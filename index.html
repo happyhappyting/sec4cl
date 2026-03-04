@@ -2,49 +2,66 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>华文毕业班资源库</title>
+    <title>毕业班华文资源库</title>
     <style>
-        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; background-color: #f4f7f6; }
-        .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; text-align: center; }
-        .btn { background: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
-        .vocab-display { margin-top: 20px; font-size: 20px; color: #e67e22; font-weight: bold; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; background: #f0f2f5; color: #333; }
+        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+        .controls { margin: 20px 0; display: flex; gap: 10px; }
+        select, button { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; }
+        button { background: #3498db; color: white; border: none; cursor: pointer; transition: 0.3s; }
+        button:hover { background: #2980b9; }
+        .vocab-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
+        .vocab-card { padding: 15px; border-left: 5px solid #3498db; background: #f9f9f9; border-radius: 4px; }
+        .word { font-size: 24px; color: #e67e22; font-weight: bold; }
+        .pinyin { color: #7f8c8d; font-style: italic; margin-left: 10px; }
+        .meaning { display: block; margin-top: 5px; color: #2c3e50; }
     </style>
 </head>
 <body>
 
-    <h1>📚 华文毕业班资源库 (Paper 1, 2, 3)</h1>
-
-    <div class="card">
-        <h3>📝 Paper 1: 作文 (Writing)</h3>
-        <ul>
-            <li><a href="#">议论文范文 (Sample Argumentative Essays)</a></li>
-            <li><a href="#">好词好句手册 (Vocabulary Guide)</a></li>
-        </ul>
+<div class="container">
+    <h1>📚 毕业班华文资源库</h1>
+    
+    <div class="controls">
+        <select id="levelSelect">
+            <option value="Level 1">Level 1 Vocabulary</option>
+            </select>
+        <button onclick="drawTen()">抽取 10 个词语</button>
     </div>
 
-    <div class="card">
-        <h3>🎲 随机词语挑战 (Random Vocab Generator)</h3>
-        <p>点击按钮随机抽取 10 个词语：</p>
-        <button class="btn" onclick="generateVocab()">抽取词语</button>
-        <div id="vocabList" class="vocab-display"></div>
+    <div id="displayArea" class="vocab-grid">
+        <p>点击上方按钮开始复习！</p>
     </div>
+</div>
 
-    <script>
-        // Your data "Database"
-        const myVocab = [
-            "锲而不舍 (qiè ér bù shě)", "豁达 (huò dá)", "不屈不挠 (bù qū bù náo)", 
-            "深思熟虑 (shēn sī shú lǜ)", "未雨绸缪 (wèi yǔ chóu móu)", "卓尔不群 (zhuó ěr bù qún)",
-            "虚怀若谷 (xū huái ruò gǔ)", "实事求是 (shí shì qiú shì)", "持之以恒 (chí zhī yǐ héng)",
-            "推陈出新 (tuī chén chū xīn)", "墨守成规 (mò shǒu chéng guī)", "见仁见智 (jiàn rén jiàn zhì)"
-        ];
+<script src="data.js"></script>
 
-        function generateVocab() {
-            const shuffled = myVocab.sort(() => 0.5 - Math.random());
-            const selected = shuffled.slice(0, 10);
-            document.getElementById('vocabList').innerHTML = selected.join("<br>");
-        }
-    </script>
+<script>
+function drawTen() {
+    const level = document.getElementById('levelSelect').value;
+    const allWords = vocabData[level];
+    
+    // Shuffle
+    const shuffled = [...allWords].sort(() => 0.5 - Math.random());
+    const selected = shuffled.slice(0, 10);
+    
+    // Display
+    const area = document.getElementById('displayArea');
+    area.innerHTML = ''; // Clear previous
+    
+    selected.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'vocab-card';
+        div.innerHTML = `
+            <span class="word">${item.word}</span>
+            <span class="pinyin">${item.pinyin}</span>
+            <span class="meaning">${item.meaning}</span>
+        `;
+        area.appendChild(div);
+    });
+}
+</script>
+
 </body>
 </html>
