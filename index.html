@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习 | Chinese Revision</title>
     <style>
-        /* --- GLOBAL STYLES --- */
+        /* 1. Global Styles */
         body { 
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             padding: 20px; background-color: #f0f4f3; color: #2c3e50; line-height: 1.8; 
@@ -13,40 +13,45 @@
         .container { max-width: 950px; margin: 20px auto; background: #fff; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
         h1 { text-align: center; color: #27ae60; font-size: 2.2em; margin-bottom: 20px; }
 
-        /* --- COUNTDOWN SECTION --- */
+        /* 2. Exam Countdown Section */
         .exam-timeline { background: #fff5f5; border: 1px solid #ff7675; border-radius: 18px; padding: 20px; margin-bottom: 30px; }
         .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-top: 10px; }
         .timeline-item { display: flex; justify-content: space-between; background: white; padding: 12px 18px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
         .days-left { font-weight: 800; color: #d63031; }
 
-        /* --- Q3 NARRATIVE SECTION (Collapsible) --- */
+        /* 3. Q3 Narration Section (Collapsible) */
         .q3-section { background: #e8f5e9; border-radius: 20px; padding: 20px; margin-bottom: 30px; border: 1px solid #c8e6c9; }
         .section-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .section-header h2 { color: #27ae60; margin: 0; font-size: 1.5em; }
         .section-header h2::before { content: "✍️"; margin-right: 10px; }
         .toggle-icon { font-size: 16px; color: #27ae60; font-weight: bold; }
         
-        #q3-content { display: none; margin-top: 20px; } /* Hidden by default */
+        #q3-content { display: none; margin-top: 20px; }
         
-        .tab-container { display: flex; gap: 10px; margin-bottom: 20px; }
-        .tab-btn { padding: 10px 20px; border-radius: 10px; border: none; background: #fff; color: #27ae60; cursor: pointer; font-weight: 600; transition: 0.3s; border: 1px solid #c8e6c9; }
+        /* Tab Navigation */
+        .tab-container { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+        .tab-btn { padding: 10px 15px; border-radius: 10px; border: none; background: #fff; color: #27ae60; cursor: pointer; font-weight: 600; transition: 0.3s; border: 1px solid #c8e6c9; font-size: 14px; }
         .tab-btn.active { background: #27ae60; color: #fff; }
 
-        /* --- CARD GRID LAYOUT --- */
+        /* 4. Card Grid Layout */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
-        .phrase-card { background: white; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #c8e6c9; transition: 0.2s; }
+        .phrase-card { background: white; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #c8e6c9; transition: 0.2s; position: relative; }
         .phrase-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
-        .phrase-text { font-size: 18px; font-weight: bold; color: #2c3e50; }
+        .phrase-text { font-size: 18px; font-weight: bold; color: #2c3e50; display: block; }
 
-        /* --- CARD DETAILS (Hidden until clicked) --- */
+        /* Detail display inside cards */
         .details { display: none; margin-top: 15px; padding-top: 12px; border-top: 1px dashed #eee; font-size: 15px; animation: fadeIn 0.3s; }
         .pinyin { color: #e67e22; font-weight: 500; margin-bottom: 5px; }
         .meaning { color: #7f8c8d; font-style: italic; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        .essay-box { grid-column: 1 / -1; background: white; padding: 25px; border-radius: 15px; border-left: 5px solid #27ae60; line-height: 2; }
+        /* Template Display Box (Long text) */
+        .essay-box { grid-column: 1 / -1; background: white; padding: 25px; border-radius: 15px; border-left: 5px solid #e67e22; line-height: 2; box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+        .essay-box h3 { margin-top: 25px; color: #d35400; border-bottom: 1px solid #eee; padding-bottom: 5px; }
+        .opening-example { color: #27ae60; background: #f9f9f9; padding: 10px; border-radius: 8px; display: block; margin: 8px 0 20px 0; }
 
-        /* --- VOCABULARY CONTROLS --- */
+        /* 5. Vocab Section Box */
+        .section-box { margin-top: 40px; padding: 20px; background: #f9f9f9; border-radius: 20px; }
         .vocab-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         select, .btn { padding: 14px; border-radius: 12px; border: 1px solid #dcdde1; font-size: 16px; cursor: pointer; }
         .btn-random { background: #27ae60; color: white; border: none; font-weight: bold; }
@@ -70,29 +75,31 @@
     <div class="q3-section">
         <div class="section-header" onclick="toggleSection('q3-content', this)">
             <h2>Q3 记叙文项目 (Narration)</h2>
-            <span class="toggle-icon">▼ Click to Expand</span>
+            <span class="toggle-icon">▼ 点击展开复习内容 Click to Expand</span>
         </div>
         
         <div id="q3-content">
             <div class="tab-container">
-                <button class="tab-btn active" onclick="renderQ3('phrases', this)">✨ 辅助词汇 & 好句</button>
-                <button class="tab-btn" onclick="renderQ3('essay', this)">📖 范文展示</button>
+                <button class="tab-btn active" onclick="renderQ3('tips', this)">💡 写作模板Templates</button>
+                <button class="tab-btn" onclick="renderQ3('traits', this)">👤 性格特征Character traits</button>
+                <button class="tab-btn" onclick="renderQ3('emotions', this)">😊 好词好句Good phrases</button>
+                <button class="tab-btn" onclick="renderQ3('vocab', this)">📍 常用词汇Common vocab</button>
             </div>
             <div id="q3-display" class="card-grid"></div>
         </div>
     </div>
 
     <div class="section-box">
-        <h2 style="color: #34495e;">🏷️ 词语复习 Vocabulary</h2>
+        <h2 style="color: #34495e;">🏷️ 词语复习 Vocabulary (Paper 2)</h2>
         <div class="vocab-controls">
             <select id="levelSelect" style="grid-column: span 2;">
                 <option value="ALL">所有级别词汇 (All Levels)</option>
-                <option value="Level 1">一年级 (Secondary 1)</option>
-                <option value="Level 2">二年级 (Secondary 2)</option>
-                <option value="Level 3">三年级 (Secondary 3)</option>
+                <option value="Level 1">一年级词汇 (Sec 1)</option>
+                <option value="Level 2">二年级词汇 (Sec 2)</option>
+                <option value="Level 3">三年级词汇 (Sec 3)</option>
             </select>
-            <button class="btn btn-random" onclick="drawRandom()">🎲 随机10词 (Random 10)</button>
-            <button class="btn btn-all" onclick="showAll()">📋 查看总览 (Show All)</button>
+            <button class="btn btn-random" onclick="drawRandom()">🎲 随机10词 Draw 10</button>
+            <button class="btn btn-all" onclick="showAll()">📋 查看总览 Show All</button>
         </div>
         <div id="displayArea" class="card-grid"></div>
     </div>
@@ -102,25 +109,20 @@
 <script src="data_q3.js"></script>
 
 <script>
-    /* --- SECTION 1: UI TOGGLE LOGIC --- 
-       Handles expanding and collapsing the Q3 section 
-    */
+    /* --- Q3 LOGIC --- */
     function toggleSection(id, header) {
         const content = document.getElementById(id);
         const icon = header.querySelector('.toggle-icon');
         if (content.style.display === "block") {
             content.style.display = "none";
-            icon.innerText = "▼ Click to Expand";
+            icon.innerText = "▼ 点击展开复习内容 Click to Expand";
         } else {
             content.style.display = "block";
-            icon.innerText = "▲ Click to Collapse";
-            renderQ3('phrases'); // Default to showing phrases upon opening
+            icon.innerText = "▲ 点击收起复习内容 Click to Collapse";
+            renderQ3('tips'); // Default to tips when opening
         }
     }
 
-    /* --- SECTION 2: Q3 DATA RENDERING --- 
-       Displays phrases or essay from data_q3.js 
-    */
     function renderQ3(type, btn) {
         if(btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -129,28 +131,57 @@
         const display = document.getElementById('q3-display');
         display.innerHTML = '';
 
-        if (type === 'phrases') {
-            q3Data.phrases.forEach(item => {
+        if (type === 'tips') {
+            // Render Strategy & Templates (Long Text)
+            let html = `<div class="essay-box">
+                <p>💡 <b>核心建议 Exam Tip：</b> ${q3Data.strategies.examTips}</p>
+                <hr>
+                <h3>✍️ 万能开头 (Opening Templates)</h3>`;
+            q3Data.strategies.openings.forEach(op => {
+                html += `<p><b>${op.title}</b><br><span class="opening-example">${op.example}</span></p>`;
+            });
+            html += `<h3>📝 感悟感想 (Conclusion Templates)</h3>`;
+            q3Data.strategies.conclusions.forEach(con => {
+                html += `<p><b>${con.title}</b><br>${con.content}</p>`;
+            });
+            html += `</div>`;
+            display.innerHTML = html;
+        } else {
+            // Render Cards (Traits, Emotions, Vocab)
+            let dataToRender;
+            if (type === 'traits') dataToRender = q3Data.traits;
+            else if (type === 'emotions') dataToRender = q3Data.emotions;
+            else dataToRender = q3Data.commonVocab;
+
+            dataToRender.forEach(item => {
                 const card = document.createElement('div');
                 card.className = 'phrase-card';
                 card.onclick = function() { toggleDetail(this); };
-                card.innerHTML = `<span class="phrase-text">${item.word}</span>
+                const sub = item.cat ? `<br><small style="color:#bdc3c7;">[${item.cat}]</small>` : '';
+                card.innerHTML = `<span class="phrase-text">${item.word}${sub}</span>
                     <div class="details"><div class="pinyin">${item.pinyin}</div><div class="meaning">${item.meaning}</div></div>`;
                 display.appendChild(card);
             });
-        } else {
-            display.innerHTML = `<div class="essay-box"><h3>${q3Data.essay.title}</h3><p>${q3Data.essay.content}</p></div>`;
         }
     }
 
-    /* --- SECTION 3: VOCABULARY LOGIC --- 
-       Handles Random Draw and Show All functionality for standard words 
-    */
+    /* --- COMMON LOGIC --- */
     function toggleDetail(el) {
         const d = el.querySelector('.details');
         d.style.display = d.style.display === 'block' ? 'none' : 'block';
     }
 
+    function updateCountdowns() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const dates = { 'cd-p12': new Date(year, 5, 2), 'cd-lc': new Date(year, 6, 7), 'cd-oral': new Date(year, 6, 13) };
+        for (let id in dates) {
+            const diff = Math.ceil((dates[id] - now) / (1000 * 60 * 60 * 24));
+            document.getElementById(id).innerText = diff > 0 ? `${diff} 天` : (diff === 0 ? "今天!" : "已结束");
+        }
+    }
+
+    /* --- PAPER 2 VOCAB LOGIC --- */
     function drawRandom() {
         let pool = [];
         const level = document.getElementById('levelSelect').value;
@@ -177,19 +208,6 @@
                 <div class="details"><div class="pinyin">${item.pinyin}</div><div class="meaning">${item.meaning}</div></div>`;
             area.appendChild(card);
         });
-    }
-
-    /* --- SECTION 4: INITIALIZATION --- 
-       Runs when the page loads 
-    */
-    function updateCountdowns() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const dates = { 'cd-p12': new Date(year, 5, 2), 'cd-lc': new Date(year, 6, 7), 'cd-oral': new Date(year, 6, 13) };
-        for (let id in dates) {
-            const diff = Math.ceil((dates[id] - now) / (1000 * 60 * 60 * 24));
-            document.getElementById(id).innerText = diff > 0 ? `${diff} Days` : (diff === 0 ? "Today!" : "Ended");
-        }
     }
 
     window.onload = function() {
