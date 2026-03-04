@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华文毕业班资源库</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; padding: 20px; max-width: 800px; margin: auto; background-color: #f4f7f6; }
+        .card { background: white; padding: 20px; margin-bottom: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
+        h1 { color: #2c3e50; text-align: center; }
+        .btn { background: #3498db; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer; font-size: 16px; }
+        .vocab-display { margin-top: 20px; font-size: 20px; color: #e67e22; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+    <h1>📚 华文毕业班资源库 (Paper 1, 2, 3)</h1>
+
+    <div class="card">
+        <h3>📝 Paper 1: 作文 (Writing)</h3>
+        <ul>
+            <li><a href="#">议论文范文 (Sample Argumentative Essays)</a></li>
+            <li><a href="#">好词好句手册 (Vocabulary Guide)</a></li>
+        </ul>
+    </div>
+
+    <div class="card">
+        <h3>🎲 随机词语挑战 (Random Vocab Generator)</h3>
+        <p>点击按钮随机抽取 10 个词语：</p>
+        <button class="btn" onclick="generateVocab()">抽取词语</button>
+        <div id="vocabList" class="vocab-display"></div>
+    </div>
+
+    <script>
+        // Your data "Database"
+        const myVocab = [
+            "锲而不舍 (qiè ér bù shě)", "豁达 (huò dá)", "不屈不挠 (bù qū bù náo)", 
+            "深思熟虑 (shēn sī shú lǜ)", "未雨绸缪 (wèi yǔ chóu móu)", "卓尔不群 (zhuó ěr bù qún)",
+            "虚怀若谷 (xū huái ruò gǔ)", "实事求是 (shí shì qiú shì)", "持之以恒 (chí zhī yǐ héng)",
+            "推陈出新 (tuī chén chū xīn)", "墨守成规 (mò shǒu chéng guī)", "见仁见智 (jiàn rén jiàn zhì)"
+        ];
+
+        function generateVocab() {
+            const shuffled = myVocab.sort(() => 0.5 - Math.random());
+            const selected = shuffled.slice(0, 10);
+            document.getElementById('vocabList').innerHTML = selected.join("<br>");
+        }
+    </script>
+</body>
+</html>
