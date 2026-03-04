@@ -2,65 +2,195 @@
 <html lang="zh">
 <head>
     <meta charset="UTF-8">
-    <title>毕业班华文资源库</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>华文总复习</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; padding: 40px; background: #f0f2f5; color: #333; }
-        .container { max-width: 800px; margin: auto; background: white; padding: 30px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
-        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; }
-        .controls { margin: 20px 0; display: flex; gap: 10px; }
-        select, button { padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 16px; }
-        button { background: #3498db; color: white; border: none; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #2980b9; }
-        .vocab-grid { display: grid; grid-template-columns: 1fr; gap: 15px; margin-top: 20px; }
-        .vocab-card { padding: 15px; border-left: 5px solid #3498db; background: #f9f9f9; border-radius: 4px; }
-        .word { font-size: 24px; color: #e67e22; font-weight: bold; }
-        .pinyin { color: #7f8c8d; font-style: italic; margin-left: 10px; }
-        .meaning { display: block; margin-top: 5px; color: #2c3e50; }
+        body { 
+            font-family: 'STKaiti', 'SimSun', serif; 
+            padding: 20px; 
+            background-color: #C7EDCC; 
+            color: #00441b; 
+            line-height: 1.6;
+        }
+        .container { 
+            max-width: 800px; 
+            margin: auto; 
+            background: rgba(255, 255, 255, 0.7); 
+            padding: 30px; 
+            border-radius: 15px; 
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1); 
+        }
+        h1 { text-align: center; color: #00441b; border-bottom: 3px solid #00441b; padding-bottom: 10px; }
+        
+        .section-box { 
+            margin-bottom: 25px; 
+            padding: 20px; 
+            border: 2px solid #00441b; 
+            border-radius: 12px; 
+            background: #fdfdfd;
+        }
+        h2 { border-left: 6px solid #00441b; padding-left: 12px; margin-top: 0; color: #00441b; }
+
+        .vocab-controls { 
+            display: flex; 
+            flex-direction: column; 
+            gap: 12px; 
+            background: #e1f5e5; 
+            padding: 18px; 
+            border-radius: 10px;
+        }
+        select, button { 
+            padding: 12px; 
+            border-radius: 8px; 
+            border: 1px solid #00441b; 
+            font-size: 16px; 
+            background: #fff;
+            color: #00441b;
+        }
+        button { 
+            background: #00441b; 
+            color: #C7EDCC; 
+            cursor: pointer; 
+            font-weight: bold; 
+            transition: 0.3s;
+        }
+        button:hover { background: #006622; transform: scale(1.02); }
+
+        .vocab-card { 
+            padding: 20px; 
+            margin-top: 15px; 
+            border: 1px solid #00441b; 
+            background: #fff; 
+            border-radius: 10px; 
+            cursor: pointer; 
+            text-align: center; 
+            transition: 0.2s;
+        }
+        .vocab-card:hover { border-width: 2px; background: #f0f9f0; }
+        .word { font-size: 30px; font-weight: bold; display: block; }
+        .details { display: none; margin-top: 12px; border-top: 1px dashed #00441b; padding-top: 12px; }
+        
+        #listView { 
+            margin-top: 20px; 
+            max-height: 400px; 
+            overflow-y: auto; 
+            font-size: 15px; 
+            text-align: left;
+            padding: 10px;
+            background: #fff;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+        }
+        .list-item { border-bottom: 1px solid #eee; padding: 8px 0; }
+        .list-item:last-child { border: none; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📚 毕业班华文资源库</h1>
-    
-    <div class="controls">
-        <select id="levelSelect">
-            <option value="Level 1">Level 1 Vocabulary</option>
-            </select>
-        <button onclick="drawTen()">抽取 10 个词语</button>
+    <h1>📚 华文总复习</h1>
+
+    <div class="section-box">
+        <h2>📝 卷一 Paper 1 (写作)</h2>
+        <p>资源加载中... (即将添加范文与技巧)</p>
     </div>
 
-    <div id="displayArea" class="vocab-grid">
-        <p>点击上方按钮开始复习！</p>
+    <div class="section-box">
+        <h2>📖 卷二 Paper 2 (语文应用)</h2>
+        <p>资源加载中... (即将添加练习题库)</p>
+    </div>
+
+    <div class="section-box">
+        <h2>🗣️ 卷三 Paper 3 (口试/听力)</h2>
+        <p>资源加载中... (即将添加口试话题)</p>
+    </div>
+
+    <div class="section-box">
+        <h2>🔤 词语 Vocabulary</h2>
+        
+        <div class="vocab-controls">
+            <label><b>选择范围：</b></label>
+            <select id="levelSelect">
+                <option value="ALL">🌟 所有级别 (混合随机)</option>
+                <option value="Level 1">Level 1 (第一级别)</option>
+                <option value="Level 2">Level 2 (第二级别)</option>
+                <option value="Level 3">Level 3 (第三级别)</option>
+            </select>
+            
+            <div style="display: flex; gap: 10px;">
+                <button style="flex: 1;" onclick="showAll()">📋 查看总览</button>
+                <button style="flex: 1;" onclick="drawRandom()">🎲 随机学词 (10个)</button>
+            </div>
+        </div>
+
+        <div id="displayArea">
+            <p style="text-align:center; padding: 20px;">请选择级别并点击上方按钮开始学习。</p>
+        </div>
     </div>
 </div>
 
 <script src="data.js"></script>
 
 <script>
-function drawTen() {
-    const level = document.getElementById('levelSelect').value;
-    const allWords = vocabData[level];
-    
-    // Shuffle
-    const shuffled = [...allWords].sort(() => 0.5 - Math.random());
-    const selected = shuffled.slice(0, 10);
-    
-    // Display
-    const area = document.getElementById('displayArea');
-    area.innerHTML = ''; // Clear previous
-    
-    selected.forEach(item => {
-        const div = document.createElement('div');
-        div.className = 'vocab-card';
-        div.innerHTML = `
-            <span class="word">${item.word}</span>
-            <span class="pinyin">${item.pinyin}</span>
-            <span class="meaning">${item.meaning}</span>
-        `;
-        area.appendChild(div);
-    });
-}
+    function drawRandom() {
+        const level = document.getElementById('levelSelect').value;
+        let pool = [];
+
+        if (level === "ALL") {
+            Object.values(vocabData).forEach(arr => {
+                pool = pool.concat(arr);
+            });
+        } else {
+            pool = vocabData[level];
+        }
+
+        if(!pool || pool.length === 0) return alert("数据加载失败，请检查 data.js");
+
+        const shuffled = [...pool].sort(() => 0.5 - Math.random());
+        const selected = shuffled.slice(0, 10);
+        
+        const area = document.getElementById('displayArea');
+        area.innerHTML = '<p style="text-align:center; font-size:13px; color:#00441b;">✨ 随机抽取了 10 个词语。点击卡片显示/隐藏详情 ✨</p>'; 
+        
+        selected.forEach(item => {
+            const div = document.createElement('div');
+            div.className = 'vocab-card';
+            div.onclick = function() {
+                const details = this.querySelector('.details');
+                details.style.display = details.style.display === 'block' ? 'none' : 'block';
+            };
+            div.innerHTML = `
+                <span class="word">${item.word}</span>
+                <div class="details">
+                    <span style="color:#e67e22; font-weight:bold; font-size:18px;">${item.pinyin}</span><br>
+                    <span style="color:#00441b; font-size:16px;">${item.meaning}</span>
+                </div>
+            `;
+            area.appendChild(div);
+        });
+    }
+
+    function showAll() {
+        const level = document.getElementById('levelSelect').value;
+        let allWords = [];
+        let titleName = "";
+
+        if (level === "ALL") {
+            Object.values(vocabData).forEach(arr => { allWords = allWords.concat(arr); });
+            titleName = "全部级别";
+        } else {
+            allWords = vocabData[level];
+            titleName = level;
+        }
+
+        const area = document.getElementById('displayArea');
+        let html = `<div id="listView"><h3>📍 ${titleName} 总览 (共 ${allWords.length} 个词):</h3>`;
+        allWords.forEach(item => {
+            html += `<div class="list-item"><strong>${item.word}</strong> <span style="color:#e67e22; margin-left:10px;">[${item.pinyin}]</span><br><small>${item.meaning}</small></div>`;
+        });
+        html += `</div>`;
+        area.innerHTML = html;
+    }
 </script>
 
 </body>
