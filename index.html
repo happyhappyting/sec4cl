@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习 | Chinese Revision</title>
     <style>
-        /* 1. 全局样式 */
+        /* --- GLOBAL STYLES --- */
         body { 
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
             padding: 20px; background-color: #f0f4f3; color: #2c3e50; line-height: 1.8; 
@@ -13,31 +13,32 @@
         .container { max-width: 950px; margin: 20px auto; background: #fff; padding: 30px; border-radius: 24px; box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
         h1 { text-align: center; color: #27ae60; font-size: 2.2em; margin-bottom: 20px; }
 
-        /* 2. 考试倒计时 */
+        /* --- COUNTDOWN SECTION --- */
         .exam-timeline { background: #fff5f5; border: 1px solid #ff7675; border-radius: 18px; padding: 20px; margin-bottom: 30px; }
         .timeline-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 10px; margin-top: 10px; }
         .timeline-item { display: flex; justify-content: space-between; background: white; padding: 12px 18px; border-radius: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.03); }
         .days-left { font-weight: 800; color: #d63031; }
 
-        /* 3. Q3 记叙文板块 (可折叠) */
+        /* --- Q3 NARRATIVE SECTION (Collapsible) --- */
         .q3-section { background: #e8f5e9; border-radius: 20px; padding: 20px; margin-bottom: 30px; border: 1px solid #c8e6c9; }
         .section-header { cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
         .section-header h2 { color: #27ae60; margin: 0; font-size: 1.5em; }
         .section-header h2::before { content: "✍️"; margin-right: 10px; }
-        .toggle-icon { font-size: 20px; color: #27ae60; transition: 0.3s; }
+        .toggle-icon { font-size: 16px; color: #27ae60; font-weight: bold; }
         
-        #q3-content { display: none; margin-top: 20px; } /* 默认隐藏 */
+        #q3-content { display: none; margin-top: 20px; } /* Hidden by default */
         
         .tab-container { display: flex; gap: 10px; margin-bottom: 20px; }
         .tab-btn { padding: 10px 20px; border-radius: 10px; border: none; background: #fff; color: #27ae60; cursor: pointer; font-weight: 600; transition: 0.3s; border: 1px solid #c8e6c9; }
         .tab-btn.active { background: #27ae60; color: #fff; }
 
+        /* --- CARD GRID LAYOUT --- */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 15px; }
         .phrase-card { background: white; padding: 20px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #c8e6c9; transition: 0.2s; }
         .phrase-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
         .phrase-text { font-size: 18px; font-weight: bold; color: #2c3e50; }
 
-        /* 4. 详情显示样式 */
+        /* --- CARD DETAILS (Hidden until clicked) --- */
         .details { display: none; margin-top: 15px; padding-top: 12px; border-top: 1px dashed #eee; font-size: 15px; animation: fadeIn 0.3s; }
         .pinyin { color: #e67e22; font-weight: 500; margin-bottom: 5px; }
         .meaning { color: #7f8c8d; font-style: italic; }
@@ -45,7 +46,7 @@
 
         .essay-box { grid-column: 1 / -1; background: white; padding: 25px; border-radius: 15px; border-left: 5px solid #27ae60; line-height: 2; }
 
-        /* 5. 词汇区 */
+        /* --- VOCABULARY CONTROLS --- */
         .vocab-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 20px; }
         select, .btn { padding: 14px; border-radius: 12px; border: 1px solid #dcdde1; font-size: 16px; cursor: pointer; }
         .btn-random { background: #27ae60; color: white; border: none; font-weight: bold; }
@@ -69,7 +70,7 @@
     <div class="q3-section">
         <div class="section-header" onclick="toggleSection('q3-content', this)">
             <h2>Q3 记叙文项目 (Narration)</h2>
-            <span class="toggle-icon">▼ 点击展开</span>
+            <span class="toggle-icon">▼ Click to Expand</span>
         </div>
         
         <div id="q3-content">
@@ -85,64 +86,41 @@
         <h2 style="color: #34495e;">🏷️ 词语复习 Vocabulary</h2>
         <div class="vocab-controls">
             <select id="levelSelect" style="grid-column: span 2;">
-                <option value="ALL">所有级别词汇</option>
-                <option value="Level 1">一年级</option>
-                <option value="Level 2">二年级</option>
-                <option value="Level 3">三年级</option>
+                <option value="ALL">所有级别词汇 (All Levels)</option>
+                <option value="Level 1">一年级 (Secondary 1)</option>
+                <option value="Level 2">二年级 (Secondary 2)</option>
+                <option value="Level 3">三年级 (Secondary 3)</option>
             </select>
-            <button class="btn btn-random" onclick="drawRandom()">🎲 随机10词</button>
-            <button class="btn btn-all" onclick="showAll()">📋 查看总览</button>
+            <button class="btn btn-random" onclick="drawRandom()">🎲 随机10词 (Random 10)</button>
+            <button class="btn btn-all" onclick="showAll()">📋 查看总览 (Show All)</button>
         </div>
         <div id="displayArea" class="card-grid"></div>
     </div>
 </div>
 
 <script src="data.js"></script>
-<script>
-    // --- Q3 审核版内容 (原封不动) ---
-    const q3Data = {
-        phrases: [
-            // 1. 悲伤/哭泣
-            { word: "眼泪像断了线的珍珠一样流下来。", pinyin: "yǎn lèi xiàng duàn le xiàn de zhēn zhū yī yàng liú xià lái", meaning: "Tears falling like broken pearls." },
-            { word: "泪水模糊了我的视线。", pinyin: "lèi shuǐ mó hu le wǒ de shì xiàn", meaning: "Tears blurred my vision." },
-            { word: "哽咽", pinyin: "gěng yè", meaning: "Choke with sobs." },
-            { word: "泣不成声", pinyin: "qì bù chéng shēng", meaning: "Sobbing so hard one cannot speak." },
-            // 2. 愤怒
-            { word: "听了他的话，我气得火冒三丈，拳头捏得咯咯作响。", pinyin: "tīng le tā de huà, wǒ qì de huǒ mào sān zhàng, quán tóu niē de gē gē zuò xiǎng", meaning: "Furious after hearing his words, knuckles cracking." },
-            { word: "他气得脸红脖子粗，眼睛仿佛要喷出火来。", pinyin: "tā qì de liǎn hóng bó zi cū, yǎn jīng fǎng fú yào pēn chū huǒ lái", meaning: "Flushed with rage, eyes spitting fire." },
-            { word: "怒气冲冲", pinyin: "nù qì chōng chōng", meaning: "In a towering rage." },
-            { word: "咬牙切齿", pinyin: "yǎo yá qiè chǐ", meaning: "Gnashing one's teeth." },
-            // 3. 焦急/害怕
-            { word: "我心急如焚，在那儿不停地走来走去，", pinyin: "wǒ xīn jí rú fén, zài nàr bù tíng de zǒu lái zǒu qù", meaning: "Burning with anxiety, pacing back and forth." },
-            { word: "急得像热锅上的蚂蚁。", pinyin: "jí de xiàng rè guō shàng de mǎ yǐ", meaning: "Anxious like ants on a hot pan." },
-            { word: "我的心提到了嗓子眼儿，手心出了一层冷汗。", pinyin: "wǒ de xīn tí dào le sǎng zi yǎnr, shǒu xīn chū le yī céng lěng hàn", meaning: "Heart in one's mouth, cold sweat on palms." },
-            { word: "忐忑不安", pinyin: "tǎn tè bù ān", meaning: "Uneasy and restless." },
-            { word: "惶恐", pinyin: "huáng kǒng", meaning: "Terrified/Panicked." },
-            // 4. 开心/释然
-            { word: "听了老师的表扬，我的心里像吃了蜜糖一样甜。", pinyin: "tīng le lǎo shī de biǎo yáng, wǒ de xīn lǐ xiàng chī le mì táng yī yàng tián", meaning: "As sweet as honey after teacher's praise." },
-            { word: "压在心里的一块大石头终于落地了，我松了一口气。", pinyin: "yā zài xīn lǐ de yī kuài dà shí tou zhōng yú luò dì le, wǒ sōng le yī kǒu qì", meaning: "The heavy stone in my heart finally landed; felt relieved." },
-            { word: "眉开眼笑", pinyin: "méi kāi yǎn xiào", meaning: "Be all smiles." }
-        ],
-        essay: {
-            title: "记叙文范文占位",
-            content: "此处可粘贴您的范文内容。点击上方标签即可切换词汇与范文。"
-        }
-    };
+<script src="data_q3.js"></script>
 
-    // --- 界面控制 ---
+<script>
+    /* --- SECTION 1: UI TOGGLE LOGIC --- 
+       Handles expanding and collapsing the Q3 section 
+    */
     function toggleSection(id, header) {
         const content = document.getElementById(id);
         const icon = header.querySelector('.toggle-icon');
         if (content.style.display === "block") {
             content.style.display = "none";
-            icon.innerText = "▼ 点击展开";
+            icon.innerText = "▼ Click to Expand";
         } else {
             content.style.display = "block";
-            icon.innerText = "▲ 点击收起";
-            renderQ3('phrases'); // 展开时默认渲染金句
+            icon.innerText = "▲ Click to Collapse";
+            renderQ3('phrases'); // Default to showing phrases upon opening
         }
     }
 
+    /* --- SECTION 2: Q3 DATA RENDERING --- 
+       Displays phrases or essay from data_q3.js 
+    */
     function renderQ3(type, btn) {
         if(btn) {
             document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
@@ -165,20 +143,12 @@
         }
     }
 
-    // --- 基础词汇逻辑 ---
+    /* --- SECTION 3: VOCABULARY LOGIC --- 
+       Handles Random Draw and Show All functionality for standard words 
+    */
     function toggleDetail(el) {
         const d = el.querySelector('.details');
         d.style.display = d.style.display === 'block' ? 'none' : 'block';
-    }
-
-    function updateCountdowns() {
-        const now = new Date();
-        const year = now.getFullYear();
-        const dates = { 'cd-p12': new Date(year, 5, 2), 'cd-lc': new Date(year, 6, 7), 'cd-oral': new Date(year, 6, 13) };
-        for (let id in dates) {
-            const diff = Math.ceil((dates[id] - now) / (1000 * 60 * 60 * 24));
-            document.getElementById(id).innerText = diff > 0 ? `${diff} 天` : (diff === 0 ? "今天!" : "已结束");
-        }
     }
 
     function drawRandom() {
@@ -207,6 +177,19 @@
                 <div class="details"><div class="pinyin">${item.pinyin}</div><div class="meaning">${item.meaning}</div></div>`;
             area.appendChild(card);
         });
+    }
+
+    /* --- SECTION 4: INITIALIZATION --- 
+       Runs when the page loads 
+    */
+    function updateCountdowns() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const dates = { 'cd-p12': new Date(year, 5, 2), 'cd-lc': new Date(year, 6, 7), 'cd-oral': new Date(year, 6, 13) };
+        for (let id in dates) {
+            const diff = Math.ceil((dates[id] - now) / (1000 * 60 * 60 * 24));
+            document.getElementById(id).innerText = diff > 0 ? `${diff} Days` : (diff === 0 ? "Today!" : "Ended");
+        }
     }
 
     window.onload = function() {
