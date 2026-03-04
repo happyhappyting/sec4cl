@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习 | Chinese Revision</title>
     <style>
-        /* 全局字体优化：现代、无衬线、高易读性 */
+        /* 1. 全局样式：现代阅读感 */
         body { 
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
             padding: 20px; 
@@ -16,21 +16,21 @@
         }
         
         .container { 
-            max-width: 850px; 
+            max-width: 900px; 
             margin: 20px auto; 
             background: #ffffff; 
             padding: 30px; 
-            border-radius: 20px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
+            border-radius: 24px; 
+            box-shadow: 0 10px 40px rgba(0,0,0,0.05); 
         }
 
-        h1 { text-align: center; color: #27ae60; font-size: 2em; margin-bottom: 25px; }
+        h1 { text-align: center; color: #27ae60; font-size: 2.2em; margin-bottom: 30px; }
 
-        /* 1. 考试倒计时模块 */
+        /* 2. 考试倒计时模块 */
         .exam-timeline {
             background: #fff5f5;
             border: 1px solid #ff7675;
-            border-radius: 15px;
+            border-radius: 18px;
             padding: 20px;
             margin-bottom: 30px;
         }
@@ -47,58 +47,73 @@
             justify-content: space-between;
             align-items: center;
             background: white;
-            padding: 10px 15px;
-            border-radius: 10px;
-            margin-bottom: 8px;
+            padding: 12px 18px;
+            border-radius: 12px;
+            margin-bottom: 10px;
             box-shadow: 0 2px 4px rgba(0,0,0,0.03);
         }
-        .exam-name { font-weight: 600; font-size: 15px; }
-        .exam-date-text { font-size: 13px; color: #7f8c8d; margin-left: 10px; }
-        .days-left { font-weight: 800; color: #d63031; font-size: 16px; }
+        .exam-name { font-weight: 600; font-size: 16px; color: #34495e; }
+        .exam-date-text { font-size: 13px; color: #95a5a6; margin-left: 10px; }
+        .days-left { font-weight: 800; color: #d63031; font-size: 18px; }
         .past { opacity: 0.5; text-decoration: line-through; }
 
-        /* 2. 随机语录模块 */
+        /* 3. 随机语录模块 */
         #quote-container { 
             text-align: center; 
-            margin-bottom: 30px; 
-            padding: 20px; 
-            border-radius: 12px;
+            margin-bottom: 35px; 
+            padding: 25px; 
+            border-radius: 15px;
             background: #f9fbf9;
             border: 1px dashed #27ae60;
         }
-        #quote-text { font-size: 18px; color: #1e8449; font-style: italic; }
-        #quote-translation { font-size: 14px; color: #7f8c8d; margin-top: 8px; }
-        #quote-author { display: block; margin-top: 10px; font-weight: bold; color: #2c3e50; }
+        #quote-text { font-size: 19px; color: #1e8449; font-style: italic; font-weight: 500; }
+        #quote-translation { font-size: 14px; color: #7f8c8d; margin-top: 10px; }
+        #quote-author { display: block; margin-top: 12px; font-weight: bold; color: #2c3e50; }
 
-        /* 3. 板块通用样式 */
-        .section-box { 
-            margin-bottom: 25px; 
-            padding: 20px; 
-            border-radius: 15px; 
-            background: #ffffff;
-            border: 1px solid #eef2f1;
+        /* 4. 词语功能区域 */
+        .section-box { margin-bottom: 30px; }
+        h2 { font-size: 1.5em; color: #27ae60; margin-bottom: 20px; display: flex; align-items: center; }
+        h2::before { content: "🏷️"; margin-right: 10px; }
+
+        .vocab-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-bottom: 25px; }
+        select, button { padding: 14px; border-radius: 12px; border: 1px solid #dcdde1; font-size: 16px; transition: 0.3s; }
+        select { grid-column: span 2; background: white; outline: none; }
+        button { border: none; font-weight: 600; cursor: pointer; }
+        .btn-random { background: #27ae60; color: white; }
+        .btn-random:hover { background: #219150; transform: translateY(-2px); }
+        .btn-all { background: #34495e; color: white; }
+        .btn-all:hover { background: #2c3e50; transform: translateY(-2px); }
+
+        /* 5. 卡片网格布局 */
+        #displayArea { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 15px; 
+            margin-top: 20px; 
         }
-        h2 { font-size: 1.3em; color: #27ae60; margin-top: 0; }
-
-        /* 4. 词语交互 */
-        .vocab-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
-        select, button { padding: 12px; border-radius: 10px; border: 1px solid #dcdde1; font-size: 15px; cursor: pointer; }
-        button { background: #27ae60; color: white; font-weight: 600; border: none; }
-        button:hover { background: #219150; }
-        
         .vocab-card { 
-            padding: 20px; margin-top: 15px; 
-            background: #fdfdfd; border-radius: 12px; 
+            padding: 20px; 
+            background: #ffffff; 
+            border-radius: 15px; 
+            border: 1px solid #f1f2f6;
+            text-align: center; 
+            cursor: pointer; 
             box-shadow: 0 4px 6px rgba(0,0,0,0.02);
-            text-align: center; cursor: pointer; border: 1px solid #f1f2f6;
+            transition: all 0.2s ease;
         }
-        .word { font-size: 32px; font-weight: bold; color: #2c3e50; }
-        .details { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
-        .pinyin { color: #e67e22; font-size: 18px; }
-        .meaning { color: #7f8c8d; font-size: 16px; }
+        .vocab-card:hover { border-color: #27ae60; transform: translateY(-3px); box-shadow: 0 6px 15px rgba(0,0,0,0.05); }
+        .word { font-size: 28px; font-weight: bold; color: #2c3e50; display: block; }
+        .details { display: none; margin-top: 15px; padding-top: 12px; border-top: 1px dashed #eee; animation: fadeIn 0.3s; }
+        .pinyin { color: #e67e22; font-size: 17px; font-weight: 500; }
+        .meaning { color: #7f8c8d; font-size: 15px; margin-top: 5px; }
 
-        #listView { margin-top: 15px; max-height: 400px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 10px; }
-        .list-item { padding: 8px; border-bottom: 1px solid #eee; font-size: 14px; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* 响应式调整 */
+        @media (max-width: 600px) {
+            #displayArea { grid-template-columns: 1fr 1fr; }
+            .word { font-size: 24px; }
+        }
     </style>
 </head>
 <body>
@@ -125,7 +140,7 @@
     </div>
 
     <div id="quote-container">
-        <div id="quote-text">载入中...</div>
+        <div id="quote-text">正在准备今日语录...</div>
         <div id="quote-translation"></div>
         <div id="quote-author"></div>
     </div>
@@ -133,16 +148,18 @@
     <div class="section-box">
         <h2>词语复习 Vocabulary</h2>
         <div class="vocab-controls">
-            <select id="levelSelect" style="grid-column: span 2;">
-                <option value="ALL">🌟 所有级别 (Mixed)</option>
-                <option value="Level 1">Level 1</option>
-                <option value="Level 2">Level 2</option>
-                <option value="Level 3">Level 3</option>
+            <select id="levelSelect">
+                <option value="ALL">🌟 所有级别 (Mixed Levels)</option>
+                <option value="Level 1">Level 1 (基础词汇)</option>
+                <option value="Level 2">Level 2 (进阶词汇)</option>
+                <option value="Level 3">Level 3 (高阶词汇)</option>
             </select>
-            <button onclick="drawRandom()">🎲 随机学词</button>
-            <button onclick="showAll()" style="background:#34495e">📋 查看总览</button>
+            <button class="btn-random" onclick="drawRandom()">🎲 随机学词 (10个)</button>
+            <button class="btn-all" onclick="showAll()">📋 查看当前级别总览</button>
         </div>
-        <div id="displayArea"></div>
+        <div id="displayArea">
+            <p style="grid-column: 1/-1; text-align: center; color: #95a5a6; padding: 40px;">选择一个级别，开始复习吧！</p>
+        </div>
     </div>
 </div>
 
@@ -154,7 +171,7 @@
         const now = new Date();
         const year = now.getFullYear();
         const exams = [
-            { id: 'cd-p12', date: new Date(year, 5, 2) }, // 6月2日 (月份从0开始)
+            { id: 'cd-p12', date: new Date(year, 5, 2) }, // 6月2日
             { id: 'cd-lc',  date: new Date(year, 6, 7) }, // 7月7日
             { id: 'cd-oral', date: new Date(year, 6, 13) } // 7月13日
         ];
@@ -166,19 +183,21 @@
             if (days > 0) el.innerText = `还剩 ${days} 天`;
             else if (days === 0) el.innerText = `就在今天!`;
             else {
-                el.innerText = `已结束`;
+                el.innerText = `已完成`;
                 el.parentElement.classList.add('past');
             }
         });
     }
 
-    // 2. 随机语录库
+    // 2. 名人语录库
     const quotes = [
         { text: "“读书有三到，谓心到，眼到，口到。”", trans: "Three things are needed in reading: the heart, the eyes, and the mouth.", author: "——朱熹" },
         { text: "“书犹药也，善读之可以医愚。”", trans: "A book is like medicine; good reading can cure ignorance.", author: "——刘向" },
         { text: "“黑发不知勤学早，白发方悔读书迟。”", trans: "If the young do not study hard, they will regret it when they grow old.", author: "——颜真卿" },
         { text: "“哪里有天才，我只不过是把别人喝咖啡的时间都用在工作上了。”", trans: "There is no genius; I just spend the time others spend drinking coffee on my work.", author: "——鲁迅" },
-        { text: "“成功不是终点，而失败并不致命：有勇气继续下去才是最重要的。”", trans: "Success is not final, failure is not fatal: it is the courage to continue.", author: "——温斯顿·丘吉尔" }
+        { text: "“成功不是终点，而失败并不致命：有勇气继续下去才是最重要的。”", trans: "Success is not final, failure is not fatal: it is the courage to continue.", author: "——温斯顿·丘吉尔" },
+        { text: "“时间就像海绵里的水，只要愿挤，总还是有的。”", trans: "Time is like water in a sponge; if you squeeze, there is always some more.", author: "——鲁迅" },
+        { text: "“坦白是诚实与勇敢的产物。”", trans: "Frankness is the product of honesty and courage.", author: "——马克·吐温" }
     ];
 
     window.onload = function() {
@@ -189,7 +208,35 @@
         document.getElementById('quote-author').innerText = q.author;
     };
 
-    // 3. 词语功能逻辑
+    // 3. 通用渲染卡片函数
+    function renderCards(words, isRandom = false) {
+        const area = document.getElementById('displayArea');
+        area.innerHTML = ''; // 清空区域
+
+        if (words.length === 0) {
+            area.innerHTML = '<p style="grid-column: 1/-1; text-align: center;">暂无词汇数据。</p>';
+            return;
+        }
+
+        words.forEach(item => {
+            const card = document.createElement('div');
+            card.className = 'vocab-card';
+            card.onclick = function() {
+                const d = this.querySelector('.details');
+                d.style.display = d.style.display === 'block' ? 'none' : 'block';
+            };
+            card.innerHTML = `
+                <span class="word">${item.word}</span>
+                <div class="details">
+                    <div class="pinyin">${item.pinyin}</div>
+                    <div class="meaning">${item.meaning}</div>
+                </div>
+            `;
+            area.appendChild(card);
+        });
+    }
+
+    // 4. 随机学词
     function drawRandom() {
         let pool = [];
         const level = document.getElementById('levelSelect').value;
@@ -199,35 +246,19 @@
             pool = vocabData[level];
         }
         const shuffled = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
-        const area = document.getElementById('displayArea');
-        area.innerHTML = '';
-        shuffled.forEach(item => {
-            const div = document.createElement('div');
-            div.className = 'vocab-card';
-            div.onclick = function() {
-                const d = this.querySelector('.details');
-                d.style.display = d.style.display === 'block' ? 'none' : 'block';
-            };
-            div.innerHTML = `<span class="word">${item.word}</span>
-                             <div class="details">
-                                <div class="pinyin">${item.pinyin}</div>
-                                <div class="meaning">${item.meaning}</div>
-                             </div>`;
-            area.appendChild(div);
-        });
+        renderCards(shuffled, true);
     }
 
+    // 5. 显示总览
     function showAll() {
         const level = document.getElementById('levelSelect').value;
-        let words = level === "ALL" ? [].concat(...Object.values(vocabData)) : vocabData[level];
-        let html = `<div id="listView">`;
-        words.forEach(item => {
-            html += `<div class="list-item">
-                        <strong>${item.word}</strong> 
-                        <span style="color:#7f8c8d; margin-left:10px;">${item.pinyin} | ${item.meaning}</span>
-                     </div>`;
-        });
-        document.getElementById('displayArea').innerHTML = html + `</div>`;
+        let words = [];
+        if (level === "ALL") {
+            Object.values(vocabData).forEach(arr => words = words.concat(arr));
+        } else {
+            words = vocabData[level];
+        }
+        renderCards(words);
     }
 </script>
 </body>
