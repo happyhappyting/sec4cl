@@ -33,7 +33,7 @@ const q3Data = {
         { word: "冷静", pinyin: "lěng jìng", meaning: "calm" },
         { word: "有耐心", pinyin: "yǒu nài xīn", meaning: "patient" },
         { word: "爱发脾气", pinyin: "ài fā pí qì", meaning: "short-tempered" },
-        { word: "聪明", pinyin: "cōng míng", meaning: "smart" },
+        { word: "聪明", pinyin: "cōng mìng", meaning: "smart" },
         { word: "贪心", pinyin: "tān xīn", meaning: "greedy" },
         { word: "胆小", pinyin: "dǎn xiǎo", meaning: "timid" },
         { word: "善良", pinyin: "shàn liáng", meaning: "kind" },
@@ -71,5 +71,9 @@ const q3Data = {
         { word: "图书馆", pinyin: "tú shū guǎn", meaning: "Library", cat: "地名" },
         { word: "地铁站", pinyin: "dì tiě zhàn", meaning: "MRT station", cat: "地名" },
         { word: "巴士站", pinyin: "bā shì zhàn", meaning: "bus stop", cat: "地名" }
-    ]
+    ],
+    modelEssay: {
+        title: "题目：你一直是一个胆小的人。后来，发现自己也可以很勇敢。",
+        content: "我一直是个胆小的人，直到有一天，我发现我也可以很勇敢。那是发生在休息时间的事。我看到一个高年级学生插队，直接站到了一个低年级同学前面。那个小同学看起来很不开心，眼泪快要流下来了，却不敢说话。周围的人都看到了，但大家都低下头，假装没看见。<br><br>我的心跳得很快。我看着那个高高大大的学生，也感到很害怕。我知道如果我上前说话，可能会有麻烦。但是看着小同学无助的样子，我觉得自己应该做点什么。<br><br>我深吸一口气，对自己说：不要怕，你可以做到的！然后我走上前，对那个插队的人说：“同学，请不要插队，大家都在排队。”我的声音有点发抖。那个高年级学生瞪了我一眼：“你在教我做事？”<br><br>我摇了摇头，又重复道：“请不要插队。”高年级的学生怒气冲冲，但也许是因为周围的人都看着，他最后还是抱怨着走到了队伍后面。小同学非常感激地看向我，笑得<b>见牙不见眼</b>。我的心里就像<b>吃了蜜糖一样甜</b>。<br><br>虽然只是一件小事，但我很高兴我站出来了。我学会了一个道理：只要有勇气，即使是很小的举动，也能带来改变。"
+    }
 };
