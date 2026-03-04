@@ -5,147 +5,100 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习 | Chinese Revision</title>
     <style>
-        /* 1. 字体与全局样式优化 */
+        /* 全局字体优化：现代、无衬线、高易读性 */
         body { 
             font-family: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Helvetica Neue", Helvetica, Arial, sans-serif;
             padding: 20px; 
-            background-color: #f4f7f6; /* 更清爽的背景色 */
-            color: #2c3e50; /* 深灰比纯黑更护眼 */
-            line-height: 1.8; /* 增加行间距 */
-            letter-spacing: 0.5px; /* 字间距加宽，阅读不累 */
+            background-color: #f0f4f3; 
+            color: #2c3e50; 
+            line-height: 1.8; 
+            letter-spacing: 0.5px;
         }
         
         .container { 
             max-width: 850px; 
-            margin: 40px auto; 
+            margin: 20px auto; 
             background: #ffffff; 
-            padding: 40px; 
+            padding: 30px; 
             border-radius: 20px; 
             box-shadow: 0 10px 30px rgba(0,0,0,0.05); 
         }
 
-        h1 { 
-            text-align: center; 
-            color: #27ae60; 
-            font-size: 2.2em;
+        h1 { text-align: center; color: #27ae60; font-size: 2em; margin-bottom: 25px; }
+
+        /* 1. 考试倒计时模块 */
+        .exam-timeline {
+            background: #fff5f5;
+            border: 1px solid #ff7675;
+            border-radius: 15px;
+            padding: 20px;
             margin-bottom: 30px;
         }
+        .exam-title {
+            font-size: 1.1em;
+            font-weight: bold;
+            color: #d63031;
+            margin-bottom: 15px;
+            display: block;
+            text-align: center;
+        }
+        .timeline-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 10px 15px;
+            border-radius: 10px;
+            margin-bottom: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.03);
+        }
+        .exam-name { font-weight: 600; font-size: 15px; }
+        .exam-date-text { font-size: 13px; color: #7f8c8d; margin-left: 10px; }
+        .days-left { font-weight: 800; color: #d63031; font-size: 16px; }
+        .past { opacity: 0.5; text-decoration: line-through; }
 
-        /* 2. 随机语录样式：优雅、留白 */
+        /* 2. 随机语录模块 */
         #quote-container { 
             text-align: center; 
-            margin-bottom: 40px; 
-            padding: 25px; 
+            margin-bottom: 30px; 
+            padding: 20px; 
             border-radius: 12px;
             background: #f9fbf9;
             border: 1px dashed #27ae60;
         }
-        #quote-text { 
-            font-size: 20px; 
-            color: #1e8449; 
-            font-weight: 500;
-            font-style: italic;
-        }
-        #quote-translation { 
-            font-size: 15px; 
-            color: #7f8c8d; 
-            margin-top: 10px;
-            font-style: normal;
-        }
-        #quote-author { 
-            display: block;
-            margin-top: 12px;
-            font-weight: bold; 
-            color: #2c3e50;
-        }
+        #quote-text { font-size: 18px; color: #1e8449; font-style: italic; }
+        #quote-translation { font-size: 14px; color: #7f8c8d; margin-top: 8px; }
+        #quote-author { display: block; margin-top: 10px; font-weight: bold; color: #2c3e50; }
 
-        /* 3. 板块样式 */
+        /* 3. 板块通用样式 */
         .section-box { 
-            margin-bottom: 30px; 
-            padding: 25px; 
+            margin-bottom: 25px; 
+            padding: 20px; 
             border-radius: 15px; 
             background: #ffffff;
             border: 1px solid #eef2f1;
-            transition: transform 0.3s ease;
         }
-        .section-box:hover { transform: translateY(-5px); }
-        h2 { 
-            font-size: 1.4em;
-            color: #27ae60; 
-            margin-top: 0; 
-            display: flex;
-            align-items: center;
-        }
-        h2::before {
-            content: "";
-            width: 4px;
-            height: 20px;
-            background: #27ae60;
-            margin-right: 10px;
-            border-radius: 2px;
-        }
+        h2 { font-size: 1.3em; color: #27ae60; margin-top: 0; }
 
-        /* 4. 词语交互区域 */
-        .vocab-controls { 
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-top: 20px;
-        }
-        select, button { 
-            padding: 14px; 
-            border-radius: 10px; 
-            border: 1px solid #dcdde1; 
-            font-size: 16px; 
-            outline: none;
-            transition: 0.3s;
-        }
-        button { 
-            background: #27ae60; 
-            color: white; 
-            cursor: pointer; 
-            font-weight: 600;
-            border: none;
-        }
-        button:hover { background: #219150; box-shadow: 0 5px 15px rgba(39,174,96,0.3); }
-
+        /* 4. 词语交互 */
+        .vocab-controls { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px; }
+        select, button { padding: 12px; border-radius: 10px; border: 1px solid #dcdde1; font-size: 15px; cursor: pointer; }
+        button { background: #27ae60; color: white; font-weight: 600; border: none; }
+        button:hover { background: #219150; }
+        
         .vocab-card { 
-            padding: 25px; 
-            margin-top: 20px; 
-            border: none;
-            background: #fdfdfd; 
-            border-radius: 15px; 
-            box-shadow: 0 4px 10px rgba(0,0,0,0.03);
-            text-align: center; 
-            cursor: pointer;
-            border: 1px solid #f1f2f6;
+            padding: 20px; margin-top: 15px; 
+            background: #fdfdfd; border-radius: 12px; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+            text-align: center; cursor: pointer; border: 1px solid #f1f2f6;
         }
-        .vocab-card:hover { border-color: #27ae60; }
-        .word { font-size: 36px; color: #2c3e50; }
-        .details { 
-            display: none; 
-            margin-top: 15px; 
-            padding-top: 15px;
-            border-top: 1px solid #eee; 
-        }
-        .pinyin { color: #e67e22; font-size: 20px; font-weight: 500; }
-        .meaning { color: #7f8c8d; font-size: 18px; margin-top: 5px; }
+        .word { font-size: 32px; font-weight: bold; color: #2c3e50; }
+        .details { display: none; margin-top: 10px; padding-top: 10px; border-top: 1px solid #eee; }
+        .pinyin { color: #e67e22; font-size: 18px; }
+        .meaning { color: #7f8c8d; font-size: 16px; }
 
-        #listView { 
-            margin-top: 20px; 
-            max-height: 500px; 
-            overflow-y: auto; 
-            padding: 15px;
-            background: #f9f9f9;
-            border-radius: 12px;
-        }
-        .list-item { 
-            padding: 12px; 
-            border-bottom: 1px solid #eee; 
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        #listView { margin-top: 15px; max-height: 400px; overflow-y: auto; background: #f9f9f9; padding: 10px; border-radius: 10px; }
+        .list-item { padding: 8px; border-bottom: 1px solid #eee; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -153,19 +106,32 @@
 <div class="container">
     <h1>📚 华文总复习</h1>
 
+    <div class="exam-timeline">
+        <span class="exam-title">📢 考试时间表 Countdown</span>
+        <div id="timeline-content">
+            <div class="timeline-item">
+                <div><span class="exam-name">卷一 & 卷二</span><span class="exam-date-text">6月2日</span></div>
+                <div class="days-left" id="cd-p12">---</div>
+            </div>
+            <div class="timeline-item">
+                <div><span class="exam-name">卷三 听力</span><span class="exam-date-text">7月7日</span></div>
+                <div class="days-left" id="cd-lc">---</div>
+            </div>
+            <div class="timeline-item">
+                <div><span class="exam-name">卷三 口试</span><span class="exam-date-text">7月13日-17日</span></div>
+                <div class="days-left" id="cd-oral">---</div>
+            </div>
+        </div>
+    </div>
+
     <div id="quote-container">
-        <div id="quote-text">加载中...</div>
+        <div id="quote-text">载入中...</div>
         <div id="quote-translation"></div>
         <div id="quote-author"></div>
     </div>
 
     <div class="section-box">
-        <h2>卷一 Paper 1 (写作)</h2>
-        <p>掌握高分作文技巧，告别词穷。</p>
-    </div>
-
-    <div class="section-box">
-        <h2>词语 Vocabulary</h2>
+        <h2>词语复习 Vocabulary</h2>
         <div class="vocab-controls">
             <select id="levelSelect" style="grid-column: span 2;">
                 <option value="ALL">🌟 所有级别 (Mixed)</option>
@@ -173,7 +139,7 @@
                 <option value="Level 2">Level 2</option>
                 <option value="Level 3">Level 3</option>
             </select>
-            <button onclick="drawRandom()">🎲 随机学词 (10个)</button>
+            <button onclick="drawRandom()">🎲 随机学词</button>
             <button onclick="showAll()" style="background:#34495e">📋 查看总览</button>
         </div>
         <div id="displayArea"></div>
@@ -181,25 +147,49 @@
 </div>
 
 <script src="data.js"></script>
+
 <script>
-    // 语录库
+    // 1. 倒计时逻辑
+    function updateCountdowns() {
+        const now = new Date();
+        const year = now.getFullYear();
+        const exams = [
+            { id: 'cd-p12', date: new Date(year, 5, 2) }, // 6月2日 (月份从0开始)
+            { id: 'cd-lc',  date: new Date(year, 6, 7) }, // 7月7日
+            { id: 'cd-oral', date: new Date(year, 6, 13) } // 7月13日
+        ];
+
+        exams.forEach(ex => {
+            const diff = ex.date - now;
+            const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+            const el = document.getElementById(ex.id);
+            if (days > 0) el.innerText = `还剩 ${days} 天`;
+            else if (days === 0) el.innerText = `就在今天!`;
+            else {
+                el.innerText = `已结束`;
+                el.parentElement.classList.add('past');
+            }
+        });
+    }
+
+    // 2. 随机语录库
     const quotes = [
         { text: "“读书有三到，谓心到，眼到，口到。”", trans: "Three things are needed in reading: the heart, the eyes, and the mouth.", author: "——朱熹" },
         { text: "“书犹药也，善读之可以医愚。”", trans: "A book is like medicine; good reading can cure ignorance.", author: "——刘向" },
         { text: "“黑发不知勤学早，白发方悔读书迟。”", trans: "If the young do not study hard, they will regret it when they grow old.", author: "——颜真卿" },
         { text: "“哪里有天才，我只不过是把别人喝咖啡的时间都用在工作上了。”", trans: "There is no genius; I just spend the time others spend drinking coffee on my work.", author: "——鲁迅" },
-        { text: "“时间就像海绵里的水，只要愿挤，总还是有的。”", trans: "Time is like water in a sponge; if you squeeze, there is always some more.", author: "——鲁迅" },
-        { text: "“成功不是终点，而失败并不致命：有勇气继续下去才是最重要的。”", trans: "Success is not final, failure is not fatal: it is the courage to continue that counts.", author: "——温斯顿·丘吉尔" },
-        { text: "“坦白是诚实与勇敢的产物。”", trans: "Frankness is the product of honesty and courage.", author: "——马克·吐温" }
+        { text: "“成功不是终点，而失败并不致命：有勇气继续下去才是最重要的。”", trans: "Success is not final, failure is not fatal: it is the courage to continue.", author: "——温斯顿·丘吉尔" }
     ];
 
     window.onload = function() {
+        updateCountdowns();
         const q = quotes[Math.floor(Math.random() * quotes.length)];
         document.getElementById('quote-text').innerText = q.text;
         document.getElementById('quote-translation').innerText = q.trans;
         document.getElementById('quote-author').innerText = q.author;
     };
 
+    // 3. 词语功能逻辑
     function drawRandom() {
         let pool = [];
         const level = document.getElementById('levelSelect').value;
@@ -233,8 +223,8 @@
         let html = `<div id="listView">`;
         words.forEach(item => {
             html += `<div class="list-item">
-                        <strong>${item.word}</strong>
-                        <span style="color:#7f8c8d; font-size: 0.9em;">${item.pinyin} | ${item.meaning}</span>
+                        <strong>${item.word}</strong> 
+                        <span style="color:#7f8c8d; margin-left:10px;">${item.pinyin} | ${item.meaning}</span>
                      </div>`;
         });
         document.getElementById('displayArea').innerHTML = html + `</div>`;
