@@ -52,7 +52,7 @@
         /* 模拟中文填空空格：宽度足够，带下划线 */
         .ch-space {
             display: inline-block;
-            min-width: 3em; /* 至少三个字的宽度 */
+            min-width: 3em; 
             border-bottom: 2px solid #555;
             margin: 0 4px;
             vertical-align: bottom;
@@ -128,23 +128,35 @@ function formatContent(text) {
     return formatted;
 }
 
+// 核心逻辑：显式读取 q1Data, q2Data 等
 function route(type, btn) {
-    document.querySelectorAll('.nav-group .nav-btn').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.section-box:first-of-type .nav-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
 
     const area = document.getElementById('display-area');
-    let data = window[type + 'Data']; 
+    let data = null;
+
+    // 直接通过变量名获取，不使用 window[...] 拼接
+    if (type === 'q1') data = typeof q1Data !== 'undefined' ? q1Data : null;
+    else if (type === 'q2') data = typeof q2Data !== 'undefined' ? q2Data : null;
+    else if (type === 'q3') data = typeof q3Data !== 'undefined' ? q3Data : null;
+    else if (type === 'q4') data = typeof q4Data !== 'undefined' ? q4Data : null;
+    else if (type === 'q5') data = typeof q5Data !== 'undefined' ? q5Data : null;
 
     if (!data) {
-        area.innerHTML = `<div class="paper-effect">❌ 未找到 data_${type}.js 的数据变量。</div>`;
+        area.innerHTML = `<div class="paper-effect" style="color:red;">❌ 数据读取失败。请检查 data_${type}.js</div>`;
         return;
     }
 
     if (type === 'q1' || type === 'q2') {
         area.innerHTML = `<div class="paper-effect">${formatContent(data.example)}${formatContent(data.answer)}</div>`;
-    } else if (type === 'q3') { renderQ3Menu(data); }
-    else if (type === 'q4') { renderQ4Menu(data); }
-    else if (type === 'q5') { renderQ5Menu(data); }
+    } else if (type === 'q3') { 
+        renderQ3Menu(data); 
+    } else if (type === 'q4') { 
+        renderQ4Menu(data); 
+    } else if (type === 'q5') { 
+        renderQ5Menu(data); 
+    }
 }
 
 function renderQ3Menu(data) {
@@ -160,7 +172,12 @@ function renderQ3Menu(data) {
 
 function showSub(sub, btn, qType) {
     const inner = document.getElementById('sub-area');
-    const data = window[qType + 'Data'];
+    let data = null;
+    // 显式引用
+    if (qType === 'q3') data = q3Data;
+    else if (qType === 'q4') data = q4Data;
+    else if (qType === 'q5') data = q5Data;
+
     if (btn) {
         btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
@@ -209,7 +226,6 @@ function renderVocab(mode) {
     if (selectedLevel === 'all') {
         Object.keys(vocabData).forEach(key => { pool = pool.concat(vocabData[key]); });
     } else {
-        // 关键修正：匹配 Level 1, Level 2 等
         pool = vocabData[selectedLevel] || [];
     }
 
@@ -229,11 +245,11 @@ function renderVocab(mode) {
     });
 }
 
-// Q4 & Q5
 function renderQ4Menu(data){
     document.getElementById('display-area').innerHTML = `<div class="nav-group"><button class="nav-btn" onclick="showQ4Sub('review', this)">复习</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">看法类</button></div><div id="sub-area"></div>`;
     showQ4Sub('review', document.querySelector('#display-area .nav-btn'));
 }
+
 function showQ4Sub(sub, btn){
     const inner = document.getElementById('sub-area');
     if (btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
@@ -243,10 +259,12 @@ function showQ4Sub(sub, btn){
     else { h += `<table><tr><th>步骤</th><th>内容</th></tr>`; d.framework.forEach(f => h += `<tr><td>${f.step}</td><td>${f.detail}</td></tr>`); h += `</table>`; }
     inner.innerHTML = h + `</div>`;
 }
+
 function renderQ5Menu(data){
     document.getElementById('display-area').innerHTML = `<div class="nav-group"><button class="nav-btn" onclick="showQ5Sub('definition', this)">定义</button><button class="nav-btn" onclick="showQ5Sub('argumentative', this)">议论</button></div><div id="sub-area"></div>`;
     showQ5Sub('definition', document.querySelector('#display-area .nav-btn'));
 }
+
 function showQ5Sub(sub, btn){
     const inner = document.getElementById('sub-area');
     if (btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
