@@ -8,12 +8,13 @@
         :root {
             --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; 
             --rose: #e91e63; --glass: rgba(255, 255, 255, 0.7);
+            --paper-bg: #fffcf2; --brown: #5d4037;
         }
 
         body {
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
             background-color: var(--bg-color); color: var(--forest-green);
-            padding: 20px; margin: 0; line-height: 1.6;
+            padding: 20px; margin: 0; line-height: 1.8;
         }
 
         .container {
@@ -25,47 +26,49 @@
 
         h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; letter-spacing: 2px; }
 
-        /* 倒计时样式修正 */
+        /* 倒计时 */
         .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .cd-item { 
-            background: rgba(255, 255, 255, 0.5); padding: 15px; border-radius: 18px; 
-            text-align: center; border: 1px solid rgba(233, 30, 99, 0.3);
-            transition: transform 0.3s;
-        }
-        .cd-item:hover { transform: translateY(-5px); }
-        .cd-item b { display: block; margin-bottom: 5px; color: var(--forest-green); }
-        .cd-text { font-size: 16px; color: #444; }
+        .cd-item { background: rgba(255, 255, 255, 0.5); padding: 15px; border-radius: 18px; text-align: center; border: 1px solid rgba(233, 30, 99, 0.2); }
+        .cd-item b { display: block; color: var(--forest-green); margin-bottom: 5px; }
         .days { font-size: 28px; font-weight: bold; color: var(--rose); margin: 0 4px; }
 
-        /* 导航与模块 */
+        /* 模块样式 */
         .section-box { margin-bottom: 25px; padding: 25px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.4); }
         h2 { color: var(--sea-blue); margin: 0 0 18px 0; font-size: 1.5em; border-left: 5px solid var(--sea-blue); padding-left: 12px; }
         
         .nav-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; align-items: center; }
-        .nav-btn { padding: 10px 20px; border-radius: 12px; border: 2px solid var(--forest-green); background: white; color: var(--forest-green); cursor: pointer; font-weight: bold; transition: all 0.2s; }
-        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; box-shadow: 0 4px 12px rgba(27, 67, 50, 0.2); }
+        .nav-btn { padding: 10px 20px; border-radius: 12px; border: 2px solid var(--forest-green); background: white; color: var(--forest-green); cursor: pointer; font-weight: bold; transition: 0.2s; }
+        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; }
+        .select-box { padding: 10px 15px; border-radius: 12px; border: 2px solid var(--sea-blue); font-weight: bold; color: var(--sea-blue); background: white; cursor: pointer; }
 
-        /* 下拉选择框 */
-        .select-box { padding: 10px 15px; border-radius: 12px; border: 2px solid var(--sea-blue); font-weight: bold; color: var(--sea-blue); background: white; outline: none; cursor: pointer; }
-
-        /* 内容显示区 */
+        /* 纸片质感与空格处理 */
         .paper-effect {
-            background: #fffcf2; padding: 30px; border-radius: 15px;
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.02), 2px 2px 10px rgba(0,0,0,0.05); border: 1px solid #eee;
-            color: #333; font-size: 16.5px; line-height: 1.8; white-space: pre-wrap; margin-top: 15px;
+            background: var(--paper-bg); padding: 30px; border-radius: 4px;
+            box-shadow: 4px 4px 12px rgba(0,0,0,0.06); 
+            border-left: 8px solid var(--sea-blue);
+            color: #333; font-size: 18px; line-height: 2; white-space: pre-wrap; margin-top: 15px;
+        }
+        
+        /* 模拟中文填空空格：宽度足够，带下划线 */
+        .ch-space {
+            display: inline-block;
+            min-width: 3em; /* 至少三个字的宽度 */
+            border-bottom: 2px solid #555;
+            margin: 0 4px;
+            vertical-align: bottom;
+            height: 1.2em;
         }
 
-        /* 词语卡片 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
-        .vocab-card { background: white; padding: 18px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.04); cursor: pointer; border: 1px solid transparent; transition: all 0.3s; }
-        .vocab-card:hover { transform: scale(1.03); border-color: var(--sea-blue); box-shadow: 0 6px 15px rgba(0,0,0,0.08); }
-        .word { font-size: 20px; color: var(--forest-green); font-weight: bold; display: block; margin-bottom: 4px; }
-        .pinyin { color: #888; font-size: 14px; }
-        .meaning-text { font-size: 14px; color: #d63031; margin-top: 8px; border-top: 1px dashed #eee; padding-top: 8px; font-weight: 500; }
+        .paper-effect b { color: #000; font-weight: bold; background: linear-gradient(transparent 70%, #fff176 70%); }
+        .hl { background: #fff176; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; border-radius: 8px; overflow: hidden; }
-        th, td { border: 1px solid #eee; padding: 12px; text-align: left; }
-        th { background: #f8f9fa; color: var(--forest-green); }
+        /* 词语卡片 */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-top: 20px; }
+        .vocab-card { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.04); cursor: pointer; }
+        .word { font-size: 22px; color: var(--forest-green); font-weight: bold; display: block; }
+        .det { margin-top: 10px; border-top: 1px dashed #ddd; padding-top: 10px; color: var(--brown); }
+        .pinyin { font-size: 15px; font-style: italic; display: block; margin-bottom: 5px; }
+        .meaning-text { font-size: 16px; font-weight: bold; }
     </style>
 </head>
 <body>
@@ -74,18 +77,9 @@
     <h1>📚 华文总复习</h1>
 
     <div class="header-box">
-        <div class="cd-item">
-            <b>卷一 & 卷二</b>
-            <div class="cd-text">还有<span id="cd1" class="days">--</span>天</div>
-        </div>
-        <div class="cd-item">
-            <b>卷三 听力</b>
-            <div class="cd-text">还有<span id="cd2" class="days">--</span>天</div>
-        </div>
-        <div class="cd-item">
-            <b>卷三 口试</b>
-            <div class="cd-text">还有<span id="cd3" class="days">--</span>天</div>
-        </div>
+        <div class="cd-item"><b>卷一 & 卷二</b><div>还有<span id="cd1" class="days">--</span>天</div></div>
+        <div class="cd-item"><b>卷三 听力</b><div>还有<span id="cd2" class="days">--</span>天</div></div>
+        <div class="cd-item"><b>卷三 口试</b><div>还有<span id="cd3" class="days">--</span>天</div></div>
     </div>
 
     <div class="section-box">
@@ -105,9 +99,9 @@
         <div class="nav-group">
             <select id="grade-select" class="select-box" onchange="renderVocab('all')">
                 <option value="all">所有年级 (All)</option>
-                <option value="Sec 1">一年级 (Sec 1)</option>
-                <option value="Sec 2">二年级 (Sec 2)</option>
-                <option value="Sec 3">三年级 (Sec 3)</option>
+                <option value="Level 1">一年级 (Level 1)</option>
+                <option value="Level 2">二年级 (Level 2)</option>
+                <option value="Level 3">三年级 (Level 3)</option>
             </select>
             <button class="nav-btn" onclick="renderVocab('all')">👁️ 显示全部</button>
             <button class="nav-btn" onclick="renderVocab('random')">🎲 随机10个</button>
@@ -126,70 +120,116 @@
 <script>
 "use strict";
 
-/* 稳定获取 Q1-Q5 数据 */
-function getQData(type) {
-    try {
-        if (type === 'q1') return typeof q1Data !== 'undefined' ? q1Data : null;
-        if (type === 'q2') return typeof q2Data !== 'undefined' ? q2Data : null;
-        if (type === 'q3') return typeof q3Data !== 'undefined' ? q3Data : null;
-        if (type === 'q4') return typeof q4Data !== 'undefined' ? q4Data : null;
-        if (type === 'q5') return typeof q5Data !== 'undefined' ? q5Data : null;
-    } catch(e) { return null; }
-    return null;
+// 增强格式化：处理填空空格
+function formatContent(text) {
+    if (!text) return "";
+    // 将 ( ) [ ] 或 连续三个以上的空格 替换为试卷风格的下划线空格
+    let formatted = text.replace(/\[\s*\]|\(\s*\)|_{3,}| {3,}/g, '<span class="ch-space"></span>');
+    return formatted;
 }
 
-/* 顶级路由控制 */
 function route(type, btn) {
     document.querySelectorAll('.nav-group .nav-btn').forEach(b => b.classList.remove('active'));
     if (btn) btn.classList.add('active');
 
     const area = document.getElementById('display-area');
-    const data = getQData(type);
+    let data = window[type + 'Data']; 
 
     if (!data) {
-        area.innerHTML = `<div class="paper-effect" style="color:red;">❌ 数据未加载，请检查 data_${type}.js</div>`;
+        area.innerHTML = `<div class="paper-effect">❌ 未找到 data_${type}.js 的数据变量。</div>`;
         return;
     }
 
     if (type === 'q1' || type === 'q2') {
-        area.innerHTML = `<div class="paper-effect">${data.example || ""}${data.answer || ""}</div>`;
+        area.innerHTML = `<div class="paper-effect">${formatContent(data.example)}${formatContent(data.answer)}</div>`;
     } else if (type === 'q3') { renderQ3Menu(data); }
     else if (type === 'q4') { renderQ4Menu(data); }
     else if (type === 'q5') { renderQ5Menu(data); }
 }
 
-/* Q3-Q5 的子菜单逻辑 */
 function renderQ3Menu(data) {
     document.getElementById('display-area').innerHTML = `
         <div class="nav-group" style="margin-top:10px;">
-            <button class="nav-btn" onclick="showQ3Sub('tips', this)">💡 技巧</button>
-            <button class="nav-btn" onclick="showQ3Sub('vocab', this)">📝 词库</button>
-            <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 范文</button>
+            <button class="nav-btn" onclick="showSub('tips', this, 'q3')">💡 技巧</button>
+            <button class="nav-btn" onclick="showSub('vocab', this, 'q3')">📝 词库</button>
+            <button class="nav-btn" onclick="showSub('essay', this, 'q3')">📖 范文</button>
         </div>
         <div id="sub-area"></div>`;
-    showQ3Sub('tips', document.querySelector('#display-area .nav-btn'));
+    showSub('tips', document.querySelector('#display-area .nav-btn'), 'q3');
 }
-function showQ3Sub(sub, btn) {
+
+function showSub(sub, btn, qType) {
     const inner = document.getElementById('sub-area');
+    const data = window[qType + 'Data'];
     if (btn) {
         btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
+
     if (sub === 'tips') {
-        let h = `<div class="paper-effect"><b>写作建议：</b>${q3Data.strategies.examTips}<hr>`;
-        q3Data.strategies.openings.forEach(o => h += `<p><b>${o.title}</b><br>${o.example}</p>`);
+        let h = `<div class="paper-effect"><b>建议：</b>${data.strategies.examTips}<hr>`;
+        data.strategies.openings.forEach(o => h += `<p><span class="hl">${o.title}</span><br>${o.example}</p>`);
         inner.innerHTML = h + `</div>`;
     } else if (sub === 'vocab') {
         let h = `<div class="vocab-grid">`;
-        [...q3Data.traits, ...q3Data.emotions].forEach(v => {
-            h += `<div class="vocab-card" onclick="speak('${v.word}')"><span class="word">${v.word}</span><small class="pinyin">${v.pinyin}</small><div class="meaning-text">${v.meaning}</div></div>`;
+        [...data.traits, ...data.emotions].forEach(v => {
+            h += `<div class="vocab-card" onclick="handleVocabClick(this, '${v.word}')">
+                    <span class="word">${v.word}</span>
+                    <div class="det" style="display:none">
+                        <span class="pinyin">${v.pinyin}</span>
+                        <div class="meaning-text">${v.meaning}</div>
+                    </div>
+                  </div>`;
         });
         inner.innerHTML = h + `</div>`;
     } else {
-        inner.innerHTML = `<div class="paper-effect"><h3>${q3Data.modelEssay.title}</h3>${q3Data.modelEssay.content}</div>`;
+        inner.innerHTML = `<div class="paper-effect"><h3>${data.modelEssay.title}</h3>${formatContent(data.modelEssay.content)}</div>`;
     }
 }
 
+function handleVocabClick(el, word) {
+    const d = el.querySelector('.det');
+    const isShowing = d.style.display === 'block';
+    d.style.display = isShowing ? 'none' : 'block';
+    if (!isShowing) {
+        const msg = new SpeechSynthesisUtterance(word);
+        msg.lang = "zh-CN";
+        speechSynthesis.speak(msg);
+    }
+}
+
+function renderVocab(mode) {
+    const area = document.getElementById('vocab-display');
+    const selectedLevel = document.getElementById('grade-select').value;
+    area.innerHTML = '';
+    
+    if (typeof vocabData === "undefined") return;
+
+    let pool = [];
+    if (selectedLevel === 'all') {
+        Object.keys(vocabData).forEach(key => { pool = pool.concat(vocabData[key]); });
+    } else {
+        // 关键修正：匹配 Level 1, Level 2 等
+        pool = vocabData[selectedLevel] || [];
+    }
+
+    let list = (mode === 'random') ? [...pool].sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
+
+    list.forEach(item => {
+        const card = document.createElement('div');
+        card.className = 'vocab-card';
+        card.onclick = () => handleVocabClick(card, item.word);
+        card.innerHTML = `
+            <span class="word">${item.word}</span>
+            <div class="det" style="display:none">
+                <span class="pinyin">${item.pinyin}</span>
+                <div class="meaning-text">${item.meaning}</div>
+            </div>`;
+        area.appendChild(card);
+    });
+}
+
+// Q4 & Q5
 function renderQ4Menu(data){
     document.getElementById('display-area').innerHTML = `<div class="nav-group"><button class="nav-btn" onclick="showQ4Sub('review', this)">复习</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">看法类</button></div><div id="sub-area"></div>`;
     showQ4Sub('review', document.querySelector('#display-area .nav-btn'));
@@ -203,7 +243,6 @@ function showQ4Sub(sub, btn){
     else { h += `<table><tr><th>步骤</th><th>内容</th></tr>`; d.framework.forEach(f => h += `<tr><td>${f.step}</td><td>${f.detail}</td></tr>`); h += `</table>`; }
     inner.innerHTML = h + `</div>`;
 }
-
 function renderQ5Menu(data){
     document.getElementById('display-area').innerHTML = `<div class="nav-group"><button class="nav-btn" onclick="showQ5Sub('definition', this)">定义</button><button class="nav-btn" onclick="showQ5Sub('argumentative', this)">议论</button></div><div id="sub-area"></div>`;
     showQ5Sub('definition', document.querySelector('#display-area .nav-btn'));
@@ -213,65 +252,16 @@ function showQ5Sub(sub, btn){
     if (btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const d = q5Data[sub];
     if(sub === 'definition'){ inner.innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul></div>`; }
-    else { inner.innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><p>${d.example.material}</p></div>`; }
+    else { inner.innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><p>${formatContent(d.example.material)}</p></div>`; }
 }
 
-/* 核心词语复习逻辑 */
-function speak(text){ const msg = new SpeechSynthesisUtterance(text); msg.lang = "zh-CN"; speechSynthesis.speak(msg); }
-
-function renderVocab(mode) {
-    const area = document.getElementById('vocab-display');
-    const selectedGrade = document.getElementById('grade-select').value;
-    area.innerHTML = '';
-    
-    if (typeof vocabData === "undefined") return;
-
-    let pool = [];
-    if (selectedGrade === 'all') {
-        Object.keys(vocabData).forEach(key => { pool = pool.concat(vocabData[key]); });
-    } else {
-        pool = vocabData[selectedGrade] || [];
-    }
-
-    // mode 为 'random' 时取 10 个，否则显示该年级全部
-    let list = (mode === 'random') ? [...pool].sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
-
-    list.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'vocab-card';
-        card.innerHTML = `
-            <span class="word">${item.word}</span>
-            <small class="pinyin">${item.pinyin}</small>
-            <div class="det" style="display:none">
-                <div class="meaning-text">${item.meaning}</div>
-            </div>`;
-        
-        card.onclick = function() {
-            const d = this.querySelector('.det');
-            const isVisible = d.style.display === 'block';
-            d.style.display = isVisible ? 'none' : 'block';
-            if (!isVisible) speak(item.word);
-        };
-        area.appendChild(card);
-    });
-}
-
-/* 页面启动初始化 */
 window.onload = function() {
-    // 1. 设置倒计时
     const dates = { cd1: '2026-06-02', cd2: '2026-07-07', cd3: '2026-07-13' };
     for (let id in dates) {
-        const target = new Date(dates[id]);
-        const today = new Date();
-        today.setHours(0, 0, 0, 0); // 清除小时误差
-        const diff = Math.ceil((target - today) / (1000 * 60 * 60 * 24));
+        const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
         document.getElementById(id).innerText = diff > 0 ? diff : 0;
     }
-
-    // 2. 默认显示 Q1
     route('q1', document.querySelector('.nav-btn'));
-
-    // 3. 默认显示所有词语
     renderVocab('all');
 };
 </script>
