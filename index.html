@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>华文总复习</title>
+    <title>华文总复习 | happyhappyting</title>
     <style>
         :root {
             --bg-color: #d8e2dc; 
             --forest-green: #1b4332; 
             --sea-blue: #0077b6; 
-            --brown: #6d4c41; 
             --rose: #e91e63; /* 玫红色 */
             --glass: rgba(255, 255, 255, 0.7);
         }
@@ -18,64 +17,59 @@
             font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
             background-color: var(--bg-color);
             color: var(--forest-green);
-            padding: 20px; margin: 0; line-height: 1.6;
+            padding: 20px; margin: 0;
         }
 
         .container {
-            max-width: 950px; margin: 0 auto;
+            max-width: 900px; margin: 0 auto;
             background: var(--glass); backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px); padding: 30px;
-            border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            -webkit-backdrop-filter: blur(15px); padding: 25px;
+            border-radius: 25px; box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             border: 1px solid rgba(255, 255, 255, 0.3);
         }
 
-        h1 { text-align: center; color: var(--forest-green); font-size: 2em; margin-bottom: 30px; }
+        h1 { text-align: center; color: var(--forest-green); margin-bottom: 25px; }
 
-        /* 倒计时样式修正 */
-        .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+        /* 倒计时样式 - 严格按要求修改 */
+        .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 25px; }
         .cd-item { 
-            background: rgba(255, 255, 255, 0.5); 
-            padding: 15px; 
-            border-radius: 15px; 
-            text-align: center; 
-            border: 1px solid rgba(0,0,0,0.1);
+            background: white; padding: 15px; border-radius: 15px; 
+            text-align: center; border: 1px solid #eee;
         }
-        .subject-title { font-weight: bold; font-size: 16px; color: var(--forest-green); display: block; }
+        .subject-title { font-weight: bold; font-size: 15px; color: #333; display: block; }
         .days { 
-            display: block; 
-            font-size: 26px; 
-            font-weight: bold; 
+            display: block; font-size: 26px; font-weight: bold; 
             color: var(--rose); /* 玫红色 */
             margin-top: 5px;
         }
 
         /* 导航 */
-        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.4); }
-        h2 { color: var(--sea-blue); cursor: pointer; margin: 0 0 15px 0; font-size: 1.4em; }
-        .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .nav-btn { padding: 8px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; color: var(--forest-green); cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; }
+        .section-box { margin-bottom: 15px; padding: 15px; background: rgba(255,255,255,0.4); border-radius: 15px; }
+        h2 { color: var(--sea-blue); cursor: pointer; font-size: 1.3em; margin: 0 0 10px 0; }
+        .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 10px; }
+        
+        .nav-btn { 
+            padding: 8px 15px; border-radius: 8px; border: 2px solid var(--forest-green); 
+            background: white; color: var(--forest-green); cursor: pointer; font-weight: bold;
+        }
+        .nav-btn.active { background: var(--forest-green); color: white; }
 
-        /* 内容卡片 */
+        /* 纸张展示区 */
         .paper-effect {
-            background: #fffcf2; padding: 25px; border-radius: 12px;
-            box-shadow: 2px 2px 10px rgba(0,0,0,0.05); border: 1px solid #e0e0e0;
-            color: #333; font-size: 16px; line-height: 1.8; white-space: pre-wrap; margin-top: 15px;
+            background: #fffcf2; padding: 20px; border-radius: 10px;
+            border: 1px solid #e0e0e0; color: #333; font-size: 16px;
+            line-height: 1.8; white-space: pre-wrap; margin-top: 10px;
+            min-height: 100px;
         }
 
         .hl-yellow { background: #fff176; padding: 2px 4px; border-radius: 3px; }
-        .bold-text { font-weight: bold; color: #000; }
+        .bold-text { font-weight: bold; }
 
-        /* 词语卡片 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; }
-        .word { font-size: 20px; color: var(--forest-green); font-weight: bold; display: block; }
-        
-        table { width: 100%; border-collapse: collapse; margin: 10px 0; background: white; }
-        th, td { border: 1px solid #ddd; padding: 10px; font-size: 14px; text-align: left; }
-        th { background: #f4f4f4; color: var(--forest-green); }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+        .vocab-card { background: white; padding: 12px; border-radius: 10px; text-align: center; cursor: pointer; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .word { font-size: 18px; font-weight: bold; color: var(--forest-green); }
 
-        #data-status { font-size: 11px; color: #888; text-align: center; margin-top: 20px; }
+        #data-status { font-size: 11px; text-align: center; margin-top: 20px; color: #666; }
     </style>
 </head>
 <body>
@@ -85,21 +79,21 @@
 
     <div class="header-box">
         <div class="cd-item">
-            <span class="subject-title">卷一 & 卷二</span>
+            <span class="subject-title"><b>卷一 & 卷二</b></span>
             <span id="cd1" class="days">--天</span>
         </div>
         <div class="cd-item">
-            <span class="subject-title">卷三 听力</span>
+            <span class="subject-title"><b>卷三 听力</b></span>
             <span id="cd2" class="days">--天</span>
         </div>
         <div class="cd-item">
-            <span class="subject-title">卷三 口试</span>
+            <span class="subject-title"><b>卷三 口试</b></span>
             <span id="cd3" class="days">--天</span>
         </div>
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleDiv('p1-content')">📄 卷一 写作技巧 ▾</h2>
+        <h2 onclick="toggleDiv('p1-content')">📄 卷一 写作 (Q1-Q5) ▾</h2>
         <div id="p1-content">
             <div class="nav-group">
                 <button class="nav-btn" onclick="route('q1', this)">私人电邮</button>
@@ -123,7 +117,7 @@
         </div>
     </div>
 
-    <div id="data-status">正在检查数据连接...</div>
+    <div id="data-status">正在连接数据文件...</div>
 </div>
 
 <script src="data.js"></script>
@@ -132,6 +126,9 @@
 <script src="data_q3.js"></script>
 <script src="data_q4.js"></script>
 <script src="data_q5.js"></script>
+<script src="data_p2.js"></script>
+<script src="data_p3l.js"></script>
+<script src="data_p3o.js"></script>
 
 <script>
     function toggleDiv(id) {
@@ -139,130 +136,117 @@
         el.style.display = (el.style.display === 'none') ? 'block' : 'none';
     }
 
-    // 主路由
+    // 路由函数
     function route(type, btn) {
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         if(btn) btn.classList.add('active');
         const area = document.getElementById('display-area');
-        area.innerHTML = ''; 
+        area.innerHTML = '<p>正在提取内容...</p>'; 
 
+        // 容错读取：尝试读取 q1Data, q2Data 等
         const data = window[type + 'Data']; 
+
         if (!data) {
-            area.innerHTML = `<div class="paper-effect" style="color:red">错误：无法找到 ${type}Data。请检查 data_${type}.js 是否已上传。</div>`;
+            area.innerHTML = `<div class="paper-effect" style="color:red">
+                ❌ 找不到数据变量：${type}Data<br>
+                请检查 data_${type}.js 内部第一行是否写成：const ${type}Data = { ... }
+            </div>`;
             return;
         }
 
         if (type === 'q1' || type === 'q2') {
             area.innerHTML = `<div class="paper-effect">${data.example || ""}${data.answer || ""}</div>`;
         } 
-        else if (type === 'q3') { renderQ3Menu(data); }
-        else if (type === 'q4') { renderQ4Menu(data); }
-        else if (type === 'q5') { renderQ5Menu(data); }
+        else if (type === 'q3') { renderQ3(data); }
+        else if (type === 'q4') { renderQ4(data); }
+        else if (type === 'q5') { renderQ5(data); }
     }
 
-    // --- Q3 逻辑 ---
-    function renderQ3Menu(data) {
+    function renderQ3(data) {
         document.getElementById('display-area').innerHTML = `
             <div class="nav-group" style="margin-top:10px;">
-                <button class="nav-btn" onclick="showQ3Sub('tips')">💡 技巧</button>
-                <button class="nav-btn" onclick="showQ3Sub('vocab')">📝 词库</button>
-                <button class="nav-btn" onclick="showQ3Sub('essay')">📖 范文</button>
+                <button class="nav-btn" onclick="showSub('q3', 'tips')">技巧</button>
+                <button class="nav-btn" onclick="showSub('q3', 'vocab')">词库</button>
+                <button class="nav-btn" onclick="showSub('q3', 'essay')">范文</button>
             </div>
-            <div id="sub-area"></div>`;
-        showQ3Sub('tips');
+            <div id="sub-area" class="paper-effect"></div>`;
+        showSub('q3', 'tips');
     }
 
-    function showQ3Sub(sub) {
+    function renderQ4(data) {
+        document.getElementById('display-area').innerHTML = `
+            <div class="nav-group" style="margin-top:10px;">
+                <button class="nav-btn" onclick="showSub('q4', 'review')">三要素</button>
+                <button class="nav-btn" onclick="showSub('q4', 'opinion')">看法类</button>
+                <button class="nav-btn" onclick="showSub('q4', 'suggestion')">建议类</button>
+            </div>
+            <div id="sub-area" class="paper-effect"></div>`;
+        showSub('q4', 'review');
+    }
+
+    function renderQ5(data) {
+        document.getElementById('display-area').innerHTML = `
+            <div class="nav-group" style="margin-top:10px;">
+                <button class="nav-btn" onclick="showSub('q5', 'definition')">定义</button>
+                <button class="nav-btn" onclick="showSub('q5', 'argumentative')">议论文类</button>
+                <button class="nav-btn" onclick="showSub('q5', 'narrative')">记叙文类</button>
+            </div>
+            <div id="sub-area" class="paper-effect"></div>`;
+        showSub('q5', 'definition');
+    }
+
+    function showSub(mainType, subType) {
+        const data = window[mainType + 'Data'];
         const inner = document.getElementById('sub-area');
-        const d = window.q3Data;
-        if (sub === 'tips') {
-            let h = `<div class="paper-effect"><b>小贴士：</b>${d.strategies.examTips}<hr>`;
-            d.strategies.openings.forEach(o => h += `<p><b>${o.title}</b><br>${o.example}</p>`);
-            inner.innerHTML = h + `</div>`;
-        } else if (sub === 'vocab') {
-            let h = `<div class="vocab-grid">`;
-            [...d.traits, ...d.emotions].forEach(v => {
-                h += `<div class="vocab-card" onclick="speak('${v.word}')"><span class="word">${v.word}</span><small>${v.pinyin}</small></div>`;
-            });
-            inner.innerHTML = h + `</div>`;
-        } else {
-            inner.innerHTML = `<div class="paper-effect"><h3>${d.modelEssay.title}</h3>${d.modelEssay.content}</div>`;
+        if(!data || !data[subType]) return;
+
+        let content = "";
+        const d = data[subType];
+
+        if (mainType === 'q3') {
+            if (subType === 'tips') content = `<b>建议：</b>${d.examTips}`;
+            else if (subType === 'essay') content = `<b>${d.title}</b><br>${d.content}`;
+            else content = "点击词语卡片复习";
+        } 
+        else if (mainType === 'q4') {
+            content = `<h3>${d.title}</h3>`;
+            if (subType === 'review') d.elements.forEach(e => content += `<p><b>${e.term}:</b> ${e.detail}</p>`);
+            else d.framework.forEach(f => content += `<p><b>${f.step}:</b> ${f.detail}</p>`);
         }
-    }
-
-    // --- Q4 逻辑 ---
-    function renderQ4Menu(data) {
-        document.getElementById('display-area').innerHTML = `
-            <div class="nav-group" style="margin-top:10px;">
-                <button class="nav-btn" onclick="showQ4Sub('review')">总复习</button>
-                <button class="nav-btn" onclick="showQ4Sub('opinion')">看法类</button>
-            </div><div id="sub-area"></div>`;
-        showQ4Sub('review');
-    }
-
-    function showQ4Sub(sub) {
-        const d = window.q4Data[sub];
-        let h = `<div class="paper-effect"><h3>${d.title}</h3>`;
-        if (sub === 'review') {
-            d.elements.forEach(e => h += `<p><b>${e.term}:</b> ${e.detail}</p>`);
-        } else {
-            h += `<table><tr><th>步骤</th><th>详情</th></tr>`;
-            d.framework.forEach(f => h += `<tr><td>${f.step}</td><td>${f.detail}</td></tr>`);
-            h += `</table>`;
+        else if (mainType === 'q5') {
+            content = `<h3>${d.title}</h3>`;
+            if (subType === 'definition') content += `<ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
+            else content += `<p>查看 data_q5.js 详细内容</p>`;
         }
-        document.getElementById('sub-area').innerHTML = h + `</div>`;
-    }
-
-    // --- Q5 逻辑 ---
-    function renderQ5Menu(data) {
-        document.getElementById('display-area').innerHTML = `
-            <div class="nav-group" style="margin-top:10px;">
-                <button class="nav-btn" onclick="showQ5Sub('definition')">定义</button>
-                <button class="nav-btn" onclick="showQ5Sub('argumentative')">范例</button>
-            </div><div id="sub-area"></div>`;
-        showQ5Sub('definition');
-    }
-
-    function showQ5Sub(sub) {
-        const d = window.q5Data[sub];
-        if (sub === 'definition') {
-            document.getElementById('sub-area').innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><ul>${d.rules.map(r => `<li>${r}</li>`).join('')}</ul></div>`;
-        } else {
-            document.getElementById('sub-area').innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><p>${d.example.material}</p></div>`;
-        }
-    }
-
-    function speak(text) {
-        const m = new SpeechSynthesisUtterance(text);
-        m.lang = 'zh-CN'; window.speechSynthesis.speak(m);
+        inner.innerHTML = content;
     }
 
     function renderVocab(mode) {
         const area = document.getElementById('vocab-display');
         area.innerHTML = '';
-        let pool = [].concat(...Object.values(vocabData || {}));
+        if(!window.vocabData) return;
+        let pool = [].concat(...Object.values(vocabData));
         let list = (mode === 'random') ? pool.sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
         list.forEach(item => {
             const card = document.createElement('div');
             card.className = 'vocab-card';
-            card.innerHTML = `<span class="word">${item.word}</span><div class="det" style="display:none"><small>${item.pinyin}</small></div>`;
-            card.onclick = function() {
-                const d = this.querySelector('.det');
-                d.style.display = d.style.display === 'none' ? 'block' : 'none';
-                if(d.style.display === 'block') speak(item.word);
+            card.innerHTML = `<span class="word">${item.word}</span>`;
+            card.onclick = () => {
+                const m = new SpeechSynthesisUtterance(item.word);
+                m.lang = 'zh-CN'; window.speechSynthesis.speak(m);
+                alert(`${item.word}\n${item.pinyin}\n${item.meaning}`);
             };
             area.appendChild(card);
         });
     }
 
     window.onload = function() {
-        // 倒计时逻辑
         const dates = { 'cd1': '2026-06-02', 'cd2': '2026-07-07', 'cd3': '2026-07-13' };
         for (let id in dates) {
             const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
             document.getElementById(id).innerText = (diff > 0 ? diff : 0) + "天";
         }
-        document.getElementById('data-status').innerText = "✅ 数据全部就绪 (happyhappyting 版)";
+        document.getElementById('data-status').innerText = "^^";
         route('q1');
     };
 </script>
