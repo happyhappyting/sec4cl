@@ -6,32 +6,33 @@
     <title>华文总复习</title>
     <style>
         :root {
-            --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; --rose: #e91e63; --glass: rgba(255, 255, 255, 0.7);
+            --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; --rose: #e91e63;
         }
         body { font-family: "PingFang SC", sans-serif; background-color: var(--bg-color); padding: 20px; margin: 0; }
-        .container { max-width: 950px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
-        h1 { text-align: center; color: var(--forest-green); }
-
-        /* 倒计时 - 严格按要求：科目加粗，天数玫红色 */
+        .container { max-width: 950px; margin: 0 auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        
+        /* 倒计时：科目加粗，天数玫红色 */
         .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
         .cd-item { background: white; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #ddd; }
-        .subject-title { font-weight: bold; font-size: 16px; display: block; color: #333; }
+        .subject-title { font-weight: bold; font-size: 16px; display: block; }
         .days { display: block; font-size: 28px; font-weight: bold; color: var(--rose); margin-top: 5px; }
 
-        /* 导航按钮 */
+        /* 导航 */
         .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; }
         .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
         .nav-btn { padding: 8px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; color: var(--forest-green); cursor: pointer; font-weight: bold; }
         .nav-btn.active { background: var(--forest-green); color: white; }
 
-        /* 内容展示区：纸张效果 */
-        .paper-effect { background: #fffcf2; padding: 25px; border-radius: 12px; border: 1px solid #e0e0e0; color: #333; line-height: 1.8; white-space: pre-wrap; margin-top: 15px; }
-        
+        /* 你的 JS 内部样式适配 */
+        .paper-effect { background: #fffcf2; padding: 25px; border-radius: 12px; border: 1px solid #e0e0e0; margin-top: 15px; }
+        .example-box { background: #e9edc9; padding: 15px; border-radius: 8px; border-left: 5px solid var(--forest-green); margin-bottom: 15px; color: #6d4c41; }
+        .essay-box { background: white; padding: 15px; border-radius: 8px; border: 1px dashed var(--sea-blue); }
+        .hl-yellow { background: #fff176; padding: 2px 4px; border-radius: 3px; }
+        .bold-text { font-weight: bold; color: #000; }
+
         /* 词语学习网格 */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; border: 1px solid #eee; }
-        .vocab-card:hover { border-color: var(--sea-blue); }
-        .word { font-size: 20px; color: var(--forest-green); font-weight: bold; display: block; }
+        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; }
     </style>
 </head>
 <body>
@@ -47,17 +48,17 @@
 
     <div class="section-box">
         <div class="nav-group">
-            <button class="nav-btn" onclick="route('q1', this)">Q1 私人电邮</button>
-            <button class="nav-btn" onclick="route('q2', this)">Q2 公务电邮</button>
-            <button class="nav-btn" onclick="route('q3', this)">Q3 记叙文</button>
-            <button class="nav-btn" onclick="route('q4', this)">Q4 议论文</button>
-            <button class="nav-btn" onclick="route('q5', this)">Q5 材料作文</button>
+            <button class="nav-btn" onclick="loadModule('q1', this)">Q1 私人电邮</button>
+            <button class="nav-btn" onclick="loadModule('q2', this)">Q2 公务电邮</button>
+            <button class="nav-btn" onclick="loadModule('q3', this)">Q3 记叙文</button>
+            <button class="nav-btn" onclick="loadModule('q4', this)">Q4 议论文</button>
+            <button class="nav-btn" onclick="loadModule('q5', this)">Q5 材料作文</button>
         </div>
-        <div id="display-area"></div>
+        <div id="main-display" class="paper-effect">请点击上方按钮查看内容</div>
     </div>
 
     <div class="section-box">
-        <h2 style="color: var(--sea-blue);">🏷️ 词语学习</h2>
+        <h2 style="color: var(--sea-blue);">🏷️ 词语复习</h2>
         <div class="nav-group">
             <button class="nav-btn" onclick="renderVocab('random')">🎲 随机10个</button>
             <button class="nav-btn" onclick="renderVocab('all')">📋 全部显示</button>
@@ -74,93 +75,53 @@
 <script src="data_q5.js"></script>
 
 <script>
-    function route(type, btn) {
+    // 核心切换逻辑
+    function loadModule(type, btn) {
+        // 1. 处理按钮高亮
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
-        const area = document.getElementById('display-area');
-        area.innerHTML = '';
 
-        const data = window[type + 'Data'];
-        if (!data) { 
-            area.innerHTML = `<div class="paper-effect" style="color:red">无法加载数据。请确保 data_${type}.js 的开头是: const ${type}Data = ...</div>`; 
-            return; 
-        }
-
-        // 严格区分题型渲染逻辑
-        if (type === 'q1' || type === 'q2') {
-            area.innerHTML = `<div class="paper-effect"><h3>范例题目</h3>${data.example}</div><div class="paper-effect"><h3>参考答案</h3>${data.answer}</div>`;
-        } else if (type === 'q3') {
-            renderSub(type, data, ['strategies', 'traits', 'emotions', 'modelEssay']);
-        } else if (type === 'q4') {
-            renderSub(type, data, ['review', 'opinion', 'suggestion']);
-        } else if (type === 'q5') {
-            renderSub(type, data, ['definition', 'argumentative', 'narrative']);
-        }
-    }
-
-    // 通用子菜单渲染：确保不合并，保持独立按钮
-    function renderSub(type, data, fields) {
-        const area = document.getElementById('display-area');
-        let btns = `<div class="nav-group" style="background:#eee; padding:10px; border-radius:10px;">`;
-        fields.forEach(f => {
-            if(data[f]) {
-                const label = getLabel(f);
-                btns += `<button class="nav-btn" style="font-size:13px" onclick="showContent('${type}', '${f}')">${label}</button>`;
-            }
-        });
-        btns += `</div><div id="detail-display"></div>`;
-        area.innerHTML = btns;
-        showContent(type, fields[0]); // 默认显示第一个
-    }
-
-    function getLabel(f) {
-        const labels = {
-            'strategies': '技巧模板', 'traits': '性格', 'emotions': '好词好句', 'modelEssay': '范文',
-            'review': '议论文三要素', 'opinion': '看法类', 'suggestion': '建议类',
-            'definition': '题型定义', 'argumentative': '议论类', 'narrative': '记叙类'
-        };
-        return labels[f] || f;
-    }
-
-    window.showContent = function(type, field) {
-        const d = window[type + 'Data'][field];
-        const target = document.getElementById('detail-display');
-        if (field === 'traits' || field === 'emotions') {
-            let h = '<div class="vocab-grid">';
-            d.forEach(v => h += `<div class="vocab-card" onclick="alert('${v.meaning}')"><span class="word">${v.word}</span><small>${v.pinyin}</small></div>`);
-            target.innerHTML = h + '</div>';
-        } else if (typeof d === 'object') {
-            target.innerHTML = `<div class="paper-effect">${d.title ? '<h3>'+d.title+'</h3>' : ''}${JSON.stringify(d, null, 2)}</div>`;
+        const container = document.getElementById('main-display');
+        
+        // 2. 构造函数名并调用 (例如 renderQ1, renderQ2)
+        const functionName = "render" + type.toUpperCase(); 
+        
+        if (typeof window[functionName] === "function") {
+            window[functionName](container); 
         } else {
-            target.innerHTML = `<div class="paper-effect">${d}</div>`;
+            // 如果你的 JS 里没写渲染函数，则使用默认显示逻辑
+            const data = window[type + "Data"];
+            if(data) {
+                container.innerHTML = (data.example || "") + (data.answer || "");
+            } else {
+                container.innerHTML = "找不到 " + functionName + " 或 " + type + "Data";
+            }
         }
     }
 
-    // 词语学习模块逻辑
     function renderVocab(mode) {
-        const display = document.getElementById('vocab-display');
-        display.innerHTML = '';
+        const area = document.getElementById('vocab-display');
+        area.innerHTML = '';
         if(!window.vocabData) return;
         let pool = [].concat(...Object.values(vocabData));
         let list = (mode === 'random') ? pool.sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
         list.forEach(item => {
             const card = document.createElement('div');
             card.className = 'vocab-card';
-            card.innerHTML = `<span class="word">${item.word}</span><small>${item.pinyin}</small>`;
-            card.onclick = () => alert(`${item.word}\n意思：${item.meaning}`);
-            display.appendChild(card);
+            card.innerHTML = `<b>${item.word}</b><br><small>${item.pinyin}</small>`;
+            card.onclick = () => alert(item.meaning);
+            area.appendChild(card);
         });
     }
 
     window.onload = function() {
-        // 倒计时刷新
         const dates = { 'cd1': '2026-06-02', 'cd2': '2026-07-07', 'cd3': '2026-07-13' };
         for (let id in dates) {
             const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
             document.getElementById(id).innerText = (diff > 0 ? diff : 0) + "天";
         }
         renderVocab('random');
-        route('q1', document.querySelector('.nav-btn'));
+        loadModule('q1', document.querySelector('.nav-btn'));
     };
 </script>
 </body>
