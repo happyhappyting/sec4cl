@@ -3,11 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>华文总复习</title>
+    <title>华文总复习 | happyhappyting</title>
     <style>
-        :root {
-            --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; --rose: #e91e63;
-        }
+        :root { --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; --rose: #e91e63; }
         body { font-family: "PingFang SC", sans-serif; background-color: var(--bg-color); padding: 20px; margin: 0; }
         .container { max-width: 950px; margin: 0 auto; background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
         
@@ -17,20 +15,19 @@
         .subject-title { font-weight: bold; font-size: 16px; display: block; }
         .days { display: block; font-size: 28px; font-weight: bold; color: var(--rose); margin-top: 5px; }
 
-        /* 导航 */
         .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; }
         .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
         .nav-btn { padding: 8px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; color: var(--forest-green); cursor: pointer; font-weight: bold; }
         .nav-btn.active { background: var(--forest-green); color: white; }
 
-        /* 你的 JS 内部样式适配 */
-        .paper-effect { background: #fffcf2; padding: 25px; border-radius: 12px; border: 1px solid #e0e0e0; margin-top: 15px; }
-        .example-box { background: #e9edc9; padding: 15px; border-radius: 8px; border-left: 5px solid var(--forest-green); margin-bottom: 15px; color: #6d4c41; }
+        /* 内容区样式适配 */
+        .paper-effect { background: #fffcf2; padding: 25px; border-radius: 12px; border: 1px solid #e0e0e0; margin-top: 15px; min-height: 200px; }
+        .example-box { background: #e9edc9; padding: 15px; border-radius: 8px; border-left: 5px solid var(--forest-green); margin-bottom: 15px; }
         .essay-box { background: white; padding: 15px; border-radius: 8px; border: 1px dashed var(--sea-blue); }
         .hl-yellow { background: #fff176; padding: 2px 4px; border-radius: 3px; }
         .bold-text { font-weight: bold; color: #000; }
 
-        /* 词语学习网格 */
+        /* 词语网格 */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; margin-top: 15px; }
         .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.05); cursor: pointer; }
     </style>
@@ -54,15 +51,13 @@
             <button class="nav-btn" onclick="loadModule('q4', this)">Q4 议论文</button>
             <button class="nav-btn" onclick="loadModule('q5', this)">Q5 材料作文</button>
         </div>
-        <div id="main-display" class="paper-effect">请点击上方按钮查看内容</div>
+        <div id="main-display" class="paper-effect">请选择题型</div>
     </div>
 
     <div class="section-box">
-        <h2 style="color: var(--sea-blue);">🏷️ 词语复习</h2>
-        <div class="nav-group">
-            <button class="nav-btn" onclick="renderVocab('random')">🎲 随机10个</button>
-            <button class="nav-btn" onclick="renderVocab('all')">📋 全部显示</button>
-        </div>
+        <h2 style="color: var(--sea-blue);">🏷️ 核心词语复习</h2>
+        <div class="nav-group" id="grade-selector">
+            </div>
         <div id="vocab-display" class="vocab-grid"></div>
     </div>
 </div>
@@ -75,53 +70,74 @@
 <script src="data_q5.js"></script>
 
 <script>
-    // 核心切换逻辑
+    // 1. 题型加载逻辑
     function loadModule(type, btn) {
-        // 1. 处理按钮高亮
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-
+        if(btn) btn.classList.add('active');
+        
         const container = document.getElementById('main-display');
         
-        // 2. 构造函数名并调用 (例如 renderQ1, renderQ2)
-        const functionName = "render" + type.toUpperCase(); 
-        
-        if (typeof window[functionName] === "function") {
-            window[functionName](container); 
+        // 尝试调用对应 JS 里的渲染函数 (如 renderQ1, renderQ2...)
+        const funcName = "render" + type.toUpperCase();
+        if (typeof window[funcName] === "function") {
+            window[funcName](container);
         } else {
-            // 如果你的 JS 里没写渲染函数，则使用默认显示逻辑
+            // 如果没写函数，尝试直接读取 data 对象
             const data = window[type + "Data"];
-            if(data) {
+            if (data) {
                 container.innerHTML = (data.example || "") + (data.answer || "");
             } else {
-                container.innerHTML = "找不到 " + functionName + " 或 " + type + "Data";
+                container.innerHTML = `<p style="color:red">错误：无法找到 ${type} 的内容或渲染函数。</p>`;
             }
         }
     }
 
-    function renderVocab(mode) {
-        const area = document.getElementById('vocab-display');
-        area.innerHTML = '';
+    // 2. 词语学习：完全保留你的年级选择逻辑
+    function initVocab() {
+        const selector = document.getElementById('grade-selector');
+        selector.innerHTML = '';
         if(!window.vocabData) return;
-        let pool = [].concat(...Object.values(vocabData));
-        let list = (mode === 'random') ? pool.sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
-        list.forEach(item => {
+
+        // 生成年级按钮
+        Object.keys(vocabData).forEach(grade => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-btn';
+            btn.innerText = grade;
+            btn.onclick = () => renderGrade(grade, btn);
+            selector.appendChild(btn);
+        });
+        
+        // 默认显示第一个年级
+        if(selector.firstChild) selector.firstChild.click();
+    }
+
+    function renderGrade(grade, btn) {
+        document.querySelectorAll('#grade-selector .nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        
+        const display = document.getElementById('vocab-display');
+        display.innerHTML = '';
+        
+        vocabData[grade].forEach(item => {
             const card = document.createElement('div');
             card.className = 'vocab-card';
             card.innerHTML = `<b>${item.word}</b><br><small>${item.pinyin}</small>`;
-            card.onclick = () => alert(item.meaning);
-            area.appendChild(card);
+            card.onclick = () => alert(`${item.word}\n${item.meaning}`);
+            display.appendChild(card);
         });
     }
 
+    // 3. 页面初始化
     window.onload = function() {
+        // 倒计时
         const dates = { 'cd1': '2026-06-02', 'cd2': '2026-07-07', 'cd3': '2026-07-13' };
         for (let id in dates) {
             const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
             document.getElementById(id).innerText = (diff > 0 ? diff : 0) + "天";
         }
-        renderVocab('random');
-        loadModule('q1', document.querySelector('.nav-btn'));
+        
+        initVocab(); // 恢复年级选择
+        loadModule('q1', document.querySelector('.nav-btn')); // 默认加载Q1
     };
 </script>
 </body>
