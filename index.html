@@ -134,119 +134,95 @@
 <script src="data_q5.js"></script>
 
 <script>
-    function toggleDiv(id) {
-        const el = document.getElementById(id);
-        el.style.display = (el.style.display === 'none') ? 'block' : 'none';
-    }
-
+// --- 核心路由与提取逻辑 (替换此处) ---
     function route(type, btn) {
+        // 1. 切换按钮激活状态
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         if(btn) btn.classList.add('active');
+        
         const area = document.getElementById('display-area');
-        area.innerHTML = '';
+        area.innerHTML = ''; 
 
+        // 2. 特殊处理 Q4 和 Q5
         if (type === 'q4') { renderQ4(); return; }
         if (type === 'q5') { renderQ5(); return; }
 
-        const data = window[type + 'Data'];
-        if (!data) return;
+        // 3. 读取全局变量 q1Data, q2Data, q3Data
+        const data = window[type + 'Data']; 
+        
+        if (!data) {
+            area.innerHTML = `<div style="color:red; padding:20px;">错误：未检测到变量 ${type}Data。请确保 data_${type}.js 已正确引入。</div>`;
+            return;
+        }
 
+        // Q1 & Q2 提取逻辑
         if (type === 'q1' || type === 'q2') {
-            area.innerHTML = `<div class="paper-effect">${data.example}${data.answer}</div>`;
-        } else if (type === 'q3') {
+            area.innerHTML = `<div class="paper-effect">${data.example || ""}${data.answer || ""}</div>`;
+        } 
+        // Q3 提取逻辑 (技巧/词库/常用词/范文)
+        else if (type === 'q3') {
             renderQ3Menu(data);
         }
     }
 
-    // --- Q3 专用渲染 ---
     function renderQ3Menu(data) {
         const area = document.getElementById('display-area');
         area.innerHTML = `
-            <div class="nav-group">
-                <button class="nav-btn" onclick="showQ3Sub('tips')">技巧</button>
-                <button class="nav-btn" onclick="showQ3Sub('vocab')">词库</button>
-                <button class="nav-btn" onclick="showQ3Sub('essay')">范文</button>
+            <div class="nav-group" style="margin-top:10px;">
+                <button class="nav-btn" onclick="showQ3Sub('tips')">💡 技巧模板</button>
+                <button class="nav-btn" onclick="showQ3Sub('vocab')">📝 性格/情感词</button>
+                <button class="nav-btn" onclick="showQ3Sub('common')">📂 常用词汇</button>
+                <button class="nav-btn" onclick="showQ3Sub('essay')">📖 经典范文</button>
             </div>
             <div id="q3-inner"></div>`;
-        showQ3Sub('tips');
+        showQ3Sub('tips'); 
     }
 
     function showQ3Sub(sub) {
         const inner = document.getElementById('q3-inner');
+        const data = window.q3Data; 
+
         if (sub === 'tips') {
-            let h = `<div class="paper-effect"><b>💡 考前小贴士：</b>${q3Data.strategies.examTips}<hr>`;
-            q3Data.strategies.openings.forEach(o => {
-                h += `<p><b>${o.title}</b><br>${o.example}<br><i style="color:gray">${o.case}</i></p>`;
+            let h = `<div class="paper-effect"><b>💡 考前小贴士：</b>${data.strategies.examTips}<hr>`;
+            data.strategies.openings.forEach(o => {
+                h += `<p><b style="color:#0077b6">${o.title}</b><br>模板：${o.example}<br><i style="color:gray">${o.case}</i></p>`;
+            });
+            h += `<hr><b>📌 结尾模板：</b>`;
+            data.strategies.conclusions.forEach(c => {
+                h += `<p><b>${c.title}：</b>${c.content}</p>`;
             });
             inner.innerHTML = h + `</div>`;
-        } else if (sub === 'vocab') {
+        } 
+        else if (sub === 'vocab') {
             let h = `<div class="vocab-grid">`;
-            [...q3Data.traits, ...q3Data.emotions].forEach(v => {
-                h += `<div class="vocab-card"><span class="word">${v.word}</span><small>${v.pinyin}</small><br><span style="font-size:12px">${v.meaning}</span></div>`;
-            });
-            inner.innerHTML = h + `</div>`;
-        } else {
-            inner.innerHTML = `<div class="paper-effect"><h3>${q3Data.modelEssay.title}</h3>${q3Data.modelEssay.content}</div>`;
-        }
-    }
-
-    // --- Q4 专用渲染 ---
-    function renderQ4() {
-        const area = document.getElementById('display-area');
-        area.innerHTML = `<div class="nav-group">
-            <button class="nav-btn" onclick="showQ4P('review')">复习</button>
-            <button class="nav-btn" onclick="showQ4P('opinion')">看法</button>
-            <button class="nav-btn" onclick="showQ4P('suggestion')">建议</button>
-            <button class="nav-btn" onclick="showQ4P('proscons')">利弊</button>
-        </div><div id="q4-inner"></div>`;
-        showQ4P('review');
-    }
-
-    function showQ4P(p) {
-        const d = q4Data[p];
-        let h = `<div class="paper-effect"><h3>${d.title}</h3>`;
-        if (p === 'review') {
-            d.elements.forEach(e => {
-                h += `<p><b>${e.term}:</b> ${e.detail}</p>`;
-                if (e.methods) e.methods.forEach(m => {
-                    h += `<details style="margin-left:15px; color:var(--sea-blue)"><summary>${m.name}</summary><p style="color:#333">${m.content}</p></details>`;
-                });
-            });
-        } else {
-            h += `<table><tr><th>步骤</th><th>详情</th></tr>`;
-            d.framework.forEach(f => { h += `<tr><td>${f.step}<br><small>${f.en}</small></td><td>${f.detail}</td></tr>`; });
-            h += `</table>`;
-        }
-        document.getElementById('q4-inner').innerHTML = h + `</div>`;
-    }
-
-    // --- Q5 专用渲染 ---
-    function renderQ5() {
-        const area = document.getElementById('display-area');
-        area.innerHTML = `<div class="nav-group">
-            <button class="nav-btn" onclick="showQ5P('def')">定义</button>
-            <button class="nav-btn" onclick="showQ5P('arg')">议论</button>
-            <button class="nav-btn" onclick="showQ5P('nar')">记叙</button>
-        </div><div id="q5-inner"></div>`;
-        showQ5P('def');
-    }
-
-    function showQ5P(p) {
-        const inner = document.getElementById('q5-inner');
-        if (p === 'def') {
-            inner.innerHTML = `<div class="paper-effect"><h3>${q5Data.definition.title}</h3><ul>${q5Data.definition.rules.map(r => `<li>${r}</li>`).join('')}</ul></div>`;
-        } else if (p === 'arg') {
-            const a = q5Data.argumentative;
-            inner.innerHTML = `<div class="paper-effect"><h3>${a.title}</h3>${a.stepByStep.map(s => `<p><b>${s.step}:</b> ${s.detail}</p>`).join('')}<hr><b>${a.example.title}</b><p>${a.example.material}</p></div>`;
-        } else {
-            let h = `<div class="paper-effect"><h3>${q5Data.narrative.title}</h3>`;
-            q5Data.narrative.types.forEach(t => {
-                h += `<h4>${t.name}</h4><ul>${t.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>`;
+            [...data.traits, ...data.emotions].forEach(v => {
+                h += `<div class="vocab-card" onclick="speak('${v.word}')">
+                        <span class="word">${v.word}</span>
+                        <small>${v.pinyin}</small><br>
+                        <span style="font-size:12px; color:#666">${v.meaning}</span>
+                      </div>`;
             });
             inner.innerHTML = h + `</div>`;
         }
+        else if (sub === 'common') {
+            let h = `<div class="paper-effect"><table><tr><th>类别</th><th>词汇</th><th>拼音/意思</th></tr>`;
+            data.commonVocab.forEach(v => {
+                h += `<tr><td>${v.cat}</td><td><b>${v.word}</b></td><td>${v.pinyin}<br><small>${v.meaning}</small></td></tr>`;
+            });
+            inner.innerHTML = h + `</table></div>`;
+        }
+        else if (sub === 'essay') {
+            // 修正字段名：从 modelEssay 读取 title 和 content
+            inner.innerHTML = `<div class="paper-effect"><h3>${data.modelEssay.title}</h3>${data.modelEssay.content}</div>`;
+        }
     }
 
+    function speak(text) {
+        const m = new SpeechSynthesisUtterance(text);
+        m.lang = 'zh-CN';
+        window.speechSynthesis.speak(m);
+    }
+    // --- 逻辑替换结束 ---
     // --- 词汇系统 ---
     function renderVocab(mode) {
         const lvl = document.getElementById('levelSelect').value;
