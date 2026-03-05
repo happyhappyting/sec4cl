@@ -3,72 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>华文总复习</title>
+    <title>华文总复习 - 全功能版</title>
     <style>
         :root {
             --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; 
             --rose: #e91e63; --glass: rgba(255, 255, 255, 0.7);
-            --paper-bg: #fffcf2; --brown: #5d4037;
+            --paper-bg: #fffcf2; --brown: #5d4037; --hl-yellow: #fff176;
         }
 
-        body {
-            font-family: "PingFang SC", "Microsoft YaHei", "SimSun", sans-serif;
-            background-color: var(--bg-color); color: var(--forest-green);
-            padding: 20px; margin: 0; line-height: 1.8;
-        }
-
-        .container {
-            max-width: 950px; margin: 0 auto;
-            background: var(--glass); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-
-        h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; letter-spacing: 2px; }
-
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
+        .container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        
         /* 倒计时 */
         .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
         .cd-item { background: rgba(255, 255, 255, 0.5); padding: 15px; border-radius: 18px; text-align: center; border: 1px solid rgba(233, 30, 99, 0.2); }
-        .cd-item b { display: block; color: var(--forest-green); margin-bottom: 5px; }
-        .days { font-size: 28px; font-weight: bold; color: var(--rose); margin: 0 4px; }
+        .days { font-size: 28px; font-weight: bold; color: var(--rose); }
 
-        /* 模块样式 */
-        .section-box { margin-bottom: 25px; padding: 25px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.4); }
-        h2 { color: var(--sea-blue); margin: 0 0 18px 0; font-size: 1.5em; border-left: 5px solid var(--sea-blue); padding-left: 12px; }
-        
-        .nav-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; align-items: center; }
-        .nav-btn { padding: 10px 20px; border-radius: 12px; border: 2px solid var(--forest-green); background: white; color: var(--forest-green); cursor: pointer; font-weight: bold; transition: 0.2s; }
+        /* 导航 */
+        .section-box { margin-bottom: 25px; padding: 25px; background: rgba(255, 255, 255, 0.3); border-radius: 20px; }
+        .nav-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
+        .nav-btn { padding: 10px 18px; border-radius: 12px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; }
-        .select-box { padding: 10px 15px; border-radius: 12px; border: 2px solid var(--sea-blue); font-weight: bold; color: var(--sea-blue); background: white; cursor: pointer; }
 
-        /* 纸片质感与空格处理 */
-        .paper-effect {
-            background: var(--paper-bg); padding: 30px; border-radius: 4px;
-            box-shadow: 4px 4px 12px rgba(0,0,0,0.06); 
-            border-left: 8px solid var(--sea-blue);
-            color: #333; font-size: 18px; line-height: 2; white-space: pre-wrap; margin-top: 15px;
+        /* 纸片样式 */
+        .paper-effect { 
+            background: var(--paper-bg); padding: 25px; border-radius: 4px; box-shadow: 4px 4px 12px rgba(0,0,0,0.06); 
+            border-left: 8px solid var(--sea-blue); color: #333; font-size: 17px; margin-top: 15px; position: relative;
         }
+        .example-box { border: 1px dashed #bbb; padding: 15px; margin-bottom: 15px; background: #f9f9f9; border-radius: 8px; }
+        .essay-box { background: white; padding: 15px; border-radius: 8px; box-shadow: inset 0 0 5px rgba(0,0,0,0.05); }
         
-        /* 模拟中文填空空格：宽度足够，带下划线 */
-        .ch-space {
-            display: inline-block;
-            min-width: 3em; 
-            border-bottom: 2px solid #555;
-            margin: 0 4px;
-            vertical-align: bottom;
-            height: 1.2em;
-        }
-
-        .paper-effect b { color: #000; font-weight: bold; background: linear-gradient(transparent 70%, #fff176 70%); }
-        .hl { background: #fff176; padding: 2px 5px; border-radius: 4px; font-weight: bold; }
+        /* 高亮与空格 */
+        .bold-text { font-weight: bold; color: #000; }
+        .hl-yellow { background-color: var(--hl-yellow); padding: 2px 4px; border-radius: 3px; font-weight: bold; }
+        .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #555; margin: 0 5px; vertical-align: bottom; height: 1.2em; }
+        hr { border: 0; border-top: 1px solid #ddd; margin: 20px 0; }
 
         /* 词语卡片 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-top: 20px; }
-        .vocab-card { background: white; padding: 20px; border-radius: 15px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.04); cursor: pointer; }
-        .word { font-size: 22px; color: var(--forest-green); font-weight: bold; display: block; }
-        .det { margin-top: 10px; border-top: 1px dashed #ddd; padding-top: 10px; color: var(--brown); }
-        .pinyin { font-size: 15px; font-style: italic; display: block; margin-bottom: 5px; }
-        .meaning-text { font-size: 16px; font-weight: bold; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 15px; margin-top: 15px; }
+        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #eee; }
+        .word { font-size: 20px; color: var(--forest-green); font-weight: bold; display: block; }
+        .det { margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 8px; color: var(--brown); }
+        .pinyin { font-size: 14px; font-style: italic; display: block; }
+        .meaning { font-size: 15px; font-weight: bold; }
+
+        /* 表格样式 */
+        table { width: 100%; border-collapse: collapse; background: white; margin: 10px 0; }
+        th, td { border: 1px solid #eee; padding: 10px; text-align: left; }
+        th { background: #f4f4f4; color: var(--sea-blue); }
+
+        .case-text { color: #666; font-size: 15px; background: #f0f0f0; padding: 8px; border-radius: 5px; margin-top: 5px; display: block; }
+        .en-hint { font-size: 14px; color: #888; display: block; margin-bottom: 4px; }
     </style>
 </head>
 <body>
@@ -84,7 +69,7 @@
 
     <div class="section-box">
         <h2>📄 卷一 写作技巧</h2>
-        <div class="nav-group">
+        <div class="nav-group main-nav">
             <button class="nav-btn" onclick="route('q1', this)">私人电邮</button>
             <button class="nav-btn" onclick="route('q2', this)">公务电邮</button>
             <button class="nav-btn" onclick="route('q3', this)">记叙文</button>
@@ -97,13 +82,12 @@
     <div class="section-box">
         <h2>🏷️ 核心词语复习</h2>
         <div class="nav-group">
-            <select id="grade-select" class="select-box" onchange="renderVocab('all')">
+            <select id="grade-select" class="nav-btn" style="background:white" onchange="renderVocab('all')">
                 <option value="all">所有年级 (All)</option>
                 <option value="Level 1">一年级 (Level 1)</option>
                 <option value="Level 2">二年级 (Level 2)</option>
                 <option value="Level 3">三年级 (Level 3)</option>
             </select>
-            <button class="nav-btn" onclick="renderVocab('all')">👁️ 显示全部</button>
             <button class="nav-btn" onclick="renderVocab('random')">🎲 随机10个</button>
         </div>
         <div id="vocab-display" class="vocab-grid"></div>
@@ -120,157 +104,191 @@
 <script>
 "use strict";
 
-// 增强格式化：处理填空空格
-function formatContent(text) {
-    if (!text) return "";
-    // 将 ( ) [ ] 或 连续三个以上的空格 替换为试卷风格的下划线空格
-    let formatted = text.replace(/\[\s*\]|\(\s*\)|_{3,}| {3,}/g, '<span class="ch-space"></span>');
-    return formatted;
+// 格式化：识别全角下划线并转为样式空格
+function format(text) {
+    if(!text) return "";
+    return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
 }
 
-// 核心逻辑：显式读取 q1Data, q2Data 等
 function route(type, btn) {
-    document.querySelectorAll('.section-box:first-of-type .nav-btn').forEach(b => b.classList.remove('active'));
-    if (btn) btn.classList.add('active');
+    const btns = document.querySelectorAll('.main-nav .nav-btn');
+    btns.forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
 
     const area = document.getElementById('display-area');
-    let data = null;
-
-    // 直接通过变量名获取，不使用 window[...] 拼接
-    if (type === 'q1') data = typeof q1Data !== 'undefined' ? q1Data : null;
-    else if (type === 'q2') data = typeof q2Data !== 'undefined' ? q2Data : null;
-    else if (type === 'q3') data = typeof q3Data !== 'undefined' ? q3Data : null;
-    else if (type === 'q4') data = typeof q4Data !== 'undefined' ? q4Data : null;
-    else if (type === 'q5') data = typeof q5Data !== 'undefined' ? q5Data : null;
-
-    if (!data) {
-        area.innerHTML = `<div class="paper-effect" style="color:red;">❌ 数据读取失败。请检查 data_${type}.js</div>`;
-        return;
-    }
+    area.innerHTML = ""; 
 
     if (type === 'q1' || type === 'q2') {
-        area.innerHTML = `<div class="paper-effect">${formatContent(data.example)}${formatContent(data.answer)}</div>`;
-    } else if (type === 'q3') { 
-        renderQ3Menu(data); 
-    } else if (type === 'q4') { 
-        renderQ4Menu(data); 
-    } else if (type === 'q5') { 
-        renderQ5Menu(data); 
-    }
+        const data = type === 'q1' ? q1Data : q2Data;
+        area.innerHTML = `<div class="paper-effect"><h3>${data.title}</h3>${format(data.example)}${format(data.answer)}</div>`;
+    } 
+    else if (type === 'q3') renderQ3();
+    else if (type === 'q4') renderQ4();
+    else if (type === 'q5') renderQ5();
 }
 
-function renderQ3Menu(data) {
-    document.getElementById('display-area').innerHTML = `
-        <div class="nav-group" style="margin-top:10px;">
-            <button class="nav-btn" onclick="showSub('tips', this, 'q3')">💡 技巧</button>
-            <button class="nav-btn" onclick="showSub('vocab', this, 'q3')">📝 词库</button>
-            <button class="nav-btn" onclick="showSub('essay', this, 'q3')">📖 范文</button>
+// --- Q3 渲染逻辑 ---
+function renderQ3() {
+    let html = `
+        <div class="nav-group">
+            <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
+            <button class="nav-btn" onclick="showQ3Sub('ending', this)">🎯 结尾感悟</button>
+            <button class="nav-btn" onclick="showQ3Sub('vocab', this)">📝 记叙文词库</button>
+            <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 范文</button>
         </div>
-        <div id="sub-area"></div>`;
-    showSub('tips', document.querySelector('#display-area .nav-btn'), 'q3');
+        <div id="q3-sub-area"></div>`;
+    document.getElementById('display-area').innerHTML = html;
+    showQ3Sub('tips');
 }
 
-function showSub(sub, btn, qType) {
-    const inner = document.getElementById('sub-area');
-    let data = null;
-    // 显式引用
-    if (qType === 'q3') data = q3Data;
-    else if (qType === 'q4') data = q4Data;
-    else if (qType === 'q5') data = q5Data;
-
-    if (btn) {
+function showQ3Sub(mode, btn) {
+    if(btn) {
         btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
     }
-
-    if (sub === 'tips') {
-        let h = `<div class="paper-effect"><b>建议：</b>${data.strategies.examTips}<hr>`;
-        data.strategies.openings.forEach(o => h += `<p><span class="hl">${o.title}</span><br>${o.example}</p>`);
-        inner.innerHTML = h + `</div>`;
-    } else if (sub === 'vocab') {
-        let h = `<div class="vocab-grid">`;
-        [...data.traits, ...data.emotions].forEach(v => {
-            h += `<div class="vocab-card" onclick="handleVocabClick(this, '${v.word}')">
+    const sub = document.getElementById('q3-sub-area');
+    let h = '<div class="paper-effect">';
+    if(mode === 'tips') {
+        h += `<b>考场建议：</b>${q3Data.strategies.examTips}<hr>`;
+        q3Data.strategies.openings.forEach(o => {
+            h += `<p><b class="sea-blue">${o.title}</b><br>${format(o.example)}<br><span class="case-text">${o.case}</span></p>`;
+        });
+    } else if(mode === 'ending') {
+        q3Data.strategies.conclusions.forEach(c => {
+            h += `<p><b>${c.title}：</b><br>${c.content}</p>`;
+        });
+    } else if(mode === 'vocab') {
+        h = `<div class="vocab-grid">`;
+        [...q3Data.traits, ...q3Data.emotions, ...q3Data.commonVocab].forEach(v => {
+            h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')">
                     <span class="word">${v.word}</span>
                     <div class="det" style="display:none">
                         <span class="pinyin">${v.pinyin}</span>
-                        <div class="meaning-text">${v.meaning}</div>
+                        <span class="meaning">${v.meaning}</span>
                     </div>
-                  </div>`;
+                </div>`;
         });
-        inner.innerHTML = h + `</div>`;
-    } else {
-        inner.innerHTML = `<div class="paper-effect"><h3>${data.modelEssay.title}</h3>${formatContent(data.modelEssay.content)}</div>`;
+        h += `</div>`;
+    } else if(mode === 'essay') {
+        h += `<h3>${q3Data.modelEssay.title}</h3>${q3Data.modelEssay.content}`;
     }
+    sub.innerHTML = h + (mode==='vocab'?'':'</div>');
 }
 
-function handleVocabClick(el, word) {
+// --- Q4 渲染逻辑 ---
+function renderQ4() {
+    let html = `
+        <div class="nav-group">
+            <button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
+            <button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button>
+            <button class="nav-btn" onclick="showQ4Sub('suggestion', this)">💡 建议类</button>
+            <button class="nav-btn" onclick="showQ4Sub('proscons', this)">⚖️ 利与弊</button>
+        </div>
+        <div id="q4-sub-area"></div>`;
+    document.getElementById('display-area').innerHTML = html;
+    showQ4Sub('review');
+}
+
+function showQ4Sub(mode, btn) {
+    if(btn) {
+        btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    const sub = document.getElementById('q4-sub-area');
+    let h = '<div class="paper-effect">';
+    const d = q4Data[mode];
+    
+    if(mode === 'review') {
+        h += `<h3>${d.title}</h3>`;
+        d.elements.forEach(e => {
+            h += `<p><b>${e.term}</b>：${e.detail}</p>`;
+            if(e.methods) {
+                e.methods.forEach(m => {
+                    h += `<div class="example-box"><b>${m.name}</b>：<br>${m.content}<br><i style="color:#888; font-size:14px;">${m.english}</i></div>`;
+                });
+            }
+        });
+    } else {
+        h += `<h3>${d.title}</h3><b>典型例子：</b><ul>${d.examples.map(ex=>`<li>${ex}</li>`).join('')}</ul>`;
+        h += `<table><tr><th>步骤</th><th>详情</th></tr>`;
+        d.framework.forEach(f => {
+            h += `<tr><td><span class="en-hint">${f.en}</span><b>${f.step}</b></td><td>${f.detail}</td></tr>`;
+        });
+        h += `</table>`;
+    }
+    sub.innerHTML = h + '</div>';
+}
+
+// --- Q5 渲染逻辑 ---
+function renderQ5() {
+    let html = `
+        <div class="nav-group">
+            <button class="nav-btn active" onclick="showQ5Sub('definition', this)">❓ 什么是材料作文</button>
+            <button class="nav-btn" onclick="showQ5Sub('argumentative', this)">📑 议论型</button>
+            <button class="nav-btn" onclick="showQ5Sub('narrative', this)">📝 记叙型</button>
+        </div>
+        <div id="q5-sub-area"></div>`;
+    document.getElementById('display-area').innerHTML = html;
+    showQ5Sub('definition');
+}
+
+function showQ5Sub(mode, btn) {
+    if(btn) {
+        btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
+    const sub = document.getElementById('q5-sub-area');
+    let h = '<div class="paper-effect">';
+    const d = q5Data[mode];
+
+    if(mode === 'definition') {
+        h += `<h3>${d.title}</h3><p>${d.desc}</p><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
+    } else if(mode === 'argumentative') {
+        h += `<h3>${d.title}</h3>`;
+        d.stepByStep.forEach(s => h += `<p><b>${s.step}：</b>${s.detail}</p>`);
+        h += `<div class="example-box"><b>${d.example.title}</b><br><i>材料：</i>${d.example.material}<hr><i>用法：</i>${d.example.usage}</div>`;
+    } else {
+        h += `<h3>${d.title}</h3>`;
+        d.types.forEach(t => {
+            h += `<b style="color:var(--sea-blue)">${t.name}</b><ul>${t.tips.map(tp=>`<li>${tp}</li>`).join('')}</ul>`;
+            t.cases.forEach(c => {
+                h += `<div class="essay-box" style="margin-bottom:10px;"><b>题：${c.title}</b><br><span style="color:var(--rose)">注意：${c.notice}</span></div>`;
+            });
+        });
+    }
+    sub.innerHTML = h + '</div>';
+}
+
+// --- 公共功能 ---
+function toggleCard(el, word) {
     const d = el.querySelector('.det');
     const isShowing = d.style.display === 'block';
     d.style.display = isShowing ? 'none' : 'block';
-    if (!isShowing) {
+    if(!isShowing) {
         const msg = new SpeechSynthesisUtterance(word);
         msg.lang = "zh-CN";
-        speechSynthesis.speak(msg);
+        window.speechSynthesis.speak(msg);
     }
 }
 
 function renderVocab(mode) {
     const area = document.getElementById('vocab-display');
-    const selectedLevel = document.getElementById('grade-select').value;
-    area.innerHTML = '';
-    
-    if (typeof vocabData === "undefined") return;
+    const lv = document.getElementById('grade-select').value;
+    area.innerHTML = "";
+    if(typeof vocabData === 'undefined') return;
 
     let pool = [];
-    if (selectedLevel === 'all') {
-        Object.keys(vocabData).forEach(key => { pool = pool.concat(vocabData[key]); });
-    } else {
-        pool = vocabData[selectedLevel] || [];
-    }
+    if(lv === 'all') Object.keys(vocabData).forEach(k => pool = pool.concat(vocabData[k]));
+    else pool = vocabData[lv] || [];
 
-    let list = (mode === 'random') ? [...pool].sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
-
+    let list = mode === 'random' ? [...pool].sort(()=>0.5-Math.random()).slice(0,10) : pool;
     list.forEach(item => {
         const card = document.createElement('div');
         card.className = 'vocab-card';
-        card.onclick = () => handleVocabClick(card, item.word);
-        card.innerHTML = `
-            <span class="word">${item.word}</span>
-            <div class="det" style="display:none">
-                <span class="pinyin">${item.pinyin}</span>
-                <div class="meaning-text">${item.meaning}</div>
-            </div>`;
+        card.onclick = () => toggleCard(card, item.word);
+        card.innerHTML = `<span class="word">${item.word}</span><div class="det" style="display:none"><span class="pinyin">${item.pinyin}</span><span class="meaning">${item.meaning}</span></div>`;
         area.appendChild(card);
     });
-}
-
-function renderQ4Menu(data){
-    document.getElementById('display-area').innerHTML = `<div class="nav-group"><button class="nav-btn" onclick="showQ4Sub('review', this)">复习</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">看法类</button></div><div id="sub-area"></div>`;
-    showQ4Sub('review', document.querySelector('#display-area .nav-btn'));
-}
-
-function showQ4Sub(sub, btn){
-    const inner = document.getElementById('sub-area');
-    if (btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-    const d = q4Data[sub];
-    let h = `<div class="paper-effect"><h3>${d.title}</h3>`;
-    if(sub === 'review'){ d.elements.forEach(e => h += `<p><b>${e.term}</b>: ${e.detail}</p>`); } 
-    else { h += `<table><tr><th>步骤</th><th>内容</th></tr>`; d.framework.forEach(f => h += `<tr><td>${f.step}</td><td>${f.detail}</td></tr>`); h += `</table>`; }
-    inner.innerHTML = h + `</div>`;
-}
-
-function renderQ5Menu(data){
-    document.getElementById('display-area').innerHTML = `<div class="nav-group"><button class="nav-btn" onclick="showQ5Sub('definition', this)">定义</button><button class="nav-btn" onclick="showQ5Sub('argumentative', this)">议论</button></div><div id="sub-area"></div>`;
-    showQ5Sub('definition', document.querySelector('#display-area .nav-btn'));
-}
-
-function showQ5Sub(sub, btn){
-    const inner = document.getElementById('sub-area');
-    if (btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-    const d = q5Data[sub];
-    if(sub === 'definition'){ inner.innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul></div>`; }
-    else { inner.innerHTML = `<div class="paper-effect"><h3>${d.title}</h3><p>${formatContent(d.example.material)}</p></div>`; }
 }
 
 window.onload = function() {
@@ -279,7 +297,7 @@ window.onload = function() {
         const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
         document.getElementById(id).innerText = diff > 0 ? diff : 0;
     }
-    route('q1', document.querySelector('.nav-btn'));
+    route('q1', document.querySelector('.main-nav .nav-btn'));
     renderVocab('all');
 };
 </script>
