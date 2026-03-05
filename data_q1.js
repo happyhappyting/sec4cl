@@ -1,5 +1,5 @@
 const q1Data = {
-    title: "Q1 私人电邮 (Private Email)",
+    title: "Q1 私人电邮 (Informal Email)",
     // 题目例子部分
     example: `
         <div class="example-box">
