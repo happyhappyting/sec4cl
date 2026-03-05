@@ -11,127 +11,73 @@
             --accent: #e67e22;
             --bg: #f4f7f6;
             --white: #ffffff;
+            --highlight: #fff9c4;
         }
 
-        body { 
-            font-family: "PingFang SC", "Microsoft YaHei", sans-serif; 
-            background: var(--bg); 
-            padding: 15px; 
-            margin: 0;
-            color: #2c3e50;
-        }
-
+        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background: var(--bg); padding: 15px; margin: 0; color: #2c3e50; }
         .container { max-width: 900px; margin: 0 auto; }
-
         h1 { text-align: center; color: var(--primary); margin: 20px 0; font-size: 1.8em; }
 
-        /* 倒计时样式 */
-        .countdown-box { 
-            background: var(--white); 
-            padding: 15px; 
-            border-radius: 18px; 
-            margin-bottom: 20px; 
-            text-align: center; 
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-            border: 1px solid #ff7675;
-        }
+        /* 倒计时 */
+        .countdown-box { background: var(--white); padding: 15px; border-radius: 18px; margin-bottom: 20px; text-align: center; box-shadow: 0 4px 15px rgba(0,0,0,0.05); border: 1px solid #ff7675; }
         .cd-text { font-weight: bold; color: #d63031; font-size: 1.1em; }
 
-        /* 大类折叠 (Paper 1, 2, 3) */
-        .main-card { 
-            background: var(--white); 
-            border-radius: 18px; 
-            margin-bottom: 15px; 
-            overflow: hidden; 
-            box-shadow: 0 4px 12px rgba(0,0,0,0.05); 
-        }
+        /* 折叠卡片 */
+        .main-card { background: var(--white); border-radius: 18px; margin-bottom: 15px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .card-header { background: var(--secondary); color: white; padding: 18px 25px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .card-content { display: none; padding: 20px; background: var(--white); border-top: 1px solid #eee; }
 
-        .card-header { 
-            background: var(--secondary); 
-            color: white; 
-            padding: 18px 25px; 
-            cursor: pointer; 
-            display: flex; 
-            justify-content: space-between; 
-            align-items: center; 
-            font-weight: bold;
-            transition: 0.3s;
-        }
-        .card-header:hover { background: #2c3e50; }
-
-        .card-content { 
-            display: none; 
-            padding: 20px; 
-            background: var(--white);
-            border-top: 1px solid #eee;
-        }
-
-        /* 子类导航按钮 (Q1, Q2, Q3...) */
-        .sub-nav { 
-            display: flex; 
-            flex-wrap: wrap; 
-            gap: 10px; 
-            margin-bottom: 20px; 
-            padding-bottom: 15px; 
-            border-bottom: 1px solid #f0f0f0; 
-        }
-
-        .sub-btn { 
-            padding: 10px 16px; 
-            border-radius: 10px; 
-            border: 1px solid var(--primary); 
-            background: transparent; 
-            color: var(--primary); 
-            cursor: pointer; 
-            font-size: 14px; 
-            font-weight: 600;
-            transition: 0.2s;
-        }
+        /* 导航按钮 */
+        .sub-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid #f0f0f0; }
+        .sub-btn { padding: 10px 16px; border-radius: 10px; border: 1px solid var(--primary); background: transparent; color: var(--primary); cursor: pointer; font-size: 14px; font-weight: 600; }
         .sub-btn.active { background: var(--primary); color: white; }
 
-        /* 内容展示区样式 */
+        /* 展示区域 */
         .display-area { min-height: 100px; animation: fadeIn 0.4s ease; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* 通用展示盒 */
+        /* 内容展示盒 (通用) */
         .essay-box { 
             background: #fffaf5; 
             padding: 20px; 
             border-radius: 15px; 
             border-left: 6px solid var(--accent); 
-            line-height: 1.8;
-            white-space: pre-wrap;
+            line-height: 2; 
             box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            margin-bottom: 20px;
         }
 
-        /* 卡片网格 */
-        .card-grid { 
-            display: grid; 
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
-            gap: 15px; 
+        /* 题目例子框 (通用) */
+        .example-box { 
+            border: 2px dashed #bdc3c7; 
+            background-color: #fdfdfd; 
+            padding: 20px; 
+            margin-bottom: 20px; 
+            border-radius: 15px; 
+            position: relative; 
+            line-height: 1.8;
+        }
+        .example-box::before { 
+            content: "题目例子 (Example)"; 
+            position: absolute; 
+            top: -12px; 
+            left: 15px; 
+            background: white; 
+            padding: 0 10px; 
+            color: #7f8c8d; 
+            font-size: 0.85em; 
+            font-weight: bold; 
         }
 
-        .item-card { 
-            background: #f9f9f9; 
-            border: 1px solid #eee; 
-            padding: 15px; 
-            border-radius: 12px; 
-            text-align: center; 
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .item-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+        /* 通用高亮标签 */
+        .hl-yellow { background-color: var(--highlight); font-weight: bold; padding: 2px 4px; border-radius: 4px; }
+        .bold-text { font-weight: bold; color: #000; }
 
-        .item-detail { 
-            display: none; 
-            margin-top: 10px; 
-            font-size: 0.9em; 
-            color: #666; 
-            border-top: 1px dashed #ccc; 
-            padding-top: 10px; 
-        }
+        /* 词语网格 */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; }
+        .item-card { background: #f9f9f9; border: 1px solid #eee; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; transition: 0.2s; }
+        .item-detail { display: none; margin-top: 10px; font-size: 0.9em; color: #666; border-top: 1px dashed #ccc; padding-top: 10px; }
 
-        /* 词语复习区专用 */
         .vocab-controls { margin-bottom: 20px; display: flex; gap: 10px; }
         select { padding: 10px; border-radius: 8px; border: 1px solid #ddd; flex-grow: 1; }
     </style>
@@ -140,7 +86,6 @@
 
 <div class="container">
     <h1>📚 华文总复习系统</h1>
-
     <div class="countdown-box" id="countdown">载入考试倒计时...</div>
 
     <div class="main-card">
@@ -153,7 +98,7 @@
                 <button class="sub-btn" onclick="route('Q4', this)">Q4 议论文</button>
                 <button class="sub-btn" onclick="route('Q5', this)">Q5 材料作文</button>
             </div>
-            <div id="display-p1" class="display-area">请选择左上方题号查看资料</div>
+            <div id="display-p1" class="display-area"></div>
         </div>
     </div>
 
@@ -207,62 +152,46 @@
 <script src="data_p3l.js"></script>
 
 <script>
-    /* --- 1. 手风琴折叠逻辑 --- */
     function toggleMain(id) {
         const target = document.getElementById(id);
         const isOpen = target.style.display === "block";
-        
-        // 关闭所有栏目
         document.querySelectorAll('.card-content').forEach(c => c.style.display = 'none');
-        
-        // 切换当前栏目
         target.style.display = isOpen ? "none" : "block";
     }
 
-    /* --- 2. 路由分发逻辑 --- */
     function route(type, btn) {
-        // 更新按钮激活状态
         const parent = btn.parentElement;
         parent.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
-        // 内容显示容器
         const p1Area = document.getElementById('display-p1');
         const p2Area = document.getElementById('display-p2');
         const p3Area = document.getElementById('display-p3');
 
         switch(type) {
-            case 'Q1': renderEmail(p1Area, q1Data); break;
-            case 'Q2': renderEmail(p1Area, q2Data); break;
+            case 'Q1': renderP1(p1Area, q1Data); break;
+            case 'Q2': renderP1(p1Area, q2Data); break;
             case 'Q3': renderQ3(p1Area); break; 
-            case 'Q4': renderDefault(p1Area, q4Data); break;
-            case 'Q5': renderDefault(p1Area, q5Data); break;
-            case 'P2_TIPS': renderDefault(p2Area, p2Data); break;
-            case 'P3O': renderDefault(p3Area, p3oData); break;
-            case 'P3L': renderDefault(p3Area, p3lData); break;
+            case 'Q4': renderP1(p1Area, q4Data); break;
+            case 'Q5': renderP1(p1Area, q5Data); break;
+            case 'P2_TIPS': renderP1(p2Area, p2Data); break;
+            case 'P3O': renderP1(p3Area, p3oData); break;
+            case 'P3L': renderP1(p3Area, p3lData); break;
         }
     }
 
-    /* --- 3. 渲染函数库 --- */
-
-    // 渲染普通文本类 (Q4, Q5, P2, P3)
-    function renderDefault(container, data) {
-        if(!data) { container.innerHTML = `<div class="essay-box">资料准备中...</div>`; return; }
-        container.innerHTML = `<div class="essay-box"><b>${data.title || ''}</b>\n\n${data.content || '暂无内容'}</div>`;
+    // ⚡ 增强后的通用渲染函数：支持所有JS里的例子框和回答框
+    function renderP1(container, data) {
+        if(!data) { container.innerHTML = "资料载入中..."; return; }
+        let html = "";
+        if(data.example) html += data.example;
+        if(data.answer) html += data.answer;
+        if(!data.example && !data.answer && data.content) {
+            html = `<div class="essay-box">${data.content}</div>`;
+        }
+        container.innerHTML = html;
     }
 
-    // 渲染电邮类 (Q1, Q2)
-    function renderEmail(container, data) {
-        if(!data) { container.innerHTML = `<div class="essay-box">电邮资料准备中...</div>`; return; }
-        container.innerHTML = `
-            <div class="essay-box">
-                <h3 style="margin-top:0">${data.title}</h3>
-                <p><b>常用格式：</b>\n${data.format}</p>
-                <p><b>万能句子：</b>\n${data.sentences}</p>
-            </div>`;
-    }
-
-    // 专门渲染 Q3 (带子菜单)
     function renderQ3(container) {
         container.innerHTML = `
             <div class="sub-nav" style="border:none; margin-bottom:10px;">
@@ -290,27 +219,17 @@
         }
     }
 
-    /* --- 4. 词语复习逻辑 --- */
     function drawVocab() {
         const level = document.getElementById('levelSelect').value;
         const area = document.getElementById('vocab-area');
         area.innerHTML = "";
-        
-        let pool = [];
-        if(level === 'ALL') pool = Object.values(vocabData).flat();
-        else pool = vocabData[level] || [];
-        
+        let pool = (level === 'ALL') ? Object.values(vocabData).flat() : (vocabData[level] || []);
         let shuffled = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
         shuffled.forEach(item => {
-            area.innerHTML += `
-                <div class="item-card" onclick="toggleItem(this)">
-                    <b>${item.word}</b>
-                    <div class="item-detail">${item.pinyin}<br>${item.meaning}</div>
-                </div>`;
+            area.innerHTML += `<div class="item-card" onclick="toggleItem(this)"><b>${item.word}</b><div class="item-detail">${item.pinyin}<br>${item.meaning}</div></div>`;
         });
     }
 
-    /* --- 5. 辅助逻辑 --- */
     function toggleItem(el) {
         const detail = el.querySelector('.item-detail');
         detail.style.display = detail.style.display === 'block' ? 'none' : 'block';
@@ -320,18 +239,12 @@
         const examDate = new Date('2026-06-02');
         const now = new Date();
         const diff = Math.ceil((examDate - now) / (1000 * 60 * 60 * 24));
-        const countdownEl = document.getElementById('countdown');
-        if(diff > 0) {
-            countdownEl.innerHTML = `📅 距离 <b>卷一写作</b> 考试还有：<span class="cd-text">${diff}</span> 天`;
-        } else {
-            countdownEl.innerHTML = `🎉 考试进行中或已结束！`;
-        }
+        document.getElementById('countdown').innerHTML = diff > 0 
+            ? `📅 距离 <b>卷一写作</b> 考试还有：<span class="cd-text">${diff}</span> 天`
+            : `🎉 考试进行中或已结束！`;
     }
 
-    window.onload = function() {
-        updateCountdowns();
-        // 默认展开第一个或提示
-    };
+    window.onload = updateCountdowns;
 </script>
 </body>
 </html>
