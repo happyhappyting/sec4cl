@@ -5,30 +5,122 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习 | Chinese Revision</title>
     <style>
-        :root { --green: #27ae60; --dark: #2c3e50; --orange: #e67e22; --bg: #f4f7f6; }
-        body { font-family: "PingFang SC", sans-serif; padding: 20px; background: var(--bg); color: var(--dark); line-height: 1.6; }
-        .container { max-width: 850px; margin: 0 auto; background: #fff; padding: 30px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        
-        .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; text-align: center; background: #f9fbf9; padding: 15px; border-radius: 12px; border: 1px solid #eef2f1; }
-        .days { display: block; font-size: 22px; font-weight: bold; color: var(--orange); }
+        :root {
+            --bg-color: #d8e2dc; /* 豆沙绿背景 */
+            --forest-green: #1b4332; /* 深林绿字体 */
+            --sea-blue: #0077b6; /* 海蓝 */
+            --brown: #6d4c41; /* 棕色 */
+            --rose: #e91e63; /* 玫红倒计时 */
+            --glass: rgba(255, 255, 255, 0.7);
+        }
 
-        .section-box { margin-bottom: 20px; padding: 20px; border-radius: 15px; border: 1px solid #eef2f1; background: #fff; }
-        h2 { color: var(--green); border-left: 5px solid var(--green); padding-left: 15px; cursor: pointer; }
-        
+        body {
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+            background-color: var(--bg-color);
+            color: var(--forest-green);
+            padding: 20px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+        /* 磨砂玻璃容器 */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: var(--glass);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            padding: 40px;
+            border-radius: 30px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; letter-spacing: 2px; }
+
+        /* 倒计时：玫红色 */
+        .header-box {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .cd-item {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            text-align: center;
+            border: 1px solid var(--rose);
+        }
+        .days { display: block; font-size: 28px; font-weight: bold; color: var(--rose); }
+
+        /* 板块盒子 */
+        .section-box {
+            margin-bottom: 25px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+        h2 { color: var(--sea-blue); cursor: pointer; display: flex; justify-content: space-between; margin-top: 0; }
+
+        /* 导航按钮 */
         .nav-group { display: flex; flex-wrap: wrap; gap: 10px; margin: 15px 0; }
-        .nav-btn { padding: 8px 15px; border-radius: 8px; border: 1px solid var(--green); background: #fff; color: var(--green); cursor: pointer; font-weight: 600; }
-        .nav-btn:hover, .nav-btn.active { background: var(--green); color: #fff; }
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--forest-green);
+            background: transparent;
+            color: var(--forest-green);
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .nav-btn:hover, .nav-btn.active { background: var(--forest-green); color: white; }
 
-        .essay-box { background: #fff; padding: 20px; border: 1px solid #eee; border-radius: 10px; line-height: 1.8; margin-top: 10px; }
-        .example-box { background: #fdf6e3; padding: 15px; border-radius: 10px; border-left: 4px solid var(--green); margin: 10px 0; }
+        /* 词语卡片：配色区分 */
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 15px; margin-top: 20px; }
+        .vocab-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .vocab-card:hover { transform: scale(1.03); }
+        .word { font-size: 24px; color: var(--forest-green); font-weight: bold; display: block; }
+        .pinyin { color: var(--sea-blue); font-size: 16px; margin-top: 5px; display: block; }
+        .meaning { color: var(--brown); font-size: 15px; display: block; margin-top: 3px; }
+
+        /* 纸张效果：用于展示例子和范文 */
+        .paper-effect {
+            background: #fffcf2; /* 纸张米黄色 */
+            padding: 25px;
+            border-radius: 5px;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.1), inset 0 0 50px rgba(0,0,0,0.02);
+            border: 1px solid #e0e0e0;
+            position: relative;
+            color: #333;
+            font-size: 17px;
+            line-height: 2;
+            margin-top: 20px;
+        }
+        .paper-effect::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 40px; bottom: 0;
+            width: 1px; background: #ffadad; /* 红色信纸线 */
+        }
+
+        .example-box { background: #e9edc9; padding: 15px; border-radius: 10px; border-left: 5px solid var(--forest-green); margin-bottom: 15px; color: var(--brown); font-weight: 500; }
         
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 14px; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background: var(--green); color: white; }
+        table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; margin-top: 15px; }
+        th, td { padding: 15px; border: 1px solid #eee; text-align: left; }
+        th { background: var(--forest-green); color: white; }
 
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; margin-top: 15px; }
-        .vocab-card { padding: 12px; background: #fff; border: 1px solid #f1f2f6; border-radius: 10px; text-align: center; cursor: pointer; }
-        .details { display: none; font-size: 13px; border-top: 1px dashed #eee; margin-top: 5px; padding-top: 5px; }
+        #data-status { font-size: 12px; color: var(--brown); text-align: center; margin-top: 30px; opacity: 0.7; }
     </style>
 </head>
 <body>
@@ -37,19 +129,20 @@
     <h1>📚 华文总复习</h1>
 
     <div class="header-box">
-        <div>卷一/二<span id="cd1" class="days">--</span>天</div>
-        <div>听力<span id="cd2" class="days">--</span>天</div>
-        <div>口试<span id="cd3" class="days">--</span>天</div>
+        <div class="cd-item">卷一/二<span id="cd1" class="days">--</span></div>
+        <div class="cd-item">听力 (7/7)<span id="cd2" class="days">--</span></div>
+        <div class="cd-item">口试 (7/13)<span id="cd3" class="days">--</span></div>
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleDiv('p1-content')">📄 卷一 写作部分 (P1)</h2>
+        <h2 onclick="toggleDiv('p1-content')">📄 卷一 写作部分 <span>▼</span></h2>
         <div id="p1-content" style="display:none;">
             <div class="nav-group">
                 <button class="nav-btn" onclick="route('q1', this)">Q1 私人电邮</button>
                 <button class="nav-btn" onclick="route('q2', this)">Q2 公务电邮</button>
                 <button class="nav-btn" onclick="route('q3', this)">Q3 记叙文</button>
                 <button class="nav-btn" onclick="route('q4', this)">Q4 议论文</button>
+                <button class="nav-btn" onclick="route('q5', this)">Q5 材料作文</button>
             </div>
             <div id="display-area"></div>
         </div>
@@ -58,19 +151,21 @@
     <div class="section-box">
         <h2 onclick="toggleDiv('vocab-content')">🏷️ 词语复习 Vocabulary</h2>
         <div id="vocab-content">
-            <select id="levelSelect" style="width:100%; padding:8px; margin-bottom:10px;">
-                <option value="ALL">🌟 所有级别</option>
+            <select id="levelSelect" style="width:100%; padding:12px; border-radius:10px; border:1px solid var(--forest-green); background: white;">
+                <option value="ALL">🌟 所有级别 (Levels 1-3)</option>
                 <option value="Level 1">Level 1</option>
                 <option value="Level 2">Level 2</option>
                 <option value="Level 3">Level 3</option>
             </select>
             <div class="nav-group">
-                <button class="nav-btn" onclick="renderVocab('random')">🎲 随机抽测</button>
-                <button class="nav-btn" onclick="renderVocab('all')">📋 词语总览</button>
+                <button class="nav-btn" onclick="renderVocab('random')">🎲 随机学词</button>
+                <button class="nav-btn" onclick="renderVocab('all')" style="background:var(--brown); color:white; border:none;">📋 词语总览 (卡片)</button>
             </div>
             <div id="vocab-display" class="vocab-grid"></div>
         </div>
     </div>
+
+    <div id="data-status">系统初始化...</div>
 </div>
 
 <script src="data.js"></script>
@@ -78,88 +173,121 @@
 <script src="data_q2.js"></script>
 <script src="data_q3.js"></script>
 <script src="data_q4.js"></script>
+<script src="data_q5.js"></script>
 
 <script>
+    // 基础显示切换
     function toggleDiv(id) {
         const el = document.getElementById(id);
         el.style.display = (el.style.display === 'none') ? 'block' : 'none';
     }
 
+    // 统一路由逻辑 (最强兼容版)
     function route(type, btn) {
         const area = document.getElementById('display-area');
         document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        if(btn) btn.classList.add('active');
 
-        if (type === 'q4') {
-            renderQ4();
+        // 特殊渲染器处理
+        if (type === 'q4') { renderQ4(); return; }
+        if (type === 'q5') { renderQ5(); return; }
+
+        // 获取动态变量 q1Data, q2Data 等
+        const data = window[type + 'Data'] || window[type.toUpperCase() + 'Data'];
+        
+        if (!data) {
+            area.innerHTML = `<div class="example-box" style="color:red">找不到变量 ${type}Data，请检查 data_${type}.js 文件。</div>`;
             return;
         }
 
-        const data = window[type + 'Data'];
-        if (!data) { area.innerHTML = "数据文件尚未加载。"; return; }
-
         if (type === 'q3') {
-            area.innerHTML = `<div class="example-box"><b>题目：</b>${data.modelEssay.title}</div><div class="essay-box">${data.modelEssay.content}</div>`;
+            area.innerHTML = `
+                <div class="example-box"><b>题目：</b>${data.modelEssay.title}</div>
+                <div class="paper-effect">${data.modelEssay.content}</div>`;
         } else {
-            area.innerHTML = (data.example || "") + (data.answer || "");
+            // Q1, Q2 通用：将内容包装进纸张效果
+            area.innerHTML = `<div class="paper-effect">${(data.example || "") + (data.answer || "")}</div>`;
         }
     }
 
-    // --- Q4 专用渲染逻辑 ---
+    // Q4 渲染器
     function renderQ4() {
         const area = document.getElementById('display-area');
         area.innerHTML = `
-            <div class="nav-group" style="background:#f9f9f9; padding:10px; border-radius:10px;">
+            <div class="nav-group" style="background:rgba(255,255,255,0.4); padding:10px; border-radius:15px;">
                 <button class="nav-btn" onclick="showQ4Part('review')">📚 总复习</button>
                 <button class="nav-btn" onclick="showQ4Part('opinion')">💡 看法类</button>
                 <button class="nav-btn" onclick="showQ4Part('suggestion')">🛠️ 建议类</button>
                 <button class="nav-btn" onclick="showQ4Part('proscons')">⚖️ 利与弊</button>
             </div>
-            <div id="q4-inner-area"></div>
-        `;
+            <div id="q4-inner"></div>`;
         showQ4Part('review');
     }
 
     function showQ4Part(part) {
         const data = q4Data[part];
-        const inner = document.getElementById('q4-inner-area');
-        
+        const inner = document.getElementById('q4-inner');
         if (part === 'review') {
-            let html = `<div class="essay-box"><h3>${data.title}</h3>`;
+            let html = `<div class="paper-effect"><h3>${data.title}</h3>`;
             data.elements.forEach(el => {
                 html += `<p><b>${el.term}：</b>${el.detail}</p>`;
                 if (el.methods) {
                     el.methods.forEach(m => {
-                        html += `
-                            <div style="border:1px solid #eee; padding:10px; margin:5px 0; border-radius:5px;">
-                                <div style="color:var(--green); font-weight:bold; cursor:pointer;" onclick="toggleNext(this)">+ ${m.name} (点击展开例子)</div>
-                                <div style="display:none; margin-top:8px;">
-                                    <div class="example-box">${m.content}</div>
-                                    <button class="nav-btn" style="font-size:11px;" onclick="toggleNext(this)">中英对照 (EN)</button>
-                                    <div style="display:none; color:#666; font-size:13px; margin-top:5px; font-style:italic;">${m.english}</div>
-                                </div>
-                            </div>`;
+                        html += `<div style="margin-left:20px; color:var(--brown)">● <i>${m.name}</i> <span style="cursor:pointer; color:var(--sea-blue)" onclick="toggleNext(this)">[点击看例子]</span>
+                                <div style="display:none; font-size:14px; background:#fff; padding:10px; border-radius:5px;">${m.content}<br><small>${m.english}</small></div></div>`;
                     });
                 }
             });
-            inner.innerHTML = html + "</div>";
+            inner.innerHTML = html + `</div>`;
         } else {
-            let html = `<div class="essay-box"><h3>${data.title}</h3><b>典型例子：</b><ul>`;
+            let html = `<div class="paper-effect"><h3>${data.title}</h3><b>典型例子：</b><ul>`;
             data.examples.forEach(ex => html += `<li>${ex}</li>`);
-            html += `</ul><table><tr><th>阶段</th><th>内容详解</th></tr>`;
-            data.framework.forEach(f => {
-                html += `<tr><td><b>${f.step}</b><br><small>${f.en}</small></td><td>${f.detail}</td></tr>`;
-            });
+            html += `</ul><table><tr><th>阶段</th><th>内容</th></tr>`;
+            data.framework.forEach(f => { html += `<tr><td><b>${f.step}</b></td><td>${f.detail}</td></tr>`; });
             inner.innerHTML = html + `</table></div>`;
         }
     }
 
-    function toggleNext(btn) {
-        const target = btn.nextElementSibling;
-        target.style.display = (target.style.display === 'none') ? 'block' : 'none';
+    // Q5 渲染器
+    function renderQ5() {
+        const area = document.getElementById('display-area');
+        const d = q5Data;
+        area.innerHTML = `
+            <div class="paper-effect">
+                <h3 style="color:var(--rose)">${d.definition.title}</h3>
+                <p>${d.definition.desc}</p>
+                <ul>${d.definition.rules.map(r => `<li>${r}</li>`).join('')}</ul>
+            </div>
+            <div class="nav-group">
+                <button class="nav-btn" onclick="showQ5Part('arg')">✍️ 议论文类</button>
+                <button class="nav-btn" onclick="showQ5Part('nar')">📖 记叙文类</button>
+            </div>
+            <div id="q5-inner"></div>`;
+        showQ5Part('arg');
     }
 
-    // --- 词语渲染逻辑 ---
+    function showQ5Part(part) {
+        const inner = document.getElementById('q5-inner');
+        if (part === 'arg') {
+            const arg = q5Data.argumentative;
+            inner.innerHTML = `<div class="paper-effect"><h4>${arg.title}</h4>${arg.stepByStep.map(s => `<p><b>${s.step}:</b> ${s.detail}</p>`).join('')}<div class="example-box"><strong>${arg.example.title}</strong><br><small>${arg.example.material}</small></div></div>`;
+        } else {
+            const nar = q5Data.narrative;
+            let html = `<div class="paper-effect"><h4>${nar.title}</h4>`;
+            nar.types.forEach(t => {
+                html += `<h5>${t.name}</h5><ul>${t.tips.map(tip => `<li>${tip}</li>`).join('')}</ul>`;
+                t.cases.forEach(c => html += `<div class="example-box"><b>题目：${c.title}</b><br>⚠️ ${c.notice}</div>`);
+            });
+            inner.innerHTML = html + `</div>`;
+        }
+    }
+
+    function toggleNext(el) {
+        const t = el.nextElementSibling;
+        t.style.display = t.style.display === 'none' ? 'block' : 'none';
+    }
+
+    // 词语卡片渲染逻辑 (带颜色区分)
     function renderVocab(mode) {
         const level = document.getElementById('levelSelect').value;
         const area = document.getElementById('vocab-display');
@@ -171,10 +299,22 @@
             const card = document.createElement('div');
             card.className = 'vocab-card';
             card.onclick = function() {
-                const d = this.querySelector('.details');
-                d.style.display = (d.style.display === 'none') ? 'block' : 'none';
+                const det = this.querySelector('.details');
+                const isH = det.style.display === 'none' || det.style.display === '';
+                det.style.display = isH ? 'block' : 'none';
+                if(isH) {
+                    window.speechSynthesis.cancel();
+                    const m = new SpeechSynthesisUtterance(item.word);
+                    m.lang = 'zh-CN';
+                    window.speechSynthesis.speak(m);
+                }
             };
-            card.innerHTML = `<b>${item.word}</b><div class="details"><div style="color:var(--orange)">${item.pinyin}</div>${item.meaning}</div>`;
+            card.innerHTML = `
+                <span class="word">${item.word}</span>
+                <div class="details" style="display:none">
+                    <span class="pinyin">${item.pinyin}</span>
+                    <span class="meaning">${item.meaning}</span>
+                </div>`;
             area.appendChild(card);
         });
     }
@@ -185,6 +325,7 @@
             const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
             document.getElementById(id).innerText = diff > 0 ? diff : 0;
         }
+        document.getElementById('data-status').innerText = "数据就绪，美术载入完毕。";
     };
 </script>
 </body>
