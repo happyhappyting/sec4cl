@@ -11,8 +11,8 @@
             --accent-blue: #4a7c96;  
             --rose-red: #e91e63;
             --paper-bg: #fdf6e3; 
-            --glass-bg: rgba(255, 255, 255, 0.85);
-            --serif-font: "STKaiti", "Kaiti SC", "Kaiti", "SimSun", "STSong", serif;
+            --glass-bg: rgba(255, 255, 255, 0.88);
+            --serif-font: "STKaiti", "Kaiti SC", "Kaiti", "SimSun", serif;
             --sans-font: "PingFang SC", "Microsoft YaHei", sans-serif;
         }
 
@@ -20,72 +20,66 @@
             font-family: var(--sans-font); 
             background: linear-gradient(135deg, #e9f0e9 0%, #dce8dc 100%);
             background-attachment: fixed;
-            padding: 15px; margin: 0; min-height: 100vh;
+            padding: 10px; margin: 0; min-height: 100vh;
         }
 
-        .container { max-width: 900px; margin: 0 auto; }
-        h1 { text-align: center; color: var(--main-green); margin: 30px 0; font-weight: 800; letter-spacing: 1px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { text-align: center; color: var(--main-green); margin: 20px 0; font-weight: 800; font-size: 1.8em; }
 
         .glass-card {
             background: var(--glass-bg);
             backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
             border: 1px solid rgba(255,255,255,0.4);
-            border-radius: 24px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.06);
-            margin-bottom: 25px;
-            overflow: hidden;
+            border-radius: 20px; box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+            margin-bottom: 15px; overflow: hidden;
         }
 
-        /* 1. 倒计时模块 (严格遵循日期) */
-        .countdown-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .countdown-box { padding: 22px; text-align: center; }
-        .cd-label { font-size: 1.1em; font-weight: bold; color: var(--main-green); margin-bottom: 5px; }
-        .days-highlight { color: var(--rose-red); font-size: 1.4em; font-weight: 900; padding: 0 4px; }
+        /* 1. 紧凑型倒计时 (横向单行) */
+        .compact-countdown {
+            display: flex; justify-content: space-around; align-items: center;
+            padding: 15px 5px; background: var(--glass-bg); font-size: 0.85em;
+        }
+        .cd-item { flex: 1; text-align: center; border-right: 1px solid #ddd; line-height: 1.4; }
+        .cd-item:last-child { border-right: none; }
+        .cd-label { color: #666; font-size: 0.9em; display: block; }
+        .days-highlight { color: var(--rose-red); font-size: 1.2em; font-weight: 900; }
 
-        .card-header { padding: 22px 28px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
-        .card-content { display: none; padding: 25px; border-top: 1px solid rgba(255,255,255,0.3); animation: fadeIn 0.4s ease; }
+        .card-header { padding: 18px 22px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
+        .card-content { display: none; padding: 20px; border-top: 1px solid rgba(0,0,0,0.05); animation: fadeIn 0.3s ease; }
         
-        .sub-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .sub-nav { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
         .sub-btn { 
-            padding: 11px 18px; border-radius: 12px; border: 1.5px solid var(--main-green); 
-            background: rgba(255,255,255,0.5); color: var(--main-green); cursor: pointer; font-size: 14px; font-weight: 600; transition: 0.3s;
+            padding: 8px 14px; border-radius: 10px; border: 1.5px solid var(--main-green); 
+            background: white; color: var(--main-green); cursor: pointer; font-size: 13px; font-weight: 600;
         }
-        .sub-btn.active, .sub-btn:hover { background: var(--main-green); color: #fff; transform: translateY(-2px); }
+        .sub-btn.active { background: var(--main-green); color: #fff; }
 
-        /* 词语复习交互区 (Dropdown) */
-        .vocab-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
-        .select-style { 
-            padding: 12px; border-radius: 12px; border: 1.5px solid var(--main-green); 
-            background: white; font-size: 15px; color: var(--main-green); outline: none; cursor: pointer;
-        }
-        .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        /* 词语复习区 */
+        .vocab-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .select-style { padding: 10px; border-radius: 10px; border: 1.5px solid var(--main-green); outline: none; }
+        .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
 
-        /* 4. 审美规范 (米黄纸张+衬线) */
+        /* 内容展示区 */
         .example-box { 
-            font-family: var(--serif-font); background: var(--paper-bg);
-            border: 1px solid #e3d9c2; padding: 25px; margin-bottom: 25px; border-radius: 18px; 
-            position: relative; line-height: 1.9; color: #5c4b37; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);
+            font-family: var(--serif-font); background: var(--paper-bg); border: 1px solid #e3d9c2; 
+            padding: 20px; margin-bottom: 20px; border-radius: 15px; position: relative; line-height: 1.8; color: #5c4b37;
         }
-        .example-box::before { content: "📌 题目例子"; position: absolute; top: -12px; left: 20px; background: var(--accent-brown); color: white; padding: 2px 10px; font-family: var(--sans-font); font-size: 0.8em; border-radius: 6px; }
+        .example-box::before { content: "📌 题目例子"; position: absolute; top: -10px; left: 15px; background: var(--accent-brown); color: white; padding: 1px 8px; font-family: var(--sans-font); font-size: 0.75em; border-radius: 4px; }
 
         .essay-box { 
-            font-family: var(--serif-font); background: rgba(255, 255, 255, 0.6); 
-            padding: 30px; border-radius: 18px; border-left: 8px solid var(--main-green); 
-            line-height: 2.4; white-space: pre-wrap; font-size: 1.2em; color: #1a1a1a;
+            font-family: var(--serif-font); background: rgba(255, 255, 255, 0.5); 
+            padding: 20px; border-radius: 15px; border-left: 5px solid var(--main-green); 
+            line-height: 2.2; white-space: pre-wrap; font-size: 1.1em;
         }
 
-        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 10px; }
         .item-card { 
-            background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255,255,255,0.4); 
-            padding: 20px; border-radius: 18px; text-align: center; cursor: pointer;
+            background: white; border: 1px solid #eee; padding: 15px; border-radius: 15px; text-align: center; cursor: pointer;
         }
-        .item-card b { font-family: var(--serif-font); font-size: 1.25em; font-weight: 500; color: var(--main-green); }
-        .item-detail { display: none; margin-top: 10px; font-size: 0.9em; color: var(--accent-blue); border-top: 1px dashed #ccc; padding-top: 10px; font-family: var(--sans-font); }
+        .item-card b { font-family: var(--serif-font); font-size: 1.15em; color: var(--main-green); }
+        .item-detail { display: none; margin-top: 8px; font-size: 0.85em; color: var(--accent-blue); border-top: 1px dashed #eee; padding-top: 8px; }
 
-        .text-brown { color: var(--accent-brown); font-weight: bold; }
-        .text-blue { color: var(--accent-blue); font-weight: bold; }
-
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
     </style>
 </head>
 <body>
@@ -93,23 +87,23 @@
 <div class="container">
     <h1>📚 华文总复习</h1>
 
-    <div class="countdown-container">
-        <div class="glass-card countdown-box">
-            <div class="cd-label">卷一 & 卷二 (6/2)</div>
-            <div>还有<span id="cd-p12" class="days-highlight">--</span>天</div>
+    <div class="glass-card compact-countdown">
+        <div class="cd-item">
+            <span class="cd-label">卷一 & 卷二 (6/2)</span>
+            还有 <span id="cd-p12" class="days-highlight">--</span> 天
         </div>
-        <div class="glass-card countdown-box">
-            <div class="cd-label">卷三 听力 (7/7)</div>
-            <div>还有<span id="cd-lc" class="days-highlight">--</span>天</div>
+        <div class="cd-item">
+            <span class="cd-label">卷三 听力 (7/7)</span>
+            还有 <span id="cd-lc" class="days-highlight">--</span> 天
         </div>
-        <div class="glass-card countdown-box">
-            <div class="cd-label">卷三 口试 (7/13)</div>
-            <div>还有<span id="cd-oc" class="days-highlight">--</span>天</div>
+        <div class="cd-item">
+            <span class="cd-label">卷三 口试 (7/13)</span>
+            还有 <span id="cd-oc" class="days-highlight">--</span> 天
         </div>
     </div>
 
     <div class="glass-card">
-        <div class="card-header" onclick="toggleMain('p1')">📄 卷一 Paper 1 <span>写作部分</span></div>
+        <div class="card-header" onclick="toggleMain('p1')">📄 卷一 写作部分 <span>点击展开/收起</span></div>
         <div id="p1" class="card-content">
             <div class="sub-nav">
                 <button class="sub-btn" onclick="route('Q1', this)">私人电邮</button>
@@ -143,14 +137,12 @@
     </div>
 </div>
 
-<script src="data.js"></script>
-<script src="data_q1.js"></script>
-<script src="data_q2.js"></script>
-<script src="data_q3.js"></script>
-<script src="data_q4.js"></script>
-<script src="data_q5.js"></script>
+<script src="data.js"></script><script src="data_q1.js"></script><script src="data_q2.js"></script>
+<script src="data_q3.js"></script><script src="data_q4.js"></script><script src="data_q5.js"></script>
 
 <script>
+    let currentActiveType = null; // 记录当前展示的题型
+
     function toggleMain(id) {
         const target = document.getElementById(id);
         const isOpen = target.style.display === "block";
@@ -158,35 +150,46 @@
         target.style.display = isOpen ? "none" : "block";
     }
 
-    // 修复：Q1/Q2/Q4/Q5 路由显示
+    // 路由展示逻辑 (含重复点击收起)
     function route(type, btn) {
-        btn.parentElement.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
         const area = document.getElementById('display-p1');
         
+        // 如果点的是已经激活的按钮，则清空并收起
+        if (currentActiveType === type) {
+            area.innerHTML = "";
+            btn.classList.remove('active');
+            currentActiveType = null;
+            return;
+        }
+
+        // 正常展开逻辑
+        btn.parentElement.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentActiveType = type;
+
         if(type === 'Q3') {
             renderQ3Menu(area);
         } else {
-            const dataKey = type.toLowerCase() + 'Data'; // 例如 q1Data
-            const data = window[dataKey];
+            const data = window[type.toLowerCase() + 'Data'];
             if(data) {
                 area.innerHTML = `
                     ${data.example ? `<div class="example-box">${data.example}</div>` : ''}
                     ${data.content ? `<div class="essay-box">${data.content}</div>` : ''}
                 `;
+            } else {
+                area.innerHTML = "<p style='padding:20px;'>暂无数据，请检查 data_q1.js 等文件是否加载。</p>";
             }
         }
     }
 
-    // Q3 深度拆解 (5板块独立)
     function renderQ3Menu(container) {
         container.innerHTML = `
-            <div class="sub-nav" style="border-top:1px dashed #ccc; padding-top:15px; margin-top:10px;">
-                <button class="sub-btn" onclick="showQ3Sub('tips', this)">💡 写作模板</button>
-                <button class="sub-btn" onclick="showQ3Sub('traits', this)">😊 性格特征</button>
-                <button class="sub-btn" onclick="showQ3Sub('emotions', this)">🔥 感情描写</button>
-                <button class="sub-btn" onclick="showQ3Sub('common', this)">📍 常用词汇</button>
-                <button class="sub-btn" onclick="showQ3Sub('essay', this)">📖 范文解析</button>
+            <div class="sub-nav" style="border-top:1px dashed #eee; padding-top:15px;">
+                <button class="sub-btn" onclick="showQ3Sub('tips', this)">💡 模板</button>
+                <button class="sub-btn" onclick="showQ3Sub('traits', this)">😊 性格</button>
+                <button class="sub-btn" onclick="showQ3Sub('emotions', this)">🔥 感情</button>
+                <button class="sub-btn" onclick="showQ3Sub('common', this)">📍 常用词</button>
+                <button class="sub-btn" onclick="showQ3Sub('essay', this)">📖 范文</button>
             </div>
             <div id="q3-inner-display"></div>`;
         showQ3Sub('tips', container.querySelector('.sub-btn'));
@@ -198,38 +201,31 @@
         btn.classList.add('active');
 
         if(subType === 'tips') {
-            let html = `<div class="essay-box"><span class="text-brown">【写作技巧】</span>\n${q3Data.strategies.examTips}\n\n`;
-            q3Data.strategies.openings.forEach(o => html += `<b class="text-brown">${o.title}</b>\n&emsp;&emsp;${o.example}\n<span class="text-blue">&emsp;&emsp;${o.case}</span>\n\n`);
-            html += `<span class="text-brown">【结尾道理】</span>\n`;
-            q3Data.strategies.conclusions.forEach(c => html += `<b class="text-brown">${c.title}</b>\n&emsp;&emsp;${c.content}\n\n`);
-            inner.innerHTML = html + "</div>";
-        } else if(subType === 'traits' || subType === 'emotions' || subType === 'common') {
+            inner.innerHTML = `<div class="essay-box">${q3Data.strategies.examTips}</div>`;
+        } else if(['traits', 'emotions', 'common'].includes(subType)) {
             let list = (subType === 'traits') ? q3Data.traits : (subType === 'emotions' ? q3Data.emotions : q3Data.commonVocab);
             inner.innerHTML = `<div class="card-grid">` + list.map(item => `
                 <div class="item-card" onclick="toggleItem(this)">
                     <b>${item.word}</b>
-                    ${item.cat ? `<br><span style="font-size:0.75em; background:var(--accent-brown); color:white; padding:2px 6px; border-radius:4px;">${item.cat}</span>` : ''}
-                    <div class="item-detail"><span class="text-blue">${item.pinyin}</span><br>${item.meaning}</div>
+                    <div class="item-detail">${item.pinyin}<br>${item.meaning}</div>
                 </div>`).join('') + `</div>`;
         } else if(subType === 'essay') {
             inner.innerHTML = `<div class="example-box"><b>${q3Data.modelEssay.title}</b></div><div class="essay-box">${q3Data.modelEssay.content}</div>`;
         }
     }
 
-    // 词语复习逻辑 (Dropdown 联动)
     function vocabAction(mode) {
         const grade = document.getElementById('grade-select').value;
         const area = document.getElementById('vocab-area');
-        let pool = (grade === 'all') ? Object.values(vocabData).flat() : (vocabData[grade] || []);
+        if(!window.vocabData) return;
         
-        if(mode === 'random') {
-            pool = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
-        }
+        let pool = (grade === 'all') ? Object.values(vocabData).flat() : (vocabData[grade] || []);
+        if(mode === 'random') pool = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
         
         area.innerHTML = pool.map(item => `
             <div class="item-card" onclick="toggleItem(this)">
                 <b>${item.word}</b>
-                <div class="item-detail"><span class="text-blue">${item.pinyin}</span><br>${item.meaning}</div>
+                <div class="item-detail">${item.pinyin}<br>${item.meaning}</div>
             </div>`).join('');
     }
 
@@ -242,7 +238,7 @@
         const dates = { 'cd-p12': '2026-06-02', 'cd-lc': '2026-07-07', 'cd-oc': '2026-07-13' };
         for(let id in dates) {
             const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000*60*60*24));
-            if(document.getElementById(id)) document.getElementById(id).innerText = diff > 0 ? diff : "0";
+            document.getElementById(id).innerText = diff > 0 ? diff : "0";
         }
     }
     window.onload = updateCountdowns;
