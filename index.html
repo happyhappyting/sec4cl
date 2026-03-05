@@ -11,7 +11,7 @@
             --accent-blue: #4a7c96;  
             --rose-red: #e91e63;
             --paper-bg: #fdf6e3; 
-            --glass-bg: rgba(255, 255, 255, 0.82);
+            --glass-bg: rgba(255, 255, 255, 0.85);
             --serif-font: "STKaiti", "Kaiti SC", "Kaiti", "SimSun", "STSong", serif;
             --sans-font: "PingFang SC", "Microsoft YaHei", sans-serif;
         }
@@ -36,22 +36,31 @@
             overflow: hidden;
         }
 
-        /* 倒计时 */
-        .countdown-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .countdown-box { padding: 20px; text-align: center; }
-        .cd-days { font-size: 2.2em; font-weight: 900; color: var(--rose-red); }
+        /* 1. 倒计时模块 (严格遵循日期) */
+        .countdown-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .countdown-box { padding: 22px; text-align: center; }
+        .cd-label { font-size: 1.1em; font-weight: bold; color: var(--main-green); margin-bottom: 5px; }
+        .days-highlight { color: var(--rose-red); font-size: 1.4em; font-weight: 900; padding: 0 4px; }
 
         .card-header { padding: 22px 28px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; font-weight: bold; }
         .card-content { display: none; padding: 25px; border-top: 1px solid rgba(255,255,255,0.3); animation: fadeIn 0.4s ease; }
         
         .sub-nav { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
         .sub-btn { 
-            padding: 10px 18px; border-radius: 12px; border: 1.5px solid var(--main-green); 
+            padding: 11px 18px; border-radius: 12px; border: 1.5px solid var(--main-green); 
             background: rgba(255,255,255,0.5); color: var(--main-green); cursor: pointer; font-size: 14px; font-weight: 600; transition: 0.3s;
         }
         .sub-btn.active, .sub-btn:hover { background: var(--main-green); color: #fff; transform: translateY(-2px); }
 
-        /* 题目例子 (米黄纸张色) */
+        /* 词语复习交互区 (Dropdown) */
+        .vocab-controls { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; }
+        .select-style { 
+            padding: 12px; border-radius: 12px; border: 1.5px solid var(--main-green); 
+            background: white; font-size: 15px; color: var(--main-green); outline: none; cursor: pointer;
+        }
+        .button-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+        /* 4. 审美规范 (米黄纸张+衬线) */
         .example-box { 
             font-family: var(--serif-font); background: var(--paper-bg);
             border: 1px solid #e3d9c2; padding: 25px; margin-bottom: 25px; border-radius: 18px; 
@@ -59,21 +68,18 @@
         }
         .example-box::before { content: "📌 题目例子"; position: absolute; top: -12px; left: 20px; background: var(--accent-brown); color: white; padding: 2px 10px; font-family: var(--sans-font); font-size: 0.8em; border-radius: 6px; }
 
-        /* 范文/模板阅读区 (中式衬线) */
         .essay-box { 
             font-family: var(--serif-font); background: rgba(255, 255, 255, 0.6); 
             padding: 30px; border-radius: 18px; border-left: 8px solid var(--main-green); 
             line-height: 2.4; white-space: pre-wrap; font-size: 1.2em; color: #1a1a1a;
         }
 
-        /* 词语网格 - 楷体/宋体 */
         .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(155px, 1fr)); gap: 12px; }
         .item-card { 
             background: rgba(255, 255, 255, 0.6); border: 1px solid rgba(255,255,255,0.4); 
-            padding: 20px; border-radius: 18px; text-align: center; cursor: pointer; transition: 0.3s;
+            padding: 20px; border-radius: 18px; text-align: center; cursor: pointer;
         }
         .item-card b { font-family: var(--serif-font); font-size: 1.25em; font-weight: 500; color: var(--main-green); }
-        .item-card:hover { transform: translateY(-4px); background: #fff; border-color: var(--accent-brown); }
         .item-detail { display: none; margin-top: 10px; font-size: 0.9em; color: var(--accent-blue); border-top: 1px dashed #ccc; padding-top: 10px; font-family: var(--sans-font); }
 
         .text-brown { color: var(--accent-brown); font-weight: bold; }
@@ -88,13 +94,22 @@
     <h1>📚 华文总复习</h1>
 
     <div class="countdown-container">
-        <div class="glass-card countdown-box"><div class="cd-days" id="cd-p1">--</div><div>卷一 写作</div></div>
-        <div class="glass-card countdown-box"><div class="cd-days" id="cd-p2">--</div><div>卷二 应用</div></div>
-        <div class="glass-card countdown-box"><div class="cd-days" id="cd-p3">--</div><div>卷三 口试</div></div>
+        <div class="glass-card countdown-box">
+            <div class="cd-label">卷一 & 卷二 (6/2)</div>
+            <div>还有<span id="cd-p12" class="days-highlight">--</span>天</div>
+        </div>
+        <div class="glass-card countdown-box">
+            <div class="cd-label">卷三 听力 (7/7)</div>
+            <div>还有<span id="cd-lc" class="days-highlight">--</span>天</div>
+        </div>
+        <div class="glass-card countdown-box">
+            <div class="cd-label">卷三 口试 (7/13)</div>
+            <div>还有<span id="cd-oc" class="days-highlight">--</span>天</div>
+        </div>
     </div>
 
     <div class="glass-card">
-        <div class="card-header" onclick="toggleMain('p1')">📄 卷一 Paper 1 <span>写作资料全集</span></div>
+        <div class="card-header" onclick="toggleMain('p1')">📄 卷一 Paper 1 <span>写作部分</span></div>
         <div id="p1" class="card-content">
             <div class="sub-nav">
                 <button class="sub-btn" onclick="route('Q1', this)">私人电邮</button>
@@ -108,23 +123,32 @@
     </div>
 
     <div class="glass-card">
-        <div class="card-header" onclick="toggleMain('vocab-section')">🏷️ 词语学习 <span>年级筛选 & 随机抽测</span></div>
+        <div class="card-header" onclick="toggleMain('vocab-section')">🏷️ 词语复习 <span>自主复习模块</span></div>
         <div id="vocab-section" class="card-content">
-            <div class="sub-nav" id="grade-nav">
-                <button class="sub-btn" onclick="filterVocab('all', this)">全部总览</button>
-                <button class="sub-btn" onclick="filterVocab('sec1', this)">中一</button>
-                <button class="sub-btn" onclick="filterVocab('sec2', this)">中二</button>
-                <button class="sub-btn" onclick="filterVocab('sec3', this)">中三</button>
-                <button class="sub-btn" onclick="filterVocab('sec4', this)">中四</button>
-                <button class="sub-btn" onclick="drawRandom()">🎲 随机抽 10 个</button>
+            <div class="vocab-controls">
+                <select id="grade-select" class="select-style">
+                    <option value="all">全部年级 (词语总览)</option>
+                    <option value="sec1">中一 (Secondary 1)</option>
+                    <option value="sec2">中二 (Secondary 2)</option>
+                    <option value="sec3">中三 (Secondary 3)</option>
+                    <option value="sec4">中四 (Secondary 4)</option>
+                </select>
+                <div class="button-row">
+                    <button class="sub-btn" onclick="vocabAction('random')">🎲 随机学词语</button>
+                    <button class="sub-btn" onclick="vocabAction('all')">📜 词语总览</button>
+                </div>
             </div>
             <div id="vocab-area" class="card-grid"></div>
         </div>
     </div>
 </div>
 
-<script src="data.js"></script><script src="data_q1.js"></script><script src="data_q2.js"></script>
-<script src="data_q3.js"></script><script src="data_q4.js"></script><script src="data_q5.js"></script>
+<script src="data.js"></script>
+<script src="data_q1.js"></script>
+<script src="data_q2.js"></script>
+<script src="data_q3.js"></script>
+<script src="data_q4.js"></script>
+<script src="data_q5.js"></script>
 
 <script>
     function toggleMain(id) {
@@ -134,21 +158,27 @@
         target.style.display = isOpen ? "none" : "block";
     }
 
+    // 修复：Q1/Q2/Q4/Q5 路由显示
     function route(type, btn) {
         btn.parentElement.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         const area = document.getElementById('display-p1');
-        if(type === 'Q3') renderQ3Menu(area);
-        else {
-            const data = window[type.toLowerCase() + 'Data'];
-            area.innerHTML = `
-                ${data.example ? `<div class="example-box">${data.example}</div>` : ''}
-                ${data.content ? `<div class="essay-box">${data.content}</div>` : ''}
-            `;
+        
+        if(type === 'Q3') {
+            renderQ3Menu(area);
+        } else {
+            const dataKey = type.toLowerCase() + 'Data'; // 例如 q1Data
+            const data = window[dataKey];
+            if(data) {
+                area.innerHTML = `
+                    ${data.example ? `<div class="example-box">${data.example}</div>` : ''}
+                    ${data.content ? `<div class="essay-box">${data.content}</div>` : ''}
+                `;
+            }
         }
     }
 
-    /* Q3 细分导航：性格与感情已拆分 */
+    // Q3 深度拆解 (5板块独立)
     function renderQ3Menu(container) {
         container.innerHTML = `
             <div class="sub-nav" style="border-top:1px dashed #ccc; padding-top:15px; margin-top:10px;">
@@ -177,7 +207,8 @@
             let list = (subType === 'traits') ? q3Data.traits : (subType === 'emotions' ? q3Data.emotions : q3Data.commonVocab);
             inner.innerHTML = `<div class="card-grid">` + list.map(item => `
                 <div class="item-card" onclick="toggleItem(this)">
-                    <b>${item.word}</b>${item.cat ? `<span style="font-size:0.7em; background:var(--accent-brown); color:white; padding:2px 5px; border-radius:4px; margin-left:5px;">${item.cat}</span>` : ''}
+                    <b>${item.word}</b>
+                    ${item.cat ? `<br><span style="font-size:0.75em; background:var(--accent-brown); color:white; padding:2px 6px; border-radius:4px;">${item.cat}</span>` : ''}
                     <div class="item-detail"><span class="text-blue">${item.pinyin}</span><br>${item.meaning}</div>
                 </div>`).join('') + `</div>`;
         } else if(subType === 'essay') {
@@ -185,21 +216,17 @@
         }
     }
 
-    /* 词语学习逻辑 */
-    function filterVocab(grade, btn) {
-        btn.parentElement.querySelectorAll('.sub-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        let list = (grade === 'all') ? Object.values(vocabData).flat() : (vocabData[grade] || []);
-        renderVocabGrid(list);
-    }
-
-    function drawRandom() {
-        const pool = Object.values(vocabData).flat();
-        renderVocabGrid([...pool].sort(() => 0.5 - Math.random()).slice(0, 10));
-    }
-
-    function renderVocabGrid(list) {
-        document.getElementById('vocab-area').innerHTML = list.map(item => `
+    // 词语复习逻辑 (Dropdown 联动)
+    function vocabAction(mode) {
+        const grade = document.getElementById('grade-select').value;
+        const area = document.getElementById('vocab-area');
+        let pool = (grade === 'all') ? Object.values(vocabData).flat() : (vocabData[grade] || []);
+        
+        if(mode === 'random') {
+            pool = [...pool].sort(() => 0.5 - Math.random()).slice(0, 10);
+        }
+        
+        area.innerHTML = pool.map(item => `
             <div class="item-card" onclick="toggleItem(this)">
                 <b>${item.word}</b>
                 <div class="item-detail"><span class="text-blue">${item.pinyin}</span><br>${item.meaning}</div>
@@ -212,13 +239,13 @@
     }
 
     function updateCountdowns() {
-        const dates = { 'cd-p1': '2026-06-02', 'cd-p2': '2026-06-05', 'cd-p3': '2026-07-10' };
+        const dates = { 'cd-p12': '2026-06-02', 'cd-lc': '2026-07-07', 'cd-oc': '2026-07-13' };
         for(let id in dates) {
             const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000*60*60*24));
             if(document.getElementById(id)) document.getElementById(id).innerText = diff > 0 ? diff : "0";
         }
     }
-    window.onload = () => { updateCountdowns(); filterVocab('all', document.querySelector('#grade-nav .sub-btn')); };
+    window.onload = updateCountdowns;
 </script>
 </body>
 </html>
