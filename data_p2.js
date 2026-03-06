@@ -13,7 +13,24 @@ const p2Data = {
         ]
     },
 
-    // 2. 修辞手法
+    // 2. 议论文 (漏掉的部分已补回)
+    argumentative: {
+        analysis: {
+            title: "议论文实例分析：《走上美好的人生路》",
+            table: [
+                { point: "1. 把握时间", evidence: "祖逖“闻鸡起舞”的故事、爱迪生珍惜时间的故事", method: "举例证明把握时间的重要性" },
+                { point: "2. 勤于奋斗", evidence: "韩愈“业精于勤，荒于嬉”、熟语“勤能补拙”", method: "引用名言证明勤于奋斗的重要性" },
+                { point: "3. 不畏艰辛", evidence: "“宝剑锋从磨砺出”、贝多芬克服困难的故事", method: "引用及举例证明不畏艰辛的重要性" }
+            ]
+        },
+        methods: [
+            { name: "举例论证法 (Example)", detail: "列举确凿事例。如：陈嘉庚、霍金、贝多芬、叶品秀克服残疾夺冠。" },
+            { name: "引用论证法 (Quote)", detail: "引用名言、俗语。如：孔子说“知之者不如好之者”、俗语“施比受更有福”。" },
+            { name: "对比论证法 (Comparison)", detail: "正反两面对比。如：弟弟勇于尝试（成功） vs 哥哥不敢冒险（平庸）。" }
+        ]
+    },
+
+    // 3. 修辞手法
     rhetoric: [
         {
             name: "比喻 (Simile)",
@@ -32,7 +49,7 @@ const p2Data = {
         }
     ],
 
-    // 3. 说明文 (Expository)
+    // 4. 说明文 (Expository)
     expository: {
         orders: [
             { type: "时间顺序 (Chronological sequence)", detail: "按先后过程。例：大熊猫的演变（800万年前 -> 现代）。" },
@@ -45,7 +62,7 @@ const p2Data = {
         ]
     },
 
-    // 4. 人物描写
+    // 5. 人物描写 (保持原始文字)
     characterPortrayal: [
         { 
             type: "外貌描写 (Appearance)", 
@@ -67,15 +84,13 @@ const p2Data = {
         },
         { 
             type: "心理描写 (Psychological activity)", 
-            effect: "表现人物的性格特征 and 思想感情。", 
+            effect: "表现人物的性格特征和思想感情。", 
             example: "我想，在这风雪之夜，母亲还要工作好几个小时，真难为她了。", 
             analysis: "表现了“我”对母亲的关切。" 
         }
     ],
 
-    // --- 以下为新加入的补充资料，一字未改 ---
-
-    // 一、综合填空 & 词语替换
+    // 6. 综合填空 & 词语替换 (一字未改)
     clozeAndReplacement: {
         cloze: {
             title: "一、综合填空（Cloze Passage）",
@@ -103,7 +118,7 @@ const p2Data = {
         }
     },
 
-    // 二、阅读理解（一）
+    // 7. 阅读理解（一） (一字未改)
     comp1: {
         title: "二、阅读理解（一）（Comprehension MCQ）",
         time: "[ Suggested time: ~ 30 min ]",
@@ -117,7 +132,7 @@ const p2Data = {
         ]
     },
 
-    // 三、阅读理解（二）
+    // 8. 阅读理解（二） (一字未改)
     comp2: {
         title: "三、阅读理解（二）（Comprehension Open ended）",
         time: "[ Suggested time: ~ 40 min ]",
@@ -146,14 +161,25 @@ const p2Data = {
         ],
         remind: "每道题都要尝试，不留空白。实在不会就抄 (copy)",
         requirementVocab: [
-            { cn: "主要内容", en: "main content" }, { cn: "信息", en: "information" }, { cn: "说明重点", en: "Main point" }, { cn: "提到", en: "mention" },
-            { cn: "目的", en: "purpose" }, { cn: "看法", en: "opinion / viewpoint" }, { cn: "表达", en: "express" },
-            { cn: "启示", en: "insight / revelation" }, { cn: "意义", en: "significance / meaning" },
-            { cn: "例子", en: "example" }, { cn: "生活经验", en: "life experience" },
-            { cn: "好处", en: "benefit / advantage" }, { cn: "挑战", en: "challenge" },
-            { cn: "原因（为什么）", en: "reason (why)" }, { cn: "发现", en: "discovery / finding" },
-            { cn: "变化", en: "change" }, { cn: "改变", en: "change" },
-            { cn: "道理", en: "moral / lesson learnt" }, { cn: "决定", en: "decision" }
+            { cn: "主要内容", en: "main content" }, 
+            { cn: "信息", en: "information" }, 
+            { cn: "说明重点", en: "Main point" }, 
+            { cn: "提到", en: "mention" },
+            { cn: "目的", en: "purpose" }, 
+            { cn: "看法", en: "opinion / viewpoint" }, 
+            { cn: "表达", en: "express" },
+            { cn: "启示", en: "insight / revelation" }, 
+            { cn: "意义", en: "significance / meaning" },
+            { cn: "例子", en: "example" }, 
+            { cn: "生活经验", en: "life experience" },
+            { cn: "好处", en: "benefit / advantage" }, 
+            { cn: "挑战", en: "challenge" },
+            { cn: "原因（为什么）", en: "reason (why)" }, 
+            { cn: "发现", en: "discovery / finding" },
+            { cn: "变化", en: "change" }, 
+            { cn: "改变", en: "change" },
+            { cn: "道理", en: "moral / lesson learnt" }, 
+            { cn: "决定", en: "decision" }
         ]
     }
 };
