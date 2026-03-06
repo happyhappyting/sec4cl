@@ -7,8 +7,9 @@
     <style>
         :root {
             --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; 
-            --rose: #e91e63; --glass: rgba(255, 255, 255, 0.8);
+            --rose: #e91e63; --glass: rgba(255, 255, 255, 0.85);
             --paper-bg: #fffcf2; --brown: #5d4037; --hl-yellow: #fff176;
+            --ink: #2c3e50;
         }
 
         body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
@@ -18,42 +19,51 @@
 
         /* 倒计时 */
         .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .cd-item { background: rgba(255, 255, 255, 0.6); padding: 15px; border-radius: 18px; text-align: center; border: 1px solid rgba(233, 30, 99, 0.1); }
+        .cd-item { background: white; padding: 15px; border-radius: 18px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .days { font-size: 28px; font-weight: bold; color: var(--rose); }
 
         /* 模块样式 */
-        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255, 255, 255, 0.4); border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.5); }
-        h2 { color: var(--sea-blue); margin: 0 0 15px 0; font-size: 1.4em; border-left: 5px solid var(--sea-blue); padding-left: 12px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        h2::after { content: '▼'; font-size: 0.6em; opacity: 0.5; }
+        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.4); border-radius: 20px; border: 1px solid rgba(255,255,255,0.6); }
+        h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
+        h2:hover { color: var(--forest-green); }
 
         /* 导航按钮 */
-        .nav-group { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 15px; }
-        .nav-btn { padding: 10px 18px; border-radius: 12px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; font-size: 15px; }
+        .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+        .nav-btn { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
         .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; }
 
-        /* 词语学习专用布局 */
-        .vocab-controls { display: flex; flex-direction: column; gap: 12px; }
-        .full-width-select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid var(--sea-blue); font-weight: bold; font-size: 16px; background: white; color: var(--sea-blue); cursor: pointer; }
-        
-        /* 内容区域默认隐藏 */
-        .content-toggle { display: none; margin-top: 15px; }
+        /* 词语学习布局 */
+        .vocab-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
+        .full-width-select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid var(--sea-blue); font-weight: bold; background: white; color: var(--sea-blue); font-size: 16px; }
+
+        /* 内容折叠 */
+        .content-toggle { display: none; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; }
         .content-toggle.show { display: block; }
 
-        /* 纸片与空格 */
-        .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 12px; box-shadow: 4px 4px 12px rgba(0,0,0,0.06); border-left: 8px solid var(--sea-blue); margin-top: 10px; overflow-x: auto; }
-        .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #555; margin: 0 5px; vertical-align: bottom; height: 1.2em; }
-        .hl-yellow { background-color: var(--hl-yellow); padding: 2px 4px; border-radius: 3px; font-weight: bold; }
-        .bold-text { font-weight: bold; color: #000; }
+        /* 核心盒子样式 */
+        .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); }
+        .example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
+        .example-box::before { content: "题目样例"; position: absolute; top: -12px; left: 15px; background: white; padding: 0 10px; font-size: 12px; color: #888; border: 1px solid #ddd; border-radius: 4px; }
+        .essay-box { background: white; padding: 18px; border-radius: 10px; border: 1px solid #eee; line-height: 2; }
+
+        /* 范文雅致格式 */
+        .model-essay-paper { background: #fffef9; padding: 40px; border: 1px solid #e0d8c3; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); position: relative; }
+        .model-essay-title { font-size: 1.2em; font-weight: bold; color: var(--brown); border-bottom: 2px solid var(--brown); padding-bottom: 10px; margin-bottom: 20px; display: block; }
+        .model-essay-content { font-size: 18px; color: #333; line-height: 2.2; text-align: justify; }
+
+        /* 文本修饰 */
+        .hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; box-shadow: 2px 2px 0 rgba(0,0,0,0.05); }
+        .bold-text { font-weight: 800; color: #000; }
+        .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #333; margin: 0 5px; vertical-align: bottom; }
 
         /* 词语卡片 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 15px; margin-top: 15px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 15px; text-align: center; cursor: pointer; border: 1px solid #eee; transition: transform 0.2s; }
-        .vocab-card:hover { transform: translateY(-3px); box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-        .word { font-size: 20px; color: var(--forest-green); font-weight: bold; }
-        .det { margin-top: 10px; border-top: 1px dashed #ccc; padding-top: 10px; font-size: 14px; }
+        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
+        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; }
+        .word { font-size: 19px; color: var(--forest-green); font-weight: bold; }
+        .det { margin-top: 8px; border-top: 1px dotted #ccc; padding-top: 8px; font-size: 13px; color: var(--brown); }
 
-        table { width: 100%; border-collapse: collapse; background: white; margin: 10px 0; }
-        th, td { border: 1px solid #eee; padding: 10px; text-align: left; font-size: 15px; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
     </style>
 </head>
 <body>
@@ -68,7 +78,7 @@
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleSection('writing-content')">📄 卷一 写作技巧</h2>
+        <h2 onclick="toggleSection('writing-content')">📄 卷一 写作技巧 <span>展开/收起</span></h2>
         <div id="writing-content" class="content-toggle">
             <div class="nav-group main-nav">
                 <button class="nav-btn" onclick="route('q1', this)">Q1 私人电邮</button>
@@ -82,7 +92,7 @@
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleSection('vocab-content')">🏷️ 词语学习</h2>
+        <h2 onclick="toggleSection('vocab-content')">🏷️ 词语学习 <span>展开/收起</span></h2>
         <div id="vocab-content" class="content-toggle">
             <div class="vocab-controls">
                 <select id="grade-select" class="full-width-select" onchange="renderVocab('all')">
@@ -92,8 +102,8 @@
                     <option value="Level 3">三年级 (Level 3)</option>
                 </select>
                 <div class="nav-group">
-                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">👁️ 学习全部词汇</button>
-                    <button class="nav-btn" style="flex:1" onclick="renderVocab('random')">🎲 随机学10词</button>
+                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">👁️ 学习全部</button>
+                    <button class="nav-btn" style="flex:1" onclick="renderVocab('random')">🎲 随机10个</button>
                 </div>
             </div>
             <div id="vocab-display" class="vocab-grid"></div>
@@ -111,14 +121,13 @@
 <script>
 "use strict";
 
-// 记录当前展开的 Q 类别，实现再次点击收起
 let currentQ = null;
 
 function toggleSection(id) {
-    const el = document.getElementById(id);
-    el.classList.toggle('show');
+    document.getElementById(id).classList.toggle('show');
 }
 
+// 格式化函数：仅处理空格，保留 HTML 标签
 function format(text) {
     if(!text) return "";
     return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
@@ -126,8 +135,6 @@ function format(text) {
 
 function route(type, btn) {
     const area = document.getElementById('display-area');
-    
-    // 如果点击的是当前已经显示的，则收起
     if (currentQ === type) {
         area.style.display = 'none';
         btn.classList.remove('active');
@@ -135,7 +142,6 @@ function route(type, btn) {
         return;
     }
 
-    // 正常展开逻辑
     area.style.display = 'block';
     document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
@@ -150,15 +156,16 @@ function route(type, btn) {
     else if (type === 'q5') renderQ5();
 }
 
-// --- 以下渲染逻辑保持你提供的 JS 结构兼容性 ---
-
+// --- Q3 记叙文逻辑 ---
 function renderQ3() {
     let html = `
         <div class="nav-group" style="margin-top:10px;">
             <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
             <button class="nav-btn" onclick="showQ3Sub('ending', this)">🎯 结尾感悟</button>
-            <button class="nav-btn" onclick="showQ3Sub('vocab', this)">📝 词库</button>
-            <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 范文</button>
+            <button class="nav-btn" onclick="showQ3Sub('traits', this)">🧠 性格词库</button>
+            <button class="nav-btn" onclick="showQ3Sub('emotions', this)">🎭 情感词库</button>
+            <button class="nav-btn" onclick="showQ3Sub('common', this)">🏢 常见词语</button>
+            <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 优雅范文</button>
         </div>
         <div id="q3-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
@@ -168,26 +175,42 @@ function renderQ3() {
 function showQ3Sub(mode, btn) {
     if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const sub = document.getElementById('q3-sub-area');
-    let h = '<div class="paper-effect">';
+    let h = '';
+
     if(mode === 'tips') {
-        h += `<b>建议：</b>${q3Data.strategies.examTips}<hr>`;
-        q3Data.strategies.openings.forEach(o => h += `<p><b>${o.title}</b><br>${format(o.example)}<br><small style="color:#666">${o.case || ""}</small></p>`);
+        h = '<div class="paper-effect"><b>💡 考场建议：</b>' + q3Data.strategies.examTips + '<hr>';
+        q3Data.strategies.openings.forEach(o => {
+            h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}<br><i style="color:#666; font-size:14px;">${o.case || ""}</i></p>`;
+        });
+        h += '</div>';
     } else if(mode === 'ending') {
-        q3Data.strategies.conclusions.forEach(c => h += `<p><b>${c.title}</b>：${c.content}</p>`);
-    } else if(mode === 'vocab') {
+        h = '<div class="paper-effect">';
+        q3Data.strategies.conclusions.forEach((c, idx) => {
+            h += `<p><b>${idx+1}. ${c.title}：</b><br><span style="display:block; margin-top:5px; color:#444;">${c.content}</span></p>`;
+        });
+        h += '</div>';
+    } else if(['traits', 'emotions', 'common'].includes(mode)) {
+        const pool = mode === 'traits' ? q3Data.traits : (mode === 'emotions' ? q3Data.emotions : q3Data.commonVocab);
         h = `<div class="vocab-grid">`;
-        [...q3Data.traits, ...q3Data.emotions].forEach(v => h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`);
+        pool.forEach(v => {
+            h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`;
+        });
         h += `</div>`;
-    } else { h += `<h3>${q3Data.modelEssay.title}</h3>${q3Data.modelEssay.content}`; }
-    sub.innerHTML = h + (mode==='vocab'?'':'</div>');
+    } else if(mode === 'essay') {
+        h = `<div class="model-essay-paper">
+                <span class="model-essay-title">${q3Data.modelEssay.title}</span>
+                <div class="model-essay-content">${format(q3Data.modelEssay.content)}</div>
+             </div>`;
+    }
+    sub.innerHTML = h;
 }
 
+// --- Q4/Q5 保持结构补全 ---
 function renderQ4() {
-    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button><button class="nav-btn" onclick="showQ4Sub('suggestion', this)">💡 建议类</button></div><div id="q4-sub-area"></div>`;
+    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button></div><div id="q4-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
     showQ4Sub('review');
 }
-
 function showQ4Sub(mode, btn) {
     if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const sub = document.getElementById('q4-sub-area');
@@ -196,7 +219,7 @@ function showQ4Sub(mode, btn) {
     if(mode === 'review') {
         d.elements.forEach(e => {
             h += `<p><b>${e.term}</b>：${e.detail}</p>`;
-            if(e.methods) e.methods.forEach(m => h += `<div style="background:#f0f0f0;padding:10px;margin:5px 0;border-radius:8px"><b>${m.name}</b>：<br>${m.content}</div>`);
+            if(e.methods) e.methods.forEach(m => h += `<div class="example-box"><b>${m.name}</b>：<br>${m.content}</div>`);
         });
     } else {
         h += `<h3>${d.title}</h3><table><tr><th>步骤</th><th>详情</th></tr>`;
@@ -211,18 +234,17 @@ function renderQ5() {
     document.getElementById('display-area').innerHTML = html;
     showQ5Sub('definition');
 }
-
 function showQ5Sub(mode, btn) {
     if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const sub = document.getElementById('q5-sub-area');
     const d = q5Data[mode];
     let h = '<div class="paper-effect">';
     if(mode === 'definition') { h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`; }
-    else { h += `<h3>${d.title}</h3><p>${format(d.example.material)}</p><hr><p>${d.example.usage}</p>`; }
+    else { h += `<h3>${d.title}</h3><div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`; }
     sub.innerHTML = h + '</div>';
 }
 
-// --- 词语学习核心逻辑 ---
+// --- 词语学习公共逻辑 ---
 function toggleCard(el, word) {
     const d = el.querySelector('.det');
     const isShowing = d.style.display === 'block';
@@ -239,19 +261,10 @@ function renderVocab(mode) {
     const lv = document.getElementById('grade-select').value;
     area.innerHTML = "";
     if(typeof vocabData === 'undefined') return;
-
     let pool = [];
     if(lv === 'all') Object.keys(vocabData).forEach(k => pool = pool.concat(vocabData[k]));
     else pool = vocabData[lv] || [];
-
-    // 关键修正：如果 pool 为空（比如 data.js 还没加载完），提示一下
-    if (pool.length === 0) {
-        area.innerHTML = "<p style='padding:20px'>⚠️ 暂无该年级词汇数据</p>";
-        return;
-    }
-
     let list = mode === 'random' ? [...pool].sort(()=>0.5-Math.random()).slice(0,10) : pool;
-    
     list.forEach(item => {
         const card = document.createElement('div');
         card.className = 'vocab-card';
