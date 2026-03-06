@@ -113,13 +113,13 @@
         <h2 onclick="toggleSection('p2-content', this)">📖 卷二 语文应用与阅读 <span class="toggle-icon">▼</span></h2>
         <div id="p2-content" class="content-toggle">
             <div class="nav-group p2-nav">
-                <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 阅读技巧</button>
+                <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 作答技巧</button>
                 <button class="nav-btn" onclick="routeP2('vocab_app', this)">✍️ 填空与替换</button>
-                <button class="nav-btn" onclick="routeP2('argument_analysis', this)">⚖️ 议论文分析</button> 
                 <button class="nav-btn" onclick="routeP2('mcq', this)">🎯 阅读(一) MCQ</button>
-                <button class="nav-btn" onclick="routeP2('open_ended', this)">📝 阅读(二) 简答</button>
+                <button class="nav-btn" onclick="routeP2('open_ended', this)">📝 阅读(二) 开放题Open-ended</button>
                 <button class="nav-btn" onclick="routeP2('rhetoric', this)">✨ 修辞手法</button>
-                <button class="nav-btn" onclick="routeP2('expository', this)">ℹ️ 说明文</button>
+                <button class="nav-btn" onclick="routeP2('argument_analysis', this)">⚖️ 议论文分析</button> 
+                <button class="nav-btn" onclick="routeP2('expository', this)">ℹ️ 说明手法</button>
                 <button class="nav-btn" onclick="routeP2('character', this)">👤 人物描写</button>
             </div>
             <div id="p2-display-area"></div>
@@ -137,7 +137,7 @@
                     <option value="Level 3">三年级 (Level 3)</option>
                 </select>
                 <div class="nav-group">
-                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">👁️ 学习全部</button>
+                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">学习全部</button>
                     <button class="nav-btn" style="flex:1" onclick="renderVocab('random')">🎲 随机10个</button>
                 </div>
             </div>
@@ -249,7 +249,11 @@ function showQ3Sub(mode, btn) {
 }
 
 function renderQ4() {
-    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button></div><div id="q4-sub-area"></div>`;
+    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
+        <button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button>
+        <button class="nav-btn" onclick="showQ4Sub('suggestion', this)">💡 建议类</button>
+        <button class="nav-btn" onclick="showQ4Sub('proscons', this)">⚖️ 利与弊</button>
+    </div><div id="q4-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
     showQ4Sub('review');
 }
