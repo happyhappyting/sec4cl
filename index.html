@@ -6,62 +6,75 @@
     <title>华文总复习</title>
     <style>
         :root {
-            --bg-color: #d8e2dc; --forest-green: #1b4332; --sea-blue: #0077b6; 
-            --rose: #e91e63; --glass: rgba(255, 255, 255, 0.85);
-            --paper-bg: #fffcf2; --brown: #5d4037; --hl-yellow: #fff176;
+            /* 已将背景颜色改成明亮的豆沙绿 */
+            --bg-color: #f0f9f4; 
+            --forest-green: #1b4332; 
+            --sea-blue: #0077b6; 
+            --rose: #e91e63; 
+            --glass: rgba(255, 255, 255, 0.9);
+            --paper-bg: #fffcf2; 
+            --brown: #5d4037; 
+            --hl-yellow: #fff176;
             --ink: #2c3e50;
         }
 
         body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
-        .container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); }
+        .container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.5); }
         
-        h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; }
+        h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; text-shadow: 1px 1px 0 rgba(255,255,255,0.8); }
 
         /* 倒计时 */
         .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .cd-item { background: white; padding: 15px; border-radius: 18px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .cd-item { background: white; padding: 15px; border-radius: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
         .days { font-size: 28px; font-weight: bold; color: var(--rose); }
 
         /* 模块样式 */
-        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.4); border-radius: 20px; border: 1px solid rgba(255,255,255,0.6); }
-        h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; }
+        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.6); border-radius: 20px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+        h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; user-select: none; }
         h2:hover { color: var(--forest-green); }
+        
+        /* 优雅的箭头样式 */
+        .toggle-icon { font-size: 0.8em; transition: transform 0.3s ease; transform: rotate(-90deg); opacity: 0.7; }
+        .toggle-icon.rotated { transform: rotate(0deg); opacity: 1; color: var(--forest-green); }
 
         /* 导航按钮 */
         .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .nav-btn { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; }
-        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; }
-
-        /* 词语学习布局 */
-        .vocab-controls { display: flex; flex-direction: column; gap: 10px; margin-bottom: 15px; }
-        .full-width-select { width: 100%; padding: 12px; border-radius: 12px; border: 2px solid var(--sea-blue); font-weight: bold; background: white; color: var(--sea-blue); font-size: 16px; }
+        .nav-btn { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; box-shadow: 0 4px 10px rgba(27,67,50,0.3); }
 
         /* 内容折叠 */
         .content-toggle { display: none; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; }
         .content-toggle.show { display: block; }
 
         /* 核心盒子样式 */
-        .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); }
+        .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); position: relative; }
+        .paper-effect::before { content: ''; position: absolute; top: 0; right: 0; border-width: 0 20px 20px 0; border-style: solid; border-color: #e6e0cf var(--bg-color) #e6e0cf var(--bg-color); display: block; width: 0; }
+        
         .example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
         .example-box::before { content: "题目样例"; position: absolute; top: -12px; left: 15px; background: white; padding: 0 10px; font-size: 12px; color: #888; border: 1px solid #ddd; border-radius: 4px; }
+        .essay-box { background: white; padding: 18px; border-radius: 10px; border: 1px solid #eee; line-height: 2; }
 
         /* 范文雅致格式 */
-        .model-essay-paper { background: #fffef9; padding: 40px; border: 1px solid #e0d8c3; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); position: relative; }
-        .model-essay-title { font-size: 1.2em; font-weight: bold; color: var(--brown); border-bottom: 2px solid var(--brown); padding-bottom: 10px; margin-bottom: 20px; display: block; }
+        .model-essay-paper { background: #fffef9; padding: 40px; border: 1px solid #e0d8c3; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+        .model-essay-paper::after { content: ''; position: absolute; bottom: -50px; right: -50px; width: 100px; height: 100px; background: rgba(93, 64, 55, 0.03); border-radius: 50%; }
+        .model-essay-title { font-size: 1.2em; font-weight: bold; color: var(--brown); border-bottom: 2px solid var(--brown); padding-bottom: 10px; margin-bottom: 20px; display: block; text-align: center; }
         .model-essay-content { font-size: 18px; color: #333; line-height: 2.2; text-align: justify; }
 
         /* 文本修饰 */
         .hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; box-shadow: 2px 2px 0 rgba(0,0,0,0.05); }
+        .bold-text { font-weight: 800; color: #000; }
         .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #333; margin: 0 5px; vertical-align: bottom; }
 
         /* 词语卡片 */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; }
+        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; box-shadow: 0 2px 5px rgba(0,0,0,0.03); transition: transform 0.2s ease, box-shadow 0.2s ease; }
+        .vocab-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
         .word { font-size: 19px; color: var(--forest-green); font-weight: bold; }
         .det { margin-top: 8px; border-top: 1px dotted #ccc; padding-top: 8px; font-size: 13px; color: var(--brown); }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+        th { background: #f8f9fa; color: var(--sea-blue); }
     </style>
 </head>
 <body>
@@ -76,7 +89,7 @@
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleSection('writing-content')">📄 卷一 写作技巧 <span>展开/收起</span></h2>
+        <h2 onclick="toggleSection('writing-content', this)">📄 卷一 写作技巧 <span class="toggle-icon">▼</span></h2>
         <div id="writing-content" class="content-toggle">
             <div class="nav-group main-nav">
                 <button class="nav-btn" onclick="route('q1', this)">Q1 私人电邮</button>
@@ -90,7 +103,7 @@
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleSection('p2-content')">📖 卷二 语文应用与阅读 <span>展开/收起</span></h2>
+        <h2 onclick="toggleSection('p2-content', this)">📖 卷二 语文应用与阅读 <span class="toggle-icon">▼</span></h2>
         <div id="p2-content" class="content-toggle">
             <div class="nav-group p2-nav">
                 <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 阅读技巧</button>
@@ -107,7 +120,7 @@
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleSection('vocab-content')">🏷️ 词语学习 <span>展开/收起</span></h2>
+        <h2 onclick="toggleSection('vocab-content', this)">🏷️ 词语学习 <span class="toggle-icon">▼</span></h2>
         <div id="vocab-content" class="content-toggle">
             <div class="vocab-controls">
                 <select id="grade-select" class="full-width-select" onchange="renderVocab('all')">
@@ -140,8 +153,18 @@
 let currentQ = null;
 let currentP2 = null;
 
-function toggleSection(id) {
+// 修改后的 toggle 函数：处理内容显示和箭头旋转
+function toggleSection(id, h2Element) {
+    // 切换内容的显示/隐藏
     document.getElementById(id).classList.toggle('show');
+    
+    // 切换箭头的旋转状态
+    if(h2Element) {
+        const icon = h2Element.querySelector('.toggle-icon');
+        if(icon) {
+            icon.classList.toggle('rotated');
+        }
+    }
 }
 
 function format(text) {
