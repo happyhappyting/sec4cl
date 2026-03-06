@@ -43,7 +43,7 @@
         /* 核心盒子样式 */
         .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); }
         .example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
-        .example-box::before { content: "备考要点/实例"; position: absolute; top: -12px; left: 15px; background: white; padding: 0 10px; font-size: 12px; color: #888; border: 1px solid #ddd; border-radius: 4px; }
+        .example-box::before { content: "资料详情"; position: absolute; top: -12px; left: 15px; background: white; padding: 0 10px; font-size: 12px; color: #888; border: 1px solid #ddd; border-radius: 4px; }
         .essay-box { background: white; padding: 18px; border-radius: 10px; border: 1px solid #eee; line-height: 2; }
 
         /* 范文雅致格式 */
@@ -64,7 +64,6 @@
 
         table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background: #f8f9fa; color: var(--sea-blue); font-weight: bold; }
     </style>
 </head>
 <body>
@@ -93,17 +92,16 @@
     </div>
 
     <div class="section-box">
-        <h2 onclick="toggleSection('p2-content')">📖 卷二 语文应用 <span>展开/收起</span></h2>
+        <h2 onclick="toggleSection('p2-content')">📖 卷二 语文应用与阅读 <span>展开/收起</span></h2>
         <div id="p2-content" class="content-toggle">
             <div class="nav-group p2-nav">
-                <button class="nav-btn" onclick="route('p2_vocab', this)">✍️ 应用与替换</button>
-                <button class="nav-btn" onclick="route('p2_mcq', this)">🎯 阅读(一) MCQ</button>
-                <button class="nav-btn" onclick="route('p2_open', this)">📝 阅读(二) 问答</button>
-                <button class="nav-btn" onclick="route('p2_argument', this)">⚖️ 议论文</button>
-                <button class="nav-btn" onclick="route('p2_rhetoric', this)">✨ 修辞手法</button>
-                <button class="nav-btn" onclick="route('p2_expository', this)">ℹ️ 说明文</button>
-                <button class="nav-btn" onclick="route('p2_character', this)">👤 人物描写</button>
-                <button class="nav-btn" onclick="route('p2_news', this)">📰 新闻结构</button>
+                <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 阅读技巧</button>
+                <button class="nav-btn" onclick="routeP2('vocab_app', this)">✍️ 填空与替换</button>
+                <button class="nav-btn" onclick="routeP2('mcq', this)">🎯 阅读(一) MCQ</button>
+                <button class="nav-btn" onclick="routeP2('open_ended', this)">📝 阅读(二) 简答</button>
+                <button class="nav-btn" onclick="routeP2('rhetoric', this)">✨ 修辞手法</button>
+                <button class="nav-btn" onclick="routeP2('expository', this)">ℹ️ 说明文</button>
+                <button class="nav-btn" onclick="routeP2('character', this)">👤 人物描写</button>
             </div>
             <div id="p2-display-area"></div>
         </div>
@@ -141,6 +139,7 @@
 "use strict";
 
 let currentQ = null;
+let currentP2 = null;
 
 function toggleSection(id) {
     document.getElementById(id).classList.toggle('show');
@@ -151,13 +150,8 @@ function format(text) {
     return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
 }
 
+// 卷一路由逻辑
 function route(type, btn) {
-    // 路由分发逻辑
-    if (type.startsWith('p2_')) {
-        renderP2Sub(type.replace('p2_', ''), btn);
-        return;
-    }
-
     const area = document.getElementById('display-area');
     if (currentQ === type) {
         area.style.display = 'none';
@@ -165,7 +159,6 @@ function route(type, btn) {
         currentQ = null;
         return;
     }
-
     area.style.display = 'block';
     document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
@@ -176,23 +169,73 @@ function route(type, btn) {
         area.innerHTML = `<div class="paper-effect"><h3>${data.title}</h3>${format(data.example)}${format(data.answer)}</div>`;
     } 
     else if (type === 'q3') renderQ3();
-    else if (type === 'q4' || type === 'q5') {
-        area.innerHTML = `<div class="paper-effect">请参考卷二对应模块中的“议论文”与“说明文”技巧，那里有您提供的最详尽分析。</div>`;
-    }
+    else if (type === 'q4') renderQ4();
+    else if (type === 'q5') renderQ5();
 }
 
-// --- Q3 逻辑 ---
+// 卷二路由逻辑 (精准照搬 p2Data)
+function routeP2(mode, btn) {
+    const area = document.getElementById('p2-display-area');
+    if (currentP2 === mode) {
+        area.style.display = 'none';
+        btn.classList.remove('active');
+        currentP2 = null;
+        return;
+    }
+    area.style.display = 'block';
+    document.querySelectorAll('.p2-nav .nav-btn').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    currentP2 = mode;
+
+    let h = '<div class="paper-effect">';
+    if(mode === 'reading_tips') {
+        const d = p2Data.readingTips;
+        h += `<h3>${d.title}</h3><p style="color:var(--rose); font-weight:bold;">${d.subtitle}</p>`;
+        d.steps.forEach(s => h += `<p><b>${s.step}</b>：${s.detail}</p>`);
+    }
+    else if(mode === 'vocab_app') {
+        const c = p2Data.clozeAndReplacement.cloze;
+        const r = p2Data.clozeAndReplacement.replacement;
+        h += `<div class="example-box"><h3>${c.title}</h3><p>${c.time}</p><p><b>题型说明：</b><br>${c.desc}</p><ul>${c.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+        h += `<div class="example-box"><h3>${r.title}</h3><p>${r.time}</p><p><b>题型说明：</b><br>${r.desc}</p><ul>${r.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
+    }
+    else if(mode === 'mcq') {
+        const d = p2Data.comp1;
+        h += `<h3>${d.title}</h3><p>${d.time}</p><p><b>题型说明：</b><br>${d.desc}</p><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul>`;
+    }
+    else if(mode === 'open_ended') {
+        const d = p2Data.comp2;
+        h += `<h3>${d.title}</h3><p>${d.time}</p><p><b>题型说明：</b><br>${d.desc}</p><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul><hr>`;
+        d.commonQuestions.forEach(q => h += `<div class="example-box"><b>问：${q.q}</b><br><b>答：</b>${q.a}</div>`);
+        h += `<p style="color:var(--rose); font-weight:bold;">${d.remind}</p><hr><h4>对照表：</h4><div class="vocab-grid">`;
+        d.requirementVocab.forEach(v => h += `<div class="vocab-card"><b>${v.cn}</b><br><small>${v.en}</small></div>`);
+        h += `</div>`;
+    }
+    else if(mode === 'rhetoric') {
+        p2Data.rhetoric.forEach(r => h += `<div class="example-box"><b>${r.name}</b><br><small>${r.desc}</small><ul>${r.examples.map(ex=>`<li>${ex}</li>`).join('')}</ul></div>`);
+    }
+    else if(mode === 'expository') {
+        h += `<h3>说明顺序</h3>` + p2Data.expository.orders.map(o=>`<p><b>${o.type}</b><br>${o.detail}</p>`).join('');
+        h += `<hr><h3>说明方法</h3>` + p2Data.expository.methods.map(m=>`<p><b>${m.name}</b><br>${m.detail}</p>`).join('');
+    }
+    else if(mode === 'character') {
+        h += `<table><tr><th>描写手法</th><th>作用</th><th>例子</th><th>分析</th></tr>`;
+        p2Data.characterPortrayal.forEach(c => h += `<tr><td><b>${c.type}</b></td><td>${c.effect}</td><td>${c.example}</td><td>${c.analysis}</td></tr>`);
+        h += `</table>`;
+    }
+    area.innerHTML = h + '</div>';
+}
+
+// Q3/Q4/Q5 逻辑 (保持你的原始分门别类用意)
 function renderQ3() {
-    let html = `
-        <div class="nav-group" style="margin-top:10px;">
-            <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
-            <button class="nav-btn" onclick="showQ3Sub('ending', this)">🎯 结尾感悟</button>
-            <button class="nav-btn" onclick="showQ3Sub('traits', this)">🧠 性格词库</button>
-            <button class="nav-btn" onclick="showQ3Sub('emotions', this)">🎭 情感词库</button>
-            <button class="nav-btn" onclick="showQ3Sub('common', this)">🏢 常见词语</button>
-            <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 优雅范文</button>
-        </div>
-        <div id="q3-sub-area"></div>`;
+    let html = `<div class="nav-group" style="margin-top:10px;">
+        <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
+        <button class="nav-btn" onclick="showQ3Sub('ending', this)">🎯 结尾感悟</button>
+        <button class="nav-btn" onclick="showQ3Sub('traits', this)">🧠 性格词库</button>
+        <button class="nav-btn" onclick="showQ3Sub('emotions', this)">🎭 情感词库</button>
+        <button class="nav-btn" onclick="showQ3Sub('common', this)">🏢 常见词语</button>
+        <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 优雅范文</button>
+    </div><div id="q3-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
     showQ3Sub('tips');
 }
@@ -201,98 +244,70 @@ function showQ3Sub(mode, btn) {
     if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const sub = document.getElementById('q3-sub-area');
     let h = '';
-
     if(mode === 'tips') {
         h = '<div class="paper-effect"><b>💡 考场建议：</b>' + q3Data.strategies.examTips + '<hr>';
-        q3Data.strategies.openings.forEach(o => {
-            h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}<br><i style="color:#666; font-size:14px;">${o.case || ""}</i></p>`;
-        });
+        q3Data.strategies.openings.forEach(o => { h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}<br><i style="color:#666; font-size:14px;">${o.case || ""}</i></p>`; });
         h += '</div>';
     } else if(mode === 'ending') {
         h = '<div class="paper-effect">';
-        q3Data.strategies.conclusions.forEach((c, idx) => {
-            h += `<p><b>${idx+1}. ${c.title}：</b><br><span style="display:block; margin-top:5px; color:#444;">${c.content}</span></p>`;
-        });
+        q3Data.strategies.conclusions.forEach((c, idx) => { h += `<p><b>${idx+1}. ${c.title}：</b><br><span style="display:block; margin-top:5px; color:#444;">${c.content}</span></p>`; });
         h += '</div>';
     } else if(['traits', 'emotions', 'common'].includes(mode)) {
         const pool = mode === 'traits' ? q3Data.traits : (mode === 'emotions' ? q3Data.emotions : q3Data.commonVocab);
         h = `<div class="vocab-grid">`;
-        pool.forEach(v => {
-            h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`;
-        });
+        pool.forEach(v => { h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`; });
         h += `</div>`;
     } else if(mode === 'essay') {
-        h = `<div class="model-essay-paper">
-                <span class="model-essay-title">${q3Data.modelEssay.title}</span>
-                <div class="model-essay-content">${format(q3Data.modelEssay.content)}</div>
-             </div>`;
+        h = `<div class="model-essay-paper"><span class="model-essay-title">${q3Data.modelEssay.title}</span><div class="model-essay-content">${format(q3Data.modelEssay.content)}</div></div>`;
     }
     sub.innerHTML = h;
 }
 
-// --- 卷二逻辑 (新增渲染函数) ---
-function renderP2Sub(mode, btn) {
-    const area = document.getElementById('p2-display-area');
-    document.querySelectorAll('.p2-nav .nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
+function renderQ4() {
+    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button><button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button></div><div id="q4-sub-area"></div>`;
+    document.getElementById('display-area').innerHTML = html;
+    showQ4Sub('review');
+}
 
+function showQ4Sub(mode, btn) {
+    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+    const sub = document.getElementById('q4-sub-area');
+    const d = q4Data[mode];
     let h = '<div class="paper-effect">';
-    if(mode === 'vocab') {
-        const c = p2Data.vocabularyApps.cloze;
-        const r = p2Data.vocabularyApps.replacement;
-        h += `<div class="example-box"><h3>${c.title}</h3><p style="color:var(--rose)">${c.time}</p><ul>${c.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-        h += `<div class="example-box"><h3>${r.title}</h3><p style="color:var(--rose)">${r.time}</p><ul>${r.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-    } 
-    else if(mode === 'mcq') {
-        const d = p2Data.comprehension1;
-        h += `<h3>${d.title}</h3><p style="color:var(--rose)">${d.time}</p><p>${d.desc}</p><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul>`;
-    }
-    else if(mode === 'open') {
-        const d = p2Data.comprehension2;
-        h += `<h3>${d.title} <small>${d.time}</small></h3><hr><h4>答题策略：</h4>`;
-        d.keyStrategies.forEach(s => h += `<p><b>${s.type}</b>：${s.content}</p>`);
-        h += `<hr><h4>常见提问解析：</h4>`;
-        d.commonQuestions.forEach(q => h += `<div class="example-box"><b>问：${q.q}</b><br><b>解析：</b>${q.a}</div>`);
-        h += `<hr><h4>关键词对照表：</h4><div class="vocab-grid">`;
-        d.requirementVocab.forEach(v => h += `<div class="vocab-card"><span style="font-size:14px">${v.cn}</span><div class="det" style="display:block;border:none;padding:0">${v.en}</div></div>`);
-        h += `</div>`;
-    }
-    else if(mode === 'argument') {
-        const d = p2Data.argumentative;
-        h += `<h3>${d.analysis.title}</h3><table><tr><th>论点</th><th>论据</th><th>论证方法</th></tr>`;
-        d.analysis.table.forEach(row => h += `<tr><td><b>${row.point}</b></td><td>${row.evidence}</td><td>${row.method}</td></tr>`);
-        h += `</table><hr><h4>论证方法详解：</h4>`;
-        d.methods.forEach(m => h += `<div class="example-box"><b>${m.name}</b>：<br>${m.detail}</div>`);
-    }
-    else if(mode === 'rhetoric') {
-        p2Data.rhetoric.forEach(r => h += `<div class="example-box"><b>${r.name}</b><br><small>${r.desc}</small><ul>${r.examples.map(ex=>`<li>${ex}</li>`).join('')}</ul></div>`);
-    }
-    else if(mode === 'expository') {
-        h += `<h3>说明顺序</h3>` + p2Data.expository.orders.map(o=>`<p><b style="color:var(--sea-blue)">${o.type}</b><br>${o.detail}</p>`).join('');
-        h += `<hr><h3>说明方法</h3>` + p2Data.expository.methods.map(m=>`<p><b style="color:var(--sea-blue)">${m.name}</b><br>${m.detail}</p>`).join('');
-    }
-    else if(mode === 'character') {
-        h += `<table><tr><th>描写手法</th><th>作用</th><th>例子</th><th>分析</th></tr>`;
-        p2Data.characterPortrayal.forEach(c => h += `<tr><td><b>${c.type}</b></td><td>${c.effect}</td><td>${c.example}</td><td>${c.analysis}</td></tr>`);
+    if(mode === 'review') {
+        d.elements.forEach(e => {
+            h += `<p><b>${e.term}</b>：${e.detail}</p>`;
+            if(e.methods) e.methods.forEach(m => h += `<div class="example-box"><b>${m.name}</b>：<br>${m.content}</div>`);
+        });
+    } else {
+        h += `<h3>${d.title}</h3><table><tr><th>步骤</th><th>详情</th></tr>`;
+        d.framework.forEach(f => h += `<tr><td><b>${f.step}</b></td><td>${f.detail}</td></tr>`);
         h += `</table>`;
     }
-    else if(mode === 'news') {
-        const d = p2Data.newsStructure;
-        h += `<h3>${d.title}</h3>`;
-        d.parts.forEach(p => h += `<p><b>${p.name}</b>：${p.content}</p>`);
-    }
-    area.innerHTML = h + '</div>';
+    sub.innerHTML = h + '</div>';
+}
+
+function renderQ5() {
+    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ5Sub('definition', this)">❓ 定义</button><button class="nav-btn" onclick="showQ5Sub('argumentative', this)">📑 议论型</button></div><div id="q5-sub-area"></div>`;
+    document.getElementById('display-area').innerHTML = html;
+    showQ5Sub('definition');
+}
+
+function showQ5Sub(mode, btn) {
+    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+    const sub = document.getElementById('q5-sub-area');
+    const d = q5Data[mode];
+    let h = '<div class="paper-effect">';
+    if(mode === 'definition') { h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`; }
+    else { h += `<h3>${d.title}</h3><div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`; }
+    sub.innerHTML = h + '</div>';
 }
 
 function toggleCard(el, word) {
     const d = el.querySelector('.det');
     const isShowing = d.style.display === 'block';
     d.style.display = isShowing ? 'none' : 'block';
-    if(!isShowing) {
-        const msg = new SpeechSynthesisUtterance(word);
-        msg.lang = "zh-CN";
-        window.speechSynthesis.speak(msg);
-    }
+    if(!isShowing) { const msg = new SpeechSynthesisUtterance(word); msg.lang = "zh-CN"; window.speechSynthesis.speak(msg); }
 }
 
 function renderVocab(mode) {
@@ -317,7 +332,8 @@ window.onload = function() {
     const dates = { cd1: '2026-06-02', cd2: '2026-07-07', cd3: '2026-07-13' };
     for (let id in dates) {
         const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
-        document.getElementById(id).innerText = diff > 0 ? diff : 0;
+        const el = document.getElementById(id);
+        if(el) el.innerText = diff > 0 ? diff : 0;
     }
 };
 </script>
