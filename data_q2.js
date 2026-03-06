@@ -16,7 +16,7 @@ const q2Data = {
             &emsp;&emsp;Describe situation with original words, and then write&emsp;&emsp;<br><br>
             &emsp;&emsp;PEEL X&emsp;&emsp;4 (Usually one issue, two areas (such as impact and suggestions) – 1 area 2 PEELs)<br><br>
             &emsp;&emsp;<span class="hl-yellow">素闻您一向从善如流，办事效率高。相信您一定会听取建议，做出改善。谢谢！</span><br><br>
-            黄海丽&emsp;&emsp;启
+            <span class="hl-yellow">黄海丽</span><span class="bold-text">&emsp;启</span>：<br>
         </div>
     `
 };
