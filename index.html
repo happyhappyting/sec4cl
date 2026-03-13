@@ -5,9 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习</title>
     <style>
-        :root 
-            /* 已将背景颜色改成明亮的豆沙绿 */
-            --bg-color: #f0f9f4; 
+        :root {
+            --bg-color: #f0f9f4; /* 明亮的豆沙绿 */
             --forest-green: #1b4332; 
             --sea-blue: #0077b6; 
             --rose: #e91e63; 
@@ -48,38 +47,19 @@
 
         /* 核心盒子样式 */
         .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); position: relative; }
-        .paper-effect::before { content: ''; position: absolute; top: 0; right: 0; border-width: 0 20px 20px 0; border-style: solid; border-color: #e6e0cf var(--bg-color) #e6e0cf var(--bg-color); display: block; width: 0; }
-        
         .example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
-        .example-box::before { content: "题目样例"; position: absolute; top: -12px; left: 15px; background: white; padding: 0 10px; font-size: 12px; color: #888; border: 1px solid #ddd; border-radius: 4px; }
-        .essay-box { background: white; padding: 18px; border-radius: 10px; border: 1px solid #eee; line-height: 2; }
-
-        /* 范文雅致格式 */
-        .model-essay-paper { background: #fffef9; padding: 40px; border: 1px solid #e0d8c3; box-shadow: 2px 2px 10px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
-        .model-essay-paper::after { content: ''; position: absolute; bottom: -50px; right: -50px; width: 100px; height: 100px; background: rgba(93, 64, 55, 0.03); border-radius: 50%; }
-        .model-essay-title { font-size: 1.2em; font-weight: bold; color: var(--brown); border-bottom: 2px solid var(--brown); padding-bottom: 10px; margin-bottom: 20px; display: block; text-align: center; }
-        .model-essay-content { font-size: 18px; color: #333; line-height: 2.2; text-align: justify; }
-
-        /* 文本修饰 */
-        .hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; box-shadow: 2px 2px 0 rgba(0,0,0,0.05); }
-        .hl-green { 
-    background: #c8e6c9; /* 柔和的浅绿背景 */
-    color: #1b5e20;       /* 深绿色文字，保证清晰度 */
-    padding: 2px 6px; 
-    border-radius: 3px; 
-    font-weight: bold; 
-}
+        
+        /* 高亮与格式 */
+        .hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+        .hl-green { background: #c8e6c9; color: #1b5e20; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
         .bold-text { font-weight: 800; color: #000; }
         .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #333; margin: 0 5px; vertical-align: bottom; }
 
         /* 词语卡片 */
         .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; box-shadow: 0 2px 5px rgba(0,0,0,0.03); transition: transform 0.2s ease, box-shadow 0.2s ease; }
-        .vocab-card:hover { transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); }
-        .word { font-size: 19px; color: var(--forest-green); font-weight: bold; }
-        .det { margin-top: 8px; border-top: 1px dotted #ccc; padding-top: 8px; font-size: 13px; color: var(--brown); }
+        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
         th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
         th { background: #f8f9fa; color: var(--sea-blue); }
     </style>
@@ -113,13 +93,13 @@
         <h2 onclick="toggleSection('p2-content', this)">📖 卷二 语文应用与阅读 <span class="toggle-icon">▼</span></h2>
         <div id="p2-content" class="content-toggle">
             <div class="nav-group p2-nav">
-                <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 作答技巧</button>
+                <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 阅读技巧</button>
                 <button class="nav-btn" onclick="routeP2('vocab_app', this)">✍️ 填空与替换</button>
-                <button class="nav-btn" onclick="routeP2('mcq', this)">🎯 阅读(一) MCQ</button>
-                <button class="nav-btn" onclick="routeP2('open_ended', this)">📝 阅读(二) 开放题Open-ended</button>
-                <button class="nav-btn" onclick="routeP2('rhetoric', this)">✨ 修辞手法</button>
                 <button class="nav-btn" onclick="routeP2('argument_analysis', this)">⚖️ 议论文分析</button> 
-                <button class="nav-btn" onclick="routeP2('expository', this)">ℹ️ 说明手法</button>
+                <button class="nav-btn" onclick="routeP2('mcq', this)">🎯 阅读(一) MCQ</button>
+                <button class="nav-btn" onclick="routeP2('open_ended', this)">📝 阅读(二) 简答</button>
+                <button class="nav-btn" onclick="routeP2('rhetoric', this)">✨ 修辞手法</button>
+                <button class="nav-btn" onclick="routeP2('expository', this)">ℹ️ 说明文</button>
                 <button class="nav-btn" onclick="routeP2('character', this)">👤 人物描写</button>
             </div>
             <div id="p2-display-area"></div>
@@ -131,14 +111,14 @@
         <div id="vocab-content" class="content-toggle">
             <div class="vocab-controls">
                 <select id="grade-select" class="full-width-select" onchange="renderVocab('all')">
-    <option value="all">所有年级 (All Levels)</option>
-    <option value="Level 1">一年级 (Level 1)</option>
-    <option value="Level 2">二年级 (Level 2)</option>
-    <option value="Level 3">三年级 (Level 3)</option>
-    <option value="Level 4">四年级 (Level 4)</option> 
-                </select></select>
+                    <option value="all">所有年级 (All Levels)</option>
+                    <option value="Level 1">一年级 (Level 1)</option>
+                    <option value="Level 2">二年级 (Level 2)</option>
+                    <option value="Level 3">三年级 (Level 3)</option>
+                    <option value="Level 4">四年级 (Level 4)</option>
+                </select>
                 <div class="nav-group">
-                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">学习全部</button>
+                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">👁️ 学习全部</button>
                     <button class="nav-btn" style="flex:1" onclick="renderVocab('random')">🎲 随机10个</button>
                 </div>
             </div>
@@ -161,17 +141,11 @@
 let currentQ = null;
 let currentP2 = null;
 
-// 修改后的 toggle 函数：处理内容显示和箭头旋转
 function toggleSection(id, h2Element) {
-    // 切换内容的显示/隐藏
     document.getElementById(id).classList.toggle('show');
-    
-    // 切换箭头的旋转状态
     if(h2Element) {
         const icon = h2Element.querySelector('.toggle-icon');
-        if(icon) {
-            icon.classList.toggle('rotated');
-        }
+        if(icon) icon.classList.toggle('rotated');
     }
 }
 
@@ -180,7 +154,6 @@ function format(text) {
     return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
 }
 
-// --- 卷一写作逻辑 ---
 function route(type, btn) {
     const area = document.getElementById('display-area');
     if (currentQ === type) {
@@ -189,7 +162,6 @@ function route(type, btn) {
         currentQ = null;
         return;
     }
-
     area.style.display = 'block';
     document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
     if(btn) btn.classList.add('active');
@@ -210,8 +182,7 @@ function renderQ3() {
         <button class="nav-btn" onclick="showQ3Sub('ending', this)">🎯 结尾感悟</button>
         <button class="nav-btn" onclick="showQ3Sub('traits', this)">🧠 性格词库</button>
         <button class="nav-btn" onclick="showQ3Sub('emotions', this)">🎭 情感词库</button>
-        <button class="nav-btn" onclick="showQ3Sub('common', this)">🏢 常见词语</button>
-        <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 范文</button>
+        <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 优雅范文</button>
     </div><div id="q3-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
     showQ3Sub('tips');
@@ -223,34 +194,26 @@ function showQ3Sub(mode, btn) {
     let h = '';
     if(mode === 'tips') {
         h = '<div class="paper-effect"><b>💡 考场建议：</b>' + q3Data.strategies.examTips + '<hr>';
-        q3Data.strategies.openings.forEach(o => {
-            h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}<br><i style="color:#666; font-size:14px;">${o.case || ""}</i></p>`;
-        });
+        q3Data.strategies.openings.forEach(o => h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}</p>`);
         h += '</div>';
     } else if(mode === 'ending') {
         h = '<div class="paper-effect">';
-        q3Data.strategies.conclusions.forEach((c, idx) => {
-            h += `<p><b>${idx+1}. ${c.title}：</b><br><span style="display:block; margin-top:5px; color:#444;">${c.content}</span></p>`;
-        });
+        q3Data.strategies.conclusions.forEach((c, idx) => h += `<p><b>${idx+1}. ${c.title}：</b><br>${c.content}</p>`);
         h += '</div>';
-    } else if(['traits', 'emotions', 'common'].includes(mode)) {
-        const pool = mode === 'traits' ? q3Data.traits : (mode === 'emotions' ? q3Data.emotions : q3Data.commonVocab);
+    } else if(['traits', 'emotions'].includes(mode)) {
+        const pool = mode === 'traits' ? q3Data.traits : q3Data.emotions;
         h = `<div class="vocab-grid">`;
-        pool.forEach(v => {
-            h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`;
-        });
+        pool.forEach(v => h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`);
         h += `</div>`;
     } else if(mode === 'essay') {
-        h = `<div class="model-essay-paper">
-                <span class="model-essay-title">${q3Data.modelEssay.title}</span>
-                <div class="model-essay-content">${format(q3Data.modelEssay.content)}</div>
-             </div>`;
+        h = `<div class="model-essay-paper"><span class="model-essay-title">${q3Data.modelEssay.title}</span><div class="model-essay-content">${format(q3Data.modelEssay.content)}</div></div>`;
     }
     sub.innerHTML = h;
 }
 
 function renderQ4() {
-    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
+    let html = `<div class="nav-group" style="margin-top:10px;">
+        <button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
         <button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button>
         <button class="nav-btn" onclick="showQ4Sub('suggestion', this)">💡 建议类</button>
         <button class="nav-btn" onclick="showQ4Sub('proscons', this)">⚖️ 利与弊</button>
@@ -264,14 +227,19 @@ function showQ4Sub(mode, btn) {
     const sub = document.getElementById('q4-sub-area');
     const d = q4Data[mode];
     let h = '<div class="paper-effect">';
+    
     if(mode === 'review') {
         d.elements.forEach(e => {
             h += `<p><b>${e.term}</b>：${e.detail}</p>`;
             if(e.methods) e.methods.forEach(m => h += `<div class="example-box"><b>${m.name}</b>：<br>${m.content}</div>`);
         });
     } else {
-        h += `<h3>${d.title}</h3><table><tr><th>步骤</th><th>详情</th></tr>`;
-        d.framework.forEach(f => h += `<tr><td><b>${f.step}</b></td><td>${f.detail}</td></tr>`);
+        h += `<h3>${d.title}</h3>`;
+        if(d.examples) h += `<p style="color:#666">常见例子：${d.examples.join(' / ')}</p>`;
+        h += `<table><tr><th>步骤</th><th>详情</th></tr>`;
+        d.framework.forEach(f => {
+            h += `<tr><td><b>${f.step}</b><br><small style="color:var(--sea-blue)">${f.en || ""}</small></td><td>${f.detail}</td></tr>`;
+        });
         h += `</table>`;
     }
     sub.innerHTML = h + '</div>';
@@ -288,12 +256,11 @@ function showQ5Sub(mode, btn) {
     const sub = document.getElementById('q5-sub-area');
     const d = q5Data[mode];
     let h = '<div class="paper-effect">';
-    if(mode === 'definition') { h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`; }
-    else { h += `<h3>${d.title}</h3><div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`; }
+    if(mode === 'definition') h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
+    else h += `<h3>${d.title}</h3><div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`;
     sub.innerHTML = h + '</div>';
 }
 
-// --- 卷二逻辑 ---
 function routeP2(mode, btn) {
     const area = document.getElementById('p2-display-area');
     if (currentP2 === mode) {
@@ -308,73 +275,39 @@ function routeP2(mode, btn) {
     currentP2 = mode;
 
     let h = '<div class="paper-effect">';
-    
     if(mode === 'reading_tips') {
         const d = p2Data.readingTips;
         h += `<h3>${d.title}</h3><p style="color:var(--rose); font-weight:bold;">${d.subtitle}</p>`;
         d.steps.forEach(s => h += `<p><b>${s.step}</b>：${s.detail}</p>`);
-    }
-    else if(mode === 'vocab_app') {
+    } else if(mode === 'vocab_app') {
         const c = p2Data.clozeAndReplacement.cloze;
         const r = p2Data.clozeAndReplacement.replacement;
-        h += `<div class="example-box"><h3>${c.title}</h3><p>${c.time}</p><p><b>题型说明：</b><br>${c.desc}</p><ul>${c.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-        h += `<div class="example-box"><h3>${r.title}</h3><p>${r.time}</p><p><b>题型说明：</b><br>${r.desc}</p><ul>${r.tips.map(t=>`<li>${t}</li>`).join('')}</ul></div>`;
-    }
-    else if(mode === 'argument_analysis') {
+        h += `<div class="example-box"><h3>${c.title}</h3><p><b>说明：</b>${c.desc}</p></div>`;
+        h += `<div class="example-box"><h3>${r.title}</h3><p><b>说明：</b>${r.desc}</p></div>`;
+    } else if(mode === 'argument_analysis') {
         const d = p2Data.argumentative;
         h += `<h3>${d.analysis.title}</h3>`;
-        d.analysis.table.forEach(item => {
-            h += `<div class="example-box">
-                    <b style="color:var(--sea-blue)">论点：${item.point}</b><br>
-                    <b>论据：</b>${item.evidence}<br>
-                    <b>论证方法：</b>${item.method}
-                  </div>`;
-        });
-        h += `<hr><h4>常用论证方法：</h4>`;
-        d.methods.forEach(m => h += `<p><b>${m.name}</b>：<br>${m.detail}</p>`);
-    }
-    else if(mode === 'mcq') {
-        const d = p2Data.comp1;
-        h += `<h3>${d.title}</h3><p>${d.time}</p><p><b>题型说明：</b><br>${d.desc}</p><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul>`;
-    }
-    else if(mode === 'open_ended') {
+        d.analysis.table.forEach(item => h += `<div class="example-box"><b>论点：</b>${item.point}<br><b>方法：</b>${item.method}</div>`);
+    } else if(mode === 'open_ended') {
         const d = p2Data.comp2;
-        h += `<h3>${d.title}</h3><p>${d.time}</p><p><b>题型说明：</b><br>${d.desc}</p><ul>${d.tips.map(t=>`<li>${t}</li>`).join('')}</ul><hr>`;
-        d.commonQuestions.forEach(q => h += `<div class="example-box"><b>问：${q.q}</b><br><b>答：</b>${q.a}</div>`);
-        h += `<p style="color:var(--rose); font-weight:bold;">${d.remind}</p><hr><h4>常见提问词语对照表：</h4><div class="vocab-grid">`;
-        d.requirementVocab.forEach(v => {
-            h += `<div class="vocab-card" style="padding:10px;">
-                    <b style="font-size:16px;">${v.cn}</b><br>
-                    <small style="color:var(--brown)">${v.en}</small>
-                  </div>`;
-        });
+        h += `<h3>${d.title}</h3><hr><h4>提问词对照表：</h4><div class="vocab-grid">`;
+        d.requirementVocab.forEach(v => h += `<div class="vocab-card" style="padding:10px;"><b style="font-size:16px;">${v.cn}</b><br><small style="color:var(--brown)">${v.en}</small></div>`);
         h += `</div>`;
-    }
-    else if(mode === 'rhetoric') {
-        p2Data.rhetoric.forEach(r => h += `<div class="example-box"><b>${r.name}</b><br><small>${r.desc}</small><ul>${r.examples.map(ex=>`<li>${ex}</li>`).join('')}</ul></div>`);
-    }
-    else if(mode === 'expository') {
-        h += `<h3>说明顺序</h3>` + p2Data.expository.orders.map(o=>`<p><b>${o.type}</b><br>${o.detail}</p>`).join('');
-        h += `<hr><h3>说明方法</h3>` + p2Data.expository.methods.map(m=>`<p><b>${m.name}</b><br>${m.detail}</p>`).join('');
-    }
-    else if(mode === 'character') {
-        h += `<h3>人物描写手法</h3><p style="font-size:14px; color:#666;">(点击下方卡片查看分析)</p>`;
-        p2Data.characterPortrayal.forEach((c, index) => {
-            h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="this.querySelector('.det').style.display = (this.querySelector('.det').style.display === 'none' ? 'block' : 'none')">
+    } else if(mode === 'character') {
+        h += `<h3>人物描写手法</h3>`;
+        p2Data.characterPortrayal.forEach(c => {
+            h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); d.style.display=(d.style.display==='none'?'block':'none')">
                     <span class="word">${c.type}</span>
                     <div class="det" style="display:none; border-top:1px dashed #ccc; margin-top:8px; padding-top:8px;">
                         <p><b>作用：</b>${c.effect}</p>
                         <p><b>例子：</b><i>${c.example}</i></p>
-                        <p><b>分析：</b><span class="hl-yellow">${c.analysis}</span></p>
                     </div>
                   </div>`;
         });
     }
-
     area.innerHTML = h + '</div>';
 }
 
-// --- 词语学习逻辑 ---
 function toggleCard(el, word) {
     const d = el.querySelector('.det');
     const isShowing = d.style.display === 'block';
