@@ -1,5 +1,5 @@
 const q4Data = {
-    // 1. 什么是如何类？
+    // 1. 如何类议论文（讲义内容）
     intro: `
         <div class="example-box" style="border-left: 5px solid var(--sea-blue); margin-top: 10px;">
             <h3 style="margin-top:0">什么是“如何类”议论文？</h3>
@@ -12,7 +12,7 @@ const q4Data = {
         </div>
     `,
 
-    // 2. 常用解决方法词汇
+    // 常用解决方法词汇
     solutions: [
         { cat: "教育宣传类", word: "张贴海报", en: "Put up posters", usage: "在学校张贴海报宣传……" },
         { cat: "教育宣传类", word: "播放广告", en: "Play advertisements", usage: "在电视台播放广告提醒人们……" },
@@ -23,7 +23,7 @@ const q4Data = {
         { cat: "社区参与类", word: "社区服务", en: "Community service", usage: "通过社区服务帮助老人……" }
     ],
 
-    // 3. 连接词
+    // 连接词
     connectors: [
         { word: "首先", en: "Firstly", usage: "首先，青少年可以……" },
         { word: "其次", en: "Secondly", usage: "其次，我们也可以……" },
@@ -33,7 +33,7 @@ const q4Data = {
         { word: "总而言之", en: "In conclusion", usage: "总而言之，多方合作才能解决问题。" }
     ],
 
-    // 4. 题目范例大纲
+    // 题目范例大纲
     outlines: [
         {
             title: "题目范例 1：如何让国人养宠物时具备责任心？",
@@ -53,13 +53,29 @@ const q4Data = {
                 <b>论点三（社会/贡献）：</b>鼓励身体健康的乐龄人士担任义工或参与兼职工作，让他们在发挥余热中获得成就感。<br>
                 <b>结尾：</b>总而言之，社会各界应共同努力，让乐龄人士拥有一个老有所乐、生活充实的晚年。`
         }
+    ],
+
+    // 其他议论文类型
+    otherTypes: [
+        {
+            title: "看法类：用例子证明观点",
+            examples: "新加坡青少年是草莓族吗？ / 新加坡社会充满爱心吗？",
+            steps: ["1. 立场+分析题目 (State Stand)", "2. 结合社会现象 (Background)", "3. 论点 PEEL 展开", "4. 总结扣题 (Summary)"]
+        },
+        {
+            title: "利与弊类：双向辩证分析",
+            examples: "AI辅助学习的利与弊 / 社交媒体分享生活的利与弊",
+            steps: ["1. 背景引出 (双刃剑)", "2. 利点 (Pros)", "3. 弊点 (Cons)", "4. 权衡立场与建议"]
+        }
     ]
 };
 
 function renderQ4(container) {
+    if(!container) return;
+    
+    // 1. 渲染如何类核心内容
     let html = q4Data.intro;
 
-    // 1. 渲染常用解决方法
     html += `<h4 style="color:var(--sea-blue); margin-bottom:10px;">🛠️ 常用解决方法与词汇</h4>`;
     html += `<div class="vocab-grid">`;
     q4Data.solutions.forEach(s => {
@@ -74,7 +90,6 @@ function renderQ4(container) {
     });
     html += `</div>`;
 
-    // 2. 渲染连接词
     html += `<h4 style="color:var(--sea-blue); margin-top:25px; margin-bottom:10px;">🔗 议论文常用连接词</h4>`;
     html += `<div class="vocab-grid">`;
     q4Data.connectors.forEach(c => {
@@ -89,8 +104,7 @@ function renderQ4(container) {
     });
     html += `</div>`;
 
-    // 3. 渲染题目范例大纲
-    html += `<h4 style="color:var(--sea-blue); margin-top:25px; margin-bottom:10px;">📝 题目范例大纲 (点击查看大纲)</h4>`;
+    html += `<h4 style="color:var(--sea-blue); margin-top:25px; margin-bottom:10px;">📝 题目范例大纲 (点击查看)</h4>`;
     q4Data.outlines.forEach(o => {
         html += `
             <div class="example-box" style="cursor:pointer; margin-bottom:10px; background:#fffcf0" onclick="const d=this.querySelector('.outline-det'); d.style.display=d.style.display==='none'?'block':'none'">
@@ -98,6 +112,19 @@ function renderQ4(container) {
                 <div class="outline-det" style="display:none; margin-top:10px; font-size:14px; line-height:1.6; border-top:1px dashed #ccc; padding-top:10px;">
                     ${o.content}
                 </div>
+            </div>`;
+    });
+
+    // 2. 渲染其他类型作为补充
+    html += `<hr style="margin: 30px 0;">`;
+    q4Data.otherTypes.forEach(t => {
+        html += `
+            <div class="essay-box" style="margin-bottom:15px;">
+                <b style="color:var(--sea-blue)">${t.title}</b><br>
+                <small>例子：${t.examples}</small>
+                <ul style="margin-top:5px; font-size:13px; color:#666;">
+                    ${t.steps.map(s => `<li>${s}</li>`).join('')}
+                </ul>
             </div>`;
     });
 
