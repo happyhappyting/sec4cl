@@ -3,24 +3,24 @@ const q1Data = {
     example: `
         <div class="example-box">
             <span class="bold-text">主题</span>：提供建议<br>
-            美好：<br>
+            <span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">美好</span>：<br>
             &emsp;&emsp;你好，好久不见。…………………………<br>
             &emsp;&emsp;<span class="bold-text">祝好！</span><br>
-            快乐
+            <span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">快乐</span>
         </div>
     `,
     answer: `
         <div class="essay-box">
             <span class="bold-text">主题</span>：<span class="hl-yellow">回复：</span><span class="bold-text">提供建议</span><br>
-            快乐：<br>
-            &emsp;&emsp;好久不见，我最近还好。我今天写电邮的目的是为了谈谈＿＿＿＿＿。<br><br>
+            <span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">快乐</span>：<br>
+            &emsp;&emsp;<span style="color: #003366; font-weight: 800;">好久不见，我最近还好。我今天写电邮的目的是为了谈谈</span><span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">＿＿具体目的＿＿</span><span style="color: #003366; font-weight: 800;">。(Memorise)</span><br><br>
             &emsp;&emsp;<span class="hl-yellow">PEEL X&emsp;&emsp;4</span> (Usually one issue, two areas – 1 area 2 PEELs)<br><br>
-            &emsp;&emsp;时间不早了，我该停笔了。希望早日收到你的回复。<br>
+            &emsp;&emsp;<span style="color: #003366; font-weight: 800;">时间不早了，我该停笔了。希望早日收到你的回复。(Memorise)</span><br>
             &emsp;&emsp;<span class="bold-text">祝好！</span><br>
-            美好
+            <span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">美好</span>
         </div>
         
-        <h4 style="color:var(--sea-blue); margin-top:20px;">💡 常用方法（点击查看）：</h4>
+        <h4 style="color:var(--sea-blue); margin-top:20px;">💡 建议类常用方法（点击查看）：</h4>
         <div class="vocab-grid">
             <div class="vocab-card" onclick="toggleCard(this, '张贴海报')">
                 <span class="word" style="font-size:15px">张贴海报</span>
@@ -50,7 +50,6 @@ const q1Data = {
     `
 };
 
-// 保持这个空的或者简单的渲染函数，防止 index.html 调用报错
 function renderQ1(container) {
     if(container) container.innerHTML = q1Data.example + q1Data.answer;
 }
