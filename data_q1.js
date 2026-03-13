@@ -19,39 +19,38 @@ const q1Data = {
             &emsp;&emsp;<span class="bold-text">祝好！</span><br>
             美好
         </div>
-    `,
-    methods: [
-        { word: "张贴海报", pinyin: "zhāngtiē hǎibào", meaning: "put up posters" },
-        { word: "在德育课上教导学生", pinyin: "zài déyù kè shàng jiàodǎo xuéshēng", meaning: "teach students during CCE lessons" },
-        { word: "让父母以身作则", pinyin: "ràng fùmǔ yǐshēn-zuòzé", meaning: "let parents lead by example" },
-        { word: "做好榜样", pinyin: "zuò hǎo bǎngyàng", meaning: "set a good example" },
-        { word: "在早会时说明", pinyin: "zài zǎohuì shí shuōmíng", meaning: "explain during morning assembly" },
-        { word: "听讲座", pinyin: "tīng jiǎngzuò", meaning: "attend a talk/seminar" }
-    ]
+        
+        <h4 style="color:var(--sea-blue); margin-top:20px;">💡 常用方法（点击查看）：</h4>
+        <div class="vocab-grid">
+            <div class="vocab-card" onclick="toggleCard(this, '张贴海报')">
+                <span class="word" style="font-size:15px">张贴海报</span>
+                <div class="det" style="display:none"><i>zhāngtiē hǎibào</i><br><b>put up posters</b></div>
+            </div>
+            <div class="vocab-card" onclick="toggleCard(this, '在德育课上教导学生')">
+                <span class="word" style="font-size:15px">在德育课上教导学生</span>
+                <div class="det" style="display:none"><i>zài déyù kè shàng jiàodǎo xuéshēng</i><br><b>teach students during CCE lessons</b></div>
+            </div>
+            <div class="vocab-card" onclick="toggleCard(this, '让父母以身作则')">
+                <span class="word" style="font-size:15px">让父母以身作则</span>
+                <div class="det" style="display:none"><i>ràng fùmǔ yǐshēn-zuòzé</i><br><b>let parents lead by example</b></div>
+            </div>
+            <div class="vocab-card" onclick="toggleCard(this, '做好榜样')">
+                <span class="word" style="font-size:15px">做好榜样</span>
+                <div class="det" style="display:none"><i>zuò hǎo bǎngyàng</i><br><b>set a good example</b></div>
+            </div>
+            <div class="vocab-card" onclick="toggleCard(this, '在早会时说明')">
+                <span class="word" style="font-size:15px">在早会时说明</span>
+                <div class="det" style="display:none"><i>zài zǎohuì shí shuōmíng</i><br><b>explain during morning assembly</b></div>
+            </div>
+            <div class="vocab-card" onclick="toggleCard(this, '听讲座')">
+                <span class="word" style="font-size:15px">听讲座</span>
+                <div class="det" style="display:none"><i>tīng jiǎngzuò</i><br><b>attend a talk/seminar</b></div>
+            </div>
+        </div>
+    `
 };
 
-// 这里的渲染逻辑由 index.html 调用，不改 HTML 结构
+// 保持这个空的或者简单的渲染函数，防止 index.html 调用报错
 function renderQ1(container) {
-    // 1. 先放原本的例子和模板
-    let fullHtml = q1Data.example + q1Data.answer;
-    
-    // 2. 加上标题
-    fullHtml += `<h4 style="color:var(--sea-blue); margin: 20px 0 10px 0;">💡 建议类常用方法：</h4>`;
-    
-    // 3. 生成方法按钮网格
-    fullHtml += '<div class="vocab-grid">';
-    q1Data.methods.forEach(m => {
-        fullHtml += `
-            <div class="vocab-card" onclick="toggleCard(this, '${m.word}')">
-                <span class="word" style="font-size: 15px;">${m.word}</span>
-                <div class="det" style="display:none">
-                    <i>${m.pinyin}</i><br>
-                    <b>${m.meaning}</b>
-                </div>
-            </div>`;
-    });
-    fullHtml += '</div>';
-
-    // 4. 一次性注入容器
-    container.innerHTML = fullHtml;
+    if(container) container.innerHTML = q1Data.example + q1Data.answer;
 }
