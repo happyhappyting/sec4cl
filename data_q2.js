@@ -1,54 +1,163 @@
-const q2Data = {
-    title: "Q2 公务电邮 (Formal Email)",
-    // 题目例子框
-    example: `
-        <div class="example-box">
-            你看到一张海报，内容是鼓励青少年到全善课后托管中心当义工。义工的职责是为那里的小学生策划并主办课后与假期活动。你认为你学校的学生应该积极响应，在空闲的时候去那里当义工。<br><br>
-            假设你是<span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">黄海丽</span>，给负责学生理事会的<span class="hl-yellow">王</span>美云<span class="hl-green" style="color: #2e7d32; font-weight: bold;">老师</span>写一则电邮，<span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">请她协助鼓励学生到全善课后托管中心当义工</span>。<span class="bold-text">你在电邮中要说明学生可以做出的贡献，以及他们会得到的收获。</span>
-        </div>
-    `,
-    // 你的回答框
-    answer: `
-        <div class="essay-box">
-            <span class="bold-text">主题</span>：Compose your own subject based on purpose (E.G. <span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">请协助鼓励学生到全善课后托管中心当义工</span>)<br><br>
-            <span class="hl-yellow">王</span><span class="hl-green">老师</span>：<br>
-            &emsp;&emsp;<span style="color: #003366; font-weight: 800;">您好，本人是XX的顾客／XX区的居民／XX学校的学生。本人今天写电邮的目的是为了谈谈</span><span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">＿＿COPY SUBJECT＿＿</span><span style="color: #003366; font-weight: 800;">。(Memorise)</span><br><br>
-            &emsp;&emsp;Describe situation with original words, and then write&emsp;&emsp;<br><br>
-            &emsp;&emsp;PEEL X&emsp;4 (Usually one issue, two areas (such as impact and suggestions) – 1 area 2 PEELs)<br><br>
-            &emsp;&emsp;<span style="color: #003366; font-weight: 800;">素闻您一向从善如流，办事效率高。相信您一定会听取建议，做出改善。谢谢！(Memorise)</span><br><br>
-            <span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">黄海丽</span><span class="bold-text">&emsp;启</span>
-        </div>
+const q4Data = {
+    // 1. 复习部分 (论证法)
+    review: {
+        title: "议论文三要素",
+        elements: [
+            { term: "论点 (Point)", detail: "对议论对象（人物、事件或道理）的观点。" },
+            { term: "论据 (Evidence)", detail: "用来证明论点的理据。" },
+            { 
+                term: "论证 (Proving Method)", 
+                detail: "用论据来证明论点的过程。",
+                methods: [
+                    {
+                        name: "举例论证法",
+                        content: "天才来自于勤奋。爱迪生一生有一千多项发明。他为了发明电灯，阅读了大量资料，光笔记就有四万多页。他试过几千种物质，做了几万次实验，才最终发明了电灯。",
+                        english: "Genius comes from diligence. Edison had over a thousand inventions in his life. To invent the light bulb, he read a vast amount of material, with notes alone exceeding 40,000 pages."
+                    },
+                    {
+                        name: "引用论证法",
+                        content: "著名文学家蒲松龄曾说过：“有志者事竟成，苦心人天不负。”",
+                        english: "The famous writer Pu Songling once said: 'Where there is a will, there is a way...'"
+                    },
+                    {
+                        name: "对比论证法",
+                        content: "挪威政府将石油利润转化为社会保障基金（正面）；反之，秦朝统治者严刑峻法导致覆灭（反面）。",
+                        english: "Norway's wise resource management vs. Qin Dynasty's harsh rule."
+                    }
+                ]
+            }
+        ]
+    },
 
-        <h4 style="color:var(--sea-blue); margin-top:20px;">💡 建议类常用方法（点击查看）：</h4>
-        <div class="vocab-grid">
-            <div class="vocab-card" onclick="toggleCard(this, '张贴海报')">
-                <span class="word" style="font-size:15px">张贴海报</span>
-                <div class="det" style="display:none"><i>zhāngtiē hǎibào</i><br><b>put up posters</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '让义工巡查/提醒')">
-                <span class="word" style="font-size:15px">让义工巡查/提醒</span>
-                <div class="det" style="display:none"><i>ràng yìgōng xúnchá / tíxǐng</i><br><b>let volunteers patrol / remind others</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '加重惩罚（罚款/坐牢）')">
-                <span class="word" style="font-size:15px">加重惩罚（罚款/坐牢）</span>
-                <div class="det" style="display:none"><i>jiāzhòng chéngfá (fákuǎn / zuòláo)</i><br><b>impose heavier penalties (fine/jail)</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, 'XX日（XX=活动主题，比如家庭日）')">
-                <span class="word" style="font-size:15px">XX日（XX=活动主题，比如家庭日）</span>
-                <div class="det" style="display:none"><i>XX rì (XX=huódòng zhǔtí, bǐrú jiātíng rì)</i><br><b>XX Day (e.g. Family Day)</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '举办活动/工作坊/讲座')">
-                <span class="word" style="font-size:15px">举办活动/工作坊/讲座</span>
-                <div class="det" style="display:none"><i>jǔbàn huódòng / gōngzuòfǎng / jiǎngzuò</i><br><b>organize activities / workshops / talks</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '选出XX大使（XX=要达成的目的，比如环保大使、亲善大使）')">
-                <span class="word" style="font-size:15px">选出XX大使（XX=要达成的目的，比如环保大使、亲善大使）</span>
-                <div class="det" style="display:none"><i>xuǎnchū XX dàshǐ (XX=yào dáchéng de mùdì, bǐrú huánbǎo dàshǐ, qīnshàn dàshǐ)</i><br><b>appoint XX Ambassador</b></div>
-            </div>
-        </div>
-    `
+    // 2. 看法类 (完整保留)
+    opinion: {
+        title: "看法类：用例子证明你的观点",
+        examples: [
+            "有人说：新加坡青少年是草莓族，经不起考验。你同意吗？",
+            "新加坡社会充满爱心。你同意吗？为什么？"
+        ],
+        framework: [
+            { step: "1.立场+分析题目", en: "State stand + Analyse", detail: "有人认为：……。对我而言，我同意/不同意这个说法。+ 提出问题/下定义definition。" },
+            { step: "2.结合社会现象", en: "Background info", detail: "我们不难发现，目前社会上…… 有人认为…… 因此我认为（立场）。" },
+            { step: "3.论点 1/2/3", en: "Points P.E.E.L", detail: "首先/其次/再者、（论点P，解释E，例如E。因此，L。）" },
+            { step: "4.总结扣题", en: "Summary", detail: "总结全文，呼应call back to立场，未来展望future prospect。" }
+        ]
+    },
+
+    // 3. 建议类 (这里融入你最新的“如何类”讲义全部内容)
+    suggestion: {
+        title: "建议类 (如何类)：针对问题提出对策",
+        intro: `
+            <div class="example-box" style="border-left: 5px solid var(--sea-blue);">
+                <h3 style="margin-top:0">什么是“如何类”议论文？</h3>
+                <p>这是一类以 <span class="hl-yellow">解决问题 (problem-solving)</span> 或 <span class="hl-yellow">提出步骤方法 (step-by-step methods)</span> 为核心的议论文。</p>
+                <p>它不仅要分析问题 (analyze the issue)，还要给出具体的建议 (suggestions)。</p>
+            </div>`,
+        vocabTitle: `<h4 style="color:var(--sea-blue); margin-top:20px;">🛠️ 常用解决方法与词汇</h4>`,
+        solutions: [
+            { cat: "教育宣传类", word: "张贴海报", en: "Put up posters", usage: "在学校张贴海报宣传……" },
+            { cat: "教育宣传类", word: "播放广告", en: "Play advertisements", usage: "在电视台播放广告提醒人们……" },
+            { cat: "教育宣传类", word: "举办讲座", en: "Organize talks", usage: "学校可以举办讲座教同学们……" },
+            { cat: "教育宣传类", word: "德育课", en: "CCE", usage: "通过德育课教学生……" },
+            { cat: "社区参与类", word: "民众俱乐部活动", en: "Community club activities", usage: "民众俱乐部可以办活动……" },
+            { cat: "社区参与类", word: "义工活动", en: "Volunteer work", usage: "鼓励学生参与义工活动……" },
+            { cat: "社区参与类", word: "社区服务", en: "Community service", usage: "通过社区服务帮助老人……" }
+        ],
+        outlines: [
+            {
+                title: "📝 题目范例 1：如何让国人养宠物时具备责任心？",
+                content: "<b>开头：</b>养宠物是长期承诺...<br><b>论点：</b>培训课程、生命教育、加强执法...<br><b>结尾：</b>教育与法律双管齐下。"
+            },
+            {
+                title: "📝 题目范例 2：如何让乐龄人士的生活更加充实？",
+                content: "<b>开头：</b>老龄化社会课题...<br><b>论点：</b>兴趣班、家人陪伴、参与义工...<br><b>结尾：</b>老有所乐。"
+            }
+        ]
+    },
+
+    // 4. 利与弊类 (完整保留)
+    proscons: {
+        title: "利与弊类：双向辩证分析",
+        examples: ["青少年使用人工智能(AI)辅助学习的利弊", "在社交媒体分享生活的利与弊"],
+        framework: [
+            { step: "1.背景引出", en: "Background", detail: "介绍该现象的兴起。指出这就像一把“双刃剑”，有利也有弊。" },
+            { step: "2.利点 (Pros)", en: "Advantages", detail: "分析正面积极影响。例如：人工智能提高资料整合效率。" },
+            { step: "3.弊点 (Cons)", en: "Disadvantages", detail: "分析潜在负面危害。例如：导致丧失独立思考能力。" },
+            { step: "4.权衡立场", en: "Evaluation / Stand", detail: "我认为利大于弊。关键在于如何正确使用。" }
+        ]
+    },
+
+    // 5. 通用连接词
+    connectors: [
+        { word: "首先", en: "Firstly", usage: "首先，青少年可以……" },
+        { word: "其次", en: "Secondly", usage: "其次，我们也可以……" },
+        { word: "此外", en: "Moreover", usage: "此外，我们还可以……" },
+        { word: "例如", en: "For example", usage: "例如，政府可以制定政策..." },
+        { word: "相比之下", en: "In comparison", usage: "相比之下，教育比惩罚更有效..." },
+        { word: "总而言之", en: "In conclusion", usage: "总而言之，多方合作解决问题。" }
+    ]
 };
 
-function renderQ2(container) {
-    if(container) container.innerHTML = q2Data.example + q2Data.answer;
+// 综合渲染逻辑
+function renderQ4(container, subType = 'suggestion') {
+    if(!container) return;
+    let html = "";
+
+    if (subType === 'review') {
+        html += `<h3>${q4Data.review.title}</h3>`;
+        q4Data.review.elements.forEach(el => {
+            html += `<div class="example-box"><b>${el.term}:</b> ${el.detail}`;
+            if(el.methods) {
+                html += `<div class="vocab-grid" style="margin-top:10px">`;
+                el.methods.forEach(m => {
+                    html += `<div class="vocab-card" onclick="toggleCard(this, '${m.name}')">
+                                <span class="word" style="color:#d32f2f">【${m.name}】</span>
+                                <div class="det" style="display:none; font-size:13px;">${m.content}<br><i style="color:blue">${m.english}</i></div>
+                             </div>`;
+                });
+                html += `</div>`;
+            }
+            html += `</div>`;
+        });
+    } 
+    else if (subType === 'opinion') {
+        html += `<h3>${q4Data.opinion.title}</h3>`;
+        html += `<div class="example-box"><b>常见题目：</b><br>${q4Data.opinion.examples.join('<br>')}</div>`;
+        html += `<div class="essay-box">`;
+        q4Data.opinion.framework.forEach(f => { html += `<p><b>${f.step}</b> (${f.en})<br>${f.detail}</p>`; });
+        html += `</div>`;
+    } 
+    else if (subType === 'suggestion') {
+        html += q4Data.suggestion.intro + q4Data.suggestion.vocabTitle;
+        html += `<div class="vocab-grid">`;
+        q4Data.suggestion.solutions.forEach(s => {
+            html += `<div class="vocab-card" onclick="toggleCard(this, '${s.word}')">
+                        <span class="word" style="font-size:14px">[${s.cat}]<br><b>${s.word}</b></span>
+                        <div class="det" style="display:none"><i style="color:#d32f2f">${s.en}</i><br><small>${s.usage}</small></div>
+                     </div>`;
+        });
+        html += `</div><h4 style="color:var(--sea-blue)">📝 题目范例大纲</h4>`;
+        q4Data.suggestion.outlines.forEach(o => {
+            html += `<div class="example-box" style="background:#fffcf0"><b>${o.title}</b><p style="font-size:14px; margin-top:5px;">${o.content}</p></div>`;
+        });
+    } 
+    else if (subType === 'proscons') {
+        html += `<h3>${q4Data.proscons.title}</h3>`;
+        html += `<div class="example-box"><b>常见题目：</b><br>${q4Data.proscons.examples.join('<br>')}</div>`;
+        html += `<div class="essay-box">`;
+        q4Data.proscons.framework.forEach(f => { html += `<p><b>${f.step}</b> (${f.en})<br>${f.detail}</p>`; });
+        html += `</div>`;
+    }
+
+    // 统一在底部加上连接词
+    html += `<h4 style="color:var(--sea-blue); margin-top:20px;">🔗 常用连接词</h4><div class="vocab-grid">`;
+    q4Data.connectors.forEach(c => {
+        html += `<div class="vocab-card" onclick="toggleCard(this, '${c.word}')">
+                    <span class="word"><b>${c.word}</b></span>
+                    <div class="det" style="display:none"><i style="color:#2e7d32">${c.en}</i><br><small>${c.usage}</small></div>
+                 </div>`;
+    });
+    html += `</div>`;
+
+    container.innerHTML = html;
 }
