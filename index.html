@@ -1,350 +1,176 @@
-<!DOCTYPE html>
-<html lang="zh">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>华文总复习</title>
-    <style>
-        :root {
-            --bg-color: #f0f9f4; /* 明亮的豆沙绿 */
-            --forest-green: #1b4332; 
-            --sea-blue: #0077b6; 
-            --rose: #e91e63; 
-            --glass: rgba(255, 255, 255, 0.9);
-            --paper-bg: #fffcf2; 
-            --brown: #5d4037; 
-            --hl-yellow: #fff176;
-            --ink: #2c3e50;
-        }
+const q4Data = {
+    // 1. 三要素 & 论证法 (采用电邮卡片形式)
+    review: {
+        title: "议论文三要素",
+        elements: [
+            { term: "论点 (Point)", detail: "对议论对象（人物、事件或道理）的观点。" },
+            { term: "论据 (Evidence)", detail: "用来证明论点的理据。" },
+            { 
+                term: "论证 (Proving Method)", 
+                detail: "用论据来证明论点的过程。",
+                methods: [
+                    {
+                        name: "举例论证法",
+                        content: "天才来自于勤奋。爱迪生一生有一千多项发明。他为了发明电灯，阅读了大量资料，光笔记就有四万多页。他试过几千种物质，做了几万次实验，才最终发明了电灯。",
+                        english: "Genius comes from diligence. Edison had over a thousand inventions in his life. To invent the light bulb, he read a vast amount of material, with notes alone exceeding 40,000 pages."
+                    },
+                    {
+                        name: "引用论证法",
+                        content: "著名文学家蒲松龄曾说过：“有志者事竟成，苦心人天不负。”",
+                        english: "The famous writer Pu Songling once said: 'Where there is a will, there is a way; the heaven will not fail the person who puts in the effort.'"
+                    },
+                    {
+                        name: "对比论证法",
+                        content: "国家需要对本国国情有清楚的了解，这样才能制定出合适的政策。20世纪60年代，挪威在附近海域发现大量的石油和天然气，之后通过开采资源获得大量财富。挪威政府意识到财富迅速增加会带来许多弊端，也注意到国内人口老龄化的问题。于是，他们决定将石油利润转化为用于社会保障的基金，以让世世代代都能从中获益。这种独树一帜的做法为国家的长远发展打下坚实的基础。反之(in comparison)，秦朝统治者没有认识到百姓需要休养生息，在国家内实行严刑峻法，最终导致王朝覆灭。",
+                        english: "Countries need a clear understanding of their conditions. Norway is a good example of long-term planning. In contrast, the Qin Dynasty's harsh laws led to its collapse."
+                    }
+                ]
+            }
+        ]
+    },
 
-        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
-        .container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.5); }
-        
-        h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; text-shadow: 1px 1px 0 rgba(255,255,255,0.8); }
+    // 2. 建议类 (核心讲义：一个字都不少)
+    suggestion: {
+        title: "建议类：针对问题提出对策",
+        intro: `
+            <div class="example-box" style="border-left: 5px solid var(--sea-blue);">
+                <h3>什么是“如何类”议论文？</h3>
+                <p>这是一类以 <span class="hl-yellow">解决问题 (problem-solving)</span> 或 <span class="hl-yellow">提出步骤方法 (step-by-step methods)</span> 为核心的议论文。</p>
+            </div>`,
+        solutions: [
+            { cat: "教育宣传类", word: "张贴海报", en: "Put up posters", usage: "在学校张贴海报宣传……" },
+            { cat: "教育宣传类", word: "播放广告", en: "Play advertisements", usage: "在电视台播放广告提醒人们……" },
+            { cat: "教育宣传类", word: "举办讲座", en: "Organize talks", usage: "学校可以举办讲座教同学们……" },
+            { cat: "教育宣传类", word: "德育课", en: "CCE", usage: "通过德育课教学生……" },
+            { cat: "社区参与类", word: "民众俱乐部活动", en: "Community club activities", usage: "民众俱乐部可以办活动……" },
+            { cat: "社区参与类", word: "义工活动", en: "Volunteer work", usage: "鼓励学生参与义工活动……" },
+            { cat: "社区参与类", word: "社区服务", en: "Community service", usage: "通过社区服务帮助老人……" }
+        ],
+        connectors: [
+            { word: "首先", en: "Firstly", usage: "首先，青少年可以……" },
+            { word: "其次", en: "Secondly", usage: "其次，我们也可以……" },
+            { word: "此外", en: "Moreover", usage: "此外，我们还可以……" },
+            { word: "例如", en: "For example", usage: "例如，政府可以制定政策，让……" },
+            { word: "相比之下", en: "In comparison", usage: "相比之下，教育比惩罚更有效……" },
+            { word: "总而言之", en: "In conclusion", usage: "总而言之，多方合作才能解决问题。" }
+        ],
+        outlines: [
+            {
+                title: "题目范例 1：如何让国人养宠物时具备责任心？",
+                content: "<b>开头：</b>养宠物不仅是兴趣，更是一份长期的承诺...<br><b>论点一：</b>领养前培训课程...<br><b>论点二：</b>学校生命教育...<br><b>论点三：</b>加强执法提高罚款...<br><b>结尾：</b>教育法律双管齐下。"
+            },
+            {
+                title: "题目范例 2：如何让乐龄人士的生活更加充实？",
+                content: "<b>开头：</b>老龄化社会课题...<br><b>论点一：</b>民众俱乐部兴趣班...<br><b>论点二：</b>家人陪伴学习电子产品...<br><b>论点三：</b>鼓励身体健康者做义工...<br><b>结尾：</b>老有所乐。"
+            }
+        ],
+        examples: ["如何提高国人的公民意识？", "如何解决青少年沉迷网游的问题？"],
+        framework: [
+            { step: "1.现状分析", en: "Current Situation", detail: "描述问题的普遍性及其带来的负面影响，引出解决的紧迫性。" },
+            { step: "2.个人/家庭角度", en: "Individual / Family", detail: "家长应以身作则be role model。" },
+            { step: "3.学校/教育角度", en: "School / Education", detail: "通过讲座talk或课程培养正确价值观。" },
+            { step: "4.政府/媒体角度", en: "Govt / Media", detail: "利用法律约束或媒体宣传promote。" },
+            { step: "5.总结愿景", en: "Future Aspect", detail: "各方配合，共同努力，构建更美好的社会。" }
+        ]
+    },
 
-        /* 倒计时 */
-        .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .cd-item { background: white; padding: 15px; border-radius: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
-        .days { font-size: 28px; font-weight: bold; color: var(--rose); }
-
-        /* 模块样式 */
-        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.6); border-radius: 20px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-        h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; user-select: none; }
-        h2:hover { color: var(--forest-green); }
-        
-        /* 优雅的箭头样式 */
-        .toggle-icon { font-size: 0.8em; transition: transform 0.3s ease; transform: rotate(-90deg); opacity: 0.7; }
-        .toggle-icon.rotated { transform: rotate(0deg); opacity: 1; color: var(--forest-green); }
-
-        /* 导航按钮 */
-        .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .nav-btn { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; box-shadow: 0 4px 10px rgba(27,67,50,0.3); }
-
-        /* 内容折叠 */
-        .content-toggle { display: none; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; }
-        .content-toggle.show { display: block; }
-
-        /* 核心盒子样式 */
-        .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); position: relative; }
-        .example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
-        
-        /* 高亮与格式 */
-        .hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; }
-        .hl-green { background: #c8e6c9; color: #1b5e20; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
-        .bold-text { font-weight: 800; color: #000; }
-        .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #333; margin: 0 5px; vertical-align: bottom; }
-
-        /* 词语卡片 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
-
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background: #f8f9fa; color: var(--sea-blue); }
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h1>📚 华文总复习</h1>
-
-    <div class="header-box">
-        <div class="cd-item"><b>卷一 & 卷二</b><div>还有 <span id="cd1" class="days">--</span> 天</div></div>
-        <div class="cd-item"><b>卷三 听力</b><div>还有 <span id="cd2" class="days">--</span> 天</div></div>
-        <div class="cd-item"><b>卷三 口试</b><div>还有 <span id="cd3" class="days">--</span> 天</div></div>
-    </div>
-
-    <div class="section-box">
-        <h2 onclick="toggleSection('writing-content', this)">📄 卷一 写作技巧 <span class="toggle-icon">▼</span></h2>
-        <div id="writing-content" class="content-toggle">
-            <div class="nav-group main-nav">
-                <button class="nav-btn" onclick="route('q1', this)">Q1 私人电邮</button>
-                <button class="nav-btn" onclick="route('q2', this)">Q2 公务电邮</button>
-                <button class="nav-btn" onclick="route('q3', this)">Q3 记叙文</button>
-                <button class="nav-btn" onclick="route('q4', this)">Q4 议论文</button>
-                <button class="nav-btn" onclick="route('q5', this)">Q5 材料作文</button>
-            </div>
-            <div id="display-area"></div>
-        </div>
-    </div>
-
-    <div class="section-box">
-        <h2 onclick="toggleSection('p2-content', this)">📖 卷二 语文应用与阅读 <span class="toggle-icon">▼</span></h2>
-        <div id="p2-content" class="content-toggle">
-            <div class="nav-group p2-nav">
-                <button class="nav-btn" onclick="routeP2('reading_tips', this)">💡 阅读技巧</button>
-                <button class="nav-btn" onclick="routeP2('vocab_app', this)">✍️ 填空与替换</button>
-                <button class="nav-btn" onclick="routeP2('argument_analysis', this)">⚖️ 议论文分析</button> 
-                <button class="nav-btn" onclick="routeP2('mcq', this)">🎯 阅读(一) MCQ</button>
-                <button class="nav-btn" onclick="routeP2('open_ended', this)">📝 阅读(二) 简答</button>
-                <button class="nav-btn" onclick="routeP2('rhetoric', this)">✨ 修辞手法</button>
-                <button class="nav-btn" onclick="routeP2('expository', this)">ℹ️ 说明文</button>
-                <button class="nav-btn" onclick="routeP2('character', this)">👤 人物描写</button>
-            </div>
-            <div id="p2-display-area"></div>
-        </div>
-    </div>
-
-    <div class="section-box">
-        <h2 onclick="toggleSection('vocab-content', this)">🏷️ 词语学习 <span class="toggle-icon">▼</span></h2>
-        <div id="vocab-content" class="content-toggle">
-            <div class="vocab-controls">
-                <select id="grade-select" class="full-width-select" onchange="renderVocab('all')">
-                    <option value="all">所有年级 (All Levels)</option>
-                    <option value="Level 1">一年级 (Level 1)</option>
-                    <option value="Level 2">二年级 (Level 2)</option>
-                    <option value="Level 3">三年级 (Level 3)</option>
-                    <option value="Level 4">四年级 (Level 4)</option>
-                </select>
-                <div class="nav-group">
-                    <button class="nav-btn" style="flex:1" onclick="renderVocab('all')">👁️ 学习全部</button>
-                    <button class="nav-btn" style="flex:1" onclick="renderVocab('random')">🎲 随机10个</button>
-                </div>
-            </div>
-            <div id="vocab-display" class="vocab-grid"></div>
-        </div>
-    </div>
-</div>
-
-<script src="data.js"></script>
-<script src="data_q1.js"></script>
-<script src="data_q2.js"></script>
-<script src="data_q3.js"></script>
-<script src="data_q4.js"></script>
-<script src="data_q5.js"></script>
-<script src="data_p2.js"></script>
-
-<script>
-"use strict";
-
-let currentQ = null;
-let currentP2 = null;
-
-function toggleSection(id, h2Element) {
-    document.getElementById(id).classList.toggle('show');
-    if(h2Element) {
-        const icon = h2Element.querySelector('.toggle-icon');
-        if(icon) icon.classList.toggle('rotated');
-    }
-}
-
-function format(text) {
-    if(!text) return "";
-    return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
-}
-
-function route(type, btn) {
-    const area = document.getElementById('display-area');
-    if (currentQ === type) {
-        area.style.display = 'none';
-        btn.classList.remove('active');
-        currentQ = null;
-        return;
-    }
-    area.style.display = 'block';
-    document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
-    currentQ = type;
-
-    if (type === 'q1' || type === 'q2') {
-        const data = (type === 'q1') ? q1Data : q2Data;
-        area.innerHTML = `<div class="paper-effect"><h3>${data.title}</h3>${format(data.example)}${format(data.answer)}</div>`;
-    } 
-    else if (type === 'q3') renderQ3();
-    else if (type === 'q4') renderQ4();
-    else if (type === 'q5') renderQ5();
-}
-
-function renderQ3() {
-    let html = `<div class="nav-group" style="margin-top:10px;">
-        <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
-        <button class="nav-btn" onclick="showQ3Sub('ending', this)">🎯 结尾感悟</button>
-        <button class="nav-btn" onclick="showQ3Sub('traits', this)">🧠 性格词库</button>
-        <button class="nav-btn" onclick="showQ3Sub('emotions', this)">🎭 情感词库</button>
-        <button class="nav-btn" onclick="showQ3Sub('essay', this)">📖 优雅范文</button>
-    </div><div id="q3-sub-area"></div>`;
-    document.getElementById('display-area').innerHTML = html;
-    showQ3Sub('tips');
-}
-
-function showQ3Sub(mode, btn) {
-    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-    const sub = document.getElementById('q3-sub-area');
-    let h = '';
-    if(mode === 'tips') {
-        h = '<div class="paper-effect"><b>💡 考场建议：</b>' + q3Data.strategies.examTips + '<hr>';
-        q3Data.strategies.openings.forEach(o => h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}</p>`);
-        h += '</div>';
-    } else if(mode === 'ending') {
-        h = '<div class="paper-effect">';
-        q3Data.strategies.conclusions.forEach((c, idx) => h += `<p><b>${idx+1}. ${c.title}：</b><br>${c.content}</p>`);
-        h += '</div>';
-    } else if(['traits', 'emotions'].includes(mode)) {
-        const pool = mode === 'traits' ? q3Data.traits : q3Data.emotions;
-        h = `<div class="vocab-grid">`;
-        pool.forEach(v => h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`);
-        h += `</div>`;
-    } else if(mode === 'essay') {
-        h = `<div class="model-essay-paper"><span class="model-essay-title">${q3Data.modelEssay.title}</span><div class="model-essay-content">${format(q3Data.modelEssay.content)}</div></div>`;
-    }
-    sub.innerHTML = h;
-}
-
-function renderQ4() {
-    let html = `<div class="nav-group" style="margin-top:10px;">
-        <button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
-        <button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button>
-        <button class="nav-btn" onclick="showQ4Sub('suggestion', this)">💡 建议类</button>
-        <button class="nav-btn" onclick="showQ4Sub('proscons', this)">⚖️ 利与弊</button>
-    </div><div id="q4-sub-area"></div>`;
-    document.getElementById('display-area').innerHTML = html;
-    showQ4Sub('review');
-}
-
-function showQ4Sub(mode, btn) {
-    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-    const sub = document.getElementById('q4-sub-area');
-    const d = q4Data[mode];
-    let h = '<div class="paper-effect">';
-    
-    if(mode === 'review') {
-        d.elements.forEach(e => {
-            h += `<p><b>${e.term}</b>：${e.detail}</p>`;
-            if(e.methods) e.methods.forEach(m => h += `<div class="example-box"><b>${m.name}</b>：<br>${m.content}</div>`);
-        });
-    } else {
-        h += `<h3>${d.title}</h3>`;
-        if(d.examples) h += `<p style="color:#666">常见例子：${d.examples.join(' / ')}</p>`;
-        h += `<table><tr><th>步骤</th><th>详情</th></tr>`;
-        d.framework.forEach(f => {
-            h += `<tr><td><b>${f.step}</b><br><small style="color:var(--sea-blue)">${f.en || ""}</small></td><td>${f.detail}</td></tr>`;
-        });
-        h += `</table>`;
-    }
-    sub.innerHTML = h + '</div>';
-}
-
-function renderQ5() {
-    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ5Sub('definition', this)">❓ 定义</button><button class="nav-btn" onclick="showQ5Sub('argumentative', this)">📑 议论型</button></div><div id="q5-sub-area"></div>`;
-    document.getElementById('display-area').innerHTML = html;
-    showQ5Sub('definition');
-}
-
-function showQ5Sub(mode, btn) {
-    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
-    const sub = document.getElementById('q5-sub-area');
-    const d = q5Data[mode];
-    let h = '<div class="paper-effect">';
-    if(mode === 'definition') h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
-    else h += `<h3>${d.title}</h3><div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`;
-    sub.innerHTML = h + '</div>';
-}
-
-function routeP2(mode, btn) {
-    const area = document.getElementById('p2-display-area');
-    if (currentP2 === mode) {
-        area.style.display = 'none';
-        btn.classList.remove('active');
-        currentP2 = null;
-        return;
-    }
-    area.style.display = 'block';
-    document.querySelectorAll('.p2-nav .nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
-    currentP2 = mode;
-
-    let h = '<div class="paper-effect">';
-    if(mode === 'reading_tips') {
-        const d = p2Data.readingTips;
-        h += `<h3>${d.title}</h3><p style="color:var(--rose); font-weight:bold;">${d.subtitle}</p>`;
-        d.steps.forEach(s => h += `<p><b>${s.step}</b>：${s.detail}</p>`);
-    } else if(mode === 'vocab_app') {
-        const c = p2Data.clozeAndReplacement.cloze;
-        const r = p2Data.clozeAndReplacement.replacement;
-        h += `<div class="example-box"><h3>${c.title}</h3><p><b>说明：</b>${c.desc}</p></div>`;
-        h += `<div class="example-box"><h3>${r.title}</h3><p><b>说明：</b>${r.desc}</p></div>`;
-    } else if(mode === 'argument_analysis') {
-        const d = p2Data.argumentative;
-        h += `<h3>${d.analysis.title}</h3>`;
-        d.analysis.table.forEach(item => h += `<div class="example-box"><b>论点：</b>${item.point}<br><b>方法：</b>${item.method}</div>`);
-    } else if(mode === 'open_ended') {
-        const d = p2Data.comp2;
-        h += `<h3>${d.title}</h3><hr><h4>提问词对照表：</h4><div class="vocab-grid">`;
-        d.requirementVocab.forEach(v => h += `<div class="vocab-card" style="padding:10px;"><b style="font-size:16px;">${v.cn}</b><br><small style="color:var(--brown)">${v.en}</small></div>`);
-        h += `</div>`;
-    } else if(mode === 'character') {
-        h += `<h3>人物描写手法</h3>`;
-        p2Data.characterPortrayal.forEach(c => {
-            h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); d.style.display=(d.style.display==='none'?'block':'none')">
-                    <span class="word">${c.type}</span>
-                    <div class="det" style="display:none; border-top:1px dashed #ccc; margin-top:8px; padding-top:8px;">
-                        <p><b>作用：</b>${c.effect}</p>
-                        <p><b>例子：</b><i>${c.example}</i></p>
-                    </div>
-                  </div>`;
-        });
-    }
-    area.innerHTML = h + '</div>';
-}
-
-function toggleCard(el, word) {
-    const d = el.querySelector('.det');
-    const isShowing = d.style.display === 'block';
-    d.style.display = isShowing ? 'none' : 'block';
-    if(!isShowing) {
-        const msg = new SpeechSynthesisUtterance(word);
-        msg.lang = "zh-CN";
-        window.speechSynthesis.speak(msg);
-    }
-}
-
-function renderVocab(mode) {
-    const area = document.getElementById('vocab-display');
-    const lv = document.getElementById('grade-select').value;
-    area.innerHTML = "";
-    if(typeof vocabData === 'undefined') return;
-    let pool = [];
-    if(lv === 'all') Object.keys(vocabData).forEach(k => pool = pool.concat(vocabData[k]));
-    else pool = vocabData[lv] || [];
-    let list = mode === 'random' ? [...pool].sort(()=>0.5-Math.random()).slice(0,10) : pool;
-    list.forEach(item => {
-        const card = document.createElement('div');
-        card.className = 'vocab-card';
-        card.onclick = () => toggleCard(card, item.word);
-        card.innerHTML = `<span class="word">${item.word}</span><div class="det" style="display:none"><i>${item.pinyin}</i><br><b>${item.meaning}</b></div>`;
-        area.appendChild(card);
-    });
-}
-
-window.onload = function() {
-    const dates = { cd1: '2026-06-02', cd2: '2026-07-07', cd3: '2026-07-13' };
-    for (let id in dates) {
-        const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
-        const el = document.getElementById(id);
-        if(el) el.innerText = diff > 0 ? diff : 0;
+    // 3. 看法类 & 4. 利与弊类 (保持原样，确保点击正常)
+    opinion: {
+        title: "看法类：用例子证明你的观点",
+        examples: ["有人说：新加坡青少年是草莓族，经不起考验。你同意吗？"],
+        framework: [
+            { step: "1.立场+分析题目", en: "State stand", detail: "对我而言，我同意/不同意这个说法。" },
+            { step: "2.结合社会现象", en: "Background", detail: "目前社会上有人认为……" },
+            { step: "3.论点 1/2/3", en: "Points", detail: "首先、其次、再者。" },
+            { step: "4.总结扣题", en: "Summary", detail: "总结全文，呼应立场。" }
+        ]
+    },
+    proscons: {
+        title: "利与弊类：双向辩证分析",
+        examples: ["青少年使用人工智能(AI)的利弊"],
+        framework: [
+            { step: "1.背景引出", en: "Background", detail: "这就像一把“双刃剑”。" },
+            { step: "2.利点 (Pros)", en: "Advantages", detail: "正面影响。" },
+            { step: "3.弊点 (Cons)", en: "Disadvantages", detail: "潜在危害。" },
+            { step: "4.权衡立场", en: "Stand", detail: "我认为利大于弊。" }
+        ]
     }
 };
-</script>
-</body>
-</html>
+
+// 统一的切换函数 (完全参考看法类/电邮类的成功逻辑)
+function toggleQ4Detail(element) {
+    const det = element.querySelector('.q4-det');
+    if (det) {
+        det.style.display = (det.style.display === 'none' || det.style.display === '') ? 'block' : 'none';
+    }
+}
+
+function renderQ4(container) {
+    let html = `<h3>${q4Data.review.title}</h3>`;
+    
+    // 1. 三要素 & 论证法 (参考电邮词语卡片)
+    q4Data.review.elements.forEach(el => {
+        html += `<div class="example-box"><b>${el.term}:</b> ${el.detail}`;
+        if (el.methods) {
+            html += `<div class="vocab-grid" style="margin-top:10px">`;
+            el.methods.forEach(m => {
+                html += `
+                    <div class="vocab-card" style="width:100%; text-align:left;" onclick="toggleQ4Detail(this)">
+                        <div class="word" style="color:#d32f2f">【${m.name}】 <small>(点击看英文例子)</small></div>
+                        <div style="font-size:14px; margin:5px 0; color:#333;">${m.content}</div>
+                        <div class="q4-det" style="display:none; margin-top:10px; padding:10px; background:#f9f9f9; border-left:3px solid #d32f2f; font-style:italic; font-size:13px; color:#666;">
+                            ${m.english}
+                        </div>
+                    </div>`;
+            });
+            html += `</div>`;
+        }
+        html += `</div>`;
+    });
+
+    // 2. 建议类 (完全套用 看法类 的简单点击逻辑)
+    const sug = q4Data.suggestion;
+    html += `<hr><h3>${sug.title}</h3>${sug.intro}`;
+    
+    html += `<h4>🛠️ 常用解决方法</h4><div class="vocab-grid">`;
+    sug.solutions.forEach(s => {
+        html += `<div class="vocab-card" onclick="toggleQ4Detail(this)">
+                    <span class="word">[${s.cat}]<br><b>${s.word}</b></span>
+                    <div class="q4-det" style="display:none; color:#d32f2f;"><br><i>${s.en}</i><br><small>${s.usage}</small></div>
+                 </div>`;
+    });
+    html += `</div>`;
+
+    html += `<h4>🔗 常用连接词</h4><div class="vocab-grid">`;
+    sug.connectors.forEach(c => {
+        html += `<div class="vocab-card" onclick="toggleQ4Detail(this)">
+                    <span class="word"><b>${c.word}</b></span>
+                    <div class="q4-det" style="display:none; color:#2e7d32;"><br><i>${c.en}</i><br><small>${c.usage}</small></div>
+                 </div>`;
+    });
+    html += `</div>`;
+
+    html += `<h4>📝 题目范例大纲</h4>`;
+    sug.outlines.forEach(o => {
+        html += `<div class="example-box" style="background:#fffcf0; cursor:pointer;" onclick="toggleQ4Detail(this)">
+                    <b>📌 ${o.title}</b>
+                    <div class="q4-det" style="display:none; margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;">${o.content}</div>
+                 </div>`;
+    });
+
+    // 2.5 建议类框架
+    html += `<div class="essay-box" style="margin-top:20px;">`;
+    sug.framework.forEach(f => { html += `<p><b>${f.step}</b> (${f.en})<br>${f.detail}</p>`; });
+    html += `</div>`;
+
+    // 3. 看法类 & 4. 利与弊类 (直接渲染)
+    [q4Data.opinion, q4Data.proscons].forEach(item => {
+        html += `<hr><h3>${item.title}</h3>`;
+        html += `<div class="example-box"><b>常见题目：</b><br>${item.examples.join('<br>')}</div>`;
+        html += `<div class="essay-box">`;
+        item.framework.forEach(f => { html += `<p><b>${f.step}</b> (${f.en})<br>${f.detail}</p>`; });
+        html += `</div>`;
+    });
+
+    container.innerHTML = html;
+}
