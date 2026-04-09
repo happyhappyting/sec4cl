@@ -32,7 +32,6 @@
         h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; user-select: none; }
         h2:hover { color: var(--forest-green); }
         
-        /* 优雅的箭头样式 */
         .toggle-icon { font-size: 0.8em; transition: transform 0.3s ease; transform: rotate(-90deg); opacity: 0.7; }
         .toggle-icon.rotated { transform: rotate(0deg); opacity: 1; color: var(--forest-green); }
 
@@ -167,15 +166,36 @@ function route(type, btn) {
     if(btn) btn.classList.add('active');
     currentQ = type;
 
-    if (type === 'q1' || type === 'q2') {
-        const data = (type === 'q1') ? q1Data : q2Data;
-        area.innerHTML = `<div class="paper-effect"><h3>${data.title}</h3>${format(data.example)}${format(data.answer)}</div>`;
-    } 
+    if (type === 'q1') {
+        area.innerHTML = `<div class="paper-effect"><h3>${q1Data.title}</h3>${format(q1Data.example)}${format(q1Data.answer)}</div>`;
+    } else if (type === 'q2') {
+        if(typeof q2Data !== 'undefined') {
+            let h = `<div class="paper-effect"><h3>${q2Data.title}</h3>`;
+            if(q2Data.template_info) h += q2Data.template_info;
+            h += `<div style="margin-top:30px;"></div>` + (q2Data.example || "") + (q2Data.answer || "");
+            if(q2Data.example2) {
+                h += `<div style="margin-top:50px; border-top: 2px dashed var(--sea-blue); padding-top:20px;"></div>`;
+                h += q2Data.example2 + q2Data.answer2;
+            }
+            if(q2Data.vocab) {
+                h += `<h4>📌 核心词汇储备</h4><div class="vocab-grid">`;
+                q2Data.vocab.forEach(v => {
+                    h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><b>${v.word}</b><div class="det" style="display:none"><small>${v.en}</small><br><span style="color:var(--rose)">效果：${v.effect}</span></div></div>`;
+                });
+                h += `</div>`;
+            }
+            h += `</div>`;
+            area.innerHTML = h;
+        } else {
+            area.innerHTML = `<div class="paper-effect">⚠️ 暂无数据</div>`;
+        }
+    }
     else if (type === 'q3') renderQ3();
     else if (type === 'q4') renderQ4();
     else if (type === 'q5') renderQ5();
 }
 
+// Q3 渲染逻辑保持不变
 function renderQ3() {
     let html = `<div class="nav-group" style="margin-top:10px;">
         <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
@@ -211,12 +231,14 @@ function showQ3Sub(mode, btn) {
     sub.innerHTML = h;
 }
 
+// Q4 渲染逻辑：重写以支持数据中的全部模块
 function renderQ4() {
     let html = `<div class="nav-group" style="margin-top:10px;">
         <button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
         <button class="nav-btn" onclick="showQ4Sub('opinion', this)">💬 看法类</button>
-        <button class="nav-btn" onclick="showQ4Sub('suggestion', this)">💡 建议类</button>
+        <button class="nav-btn" onclick="showQ4Sub('suggestion_old', this)">💡 建议类</button>
         <button class="nav-btn" onclick="showQ4Sub('proscons', this)">⚖️ 利与弊</button>
+        <button class="nav-btn" onclick="showQ4Sub('extra', this)">🛠️ 解决方法/词汇</button>
     </div><div id="q4-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
     showQ4Sub('review');
@@ -225,15 +247,40 @@ function renderQ4() {
 function showQ4Sub(mode, btn) {
     if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const sub = document.getElementById('q4-sub-area');
-    const d = q4Data[mode];
     let h = '<div class="paper-effect">';
     
     if(mode === 'review') {
+        const d = q4Data.review;
+        h += `<h3>${d.title}</h3>`;
         d.elements.forEach(e => {
             h += `<p><b>${e.term}</b>：${e.detail}</p>`;
-            if(e.methods) e.methods.forEach(m => h += `<div class="example-box"><b>${m.name}</b>：<br>${m.content}</div>`);
+            if(e.methods) {
+                e.methods.forEach(m => {
+                    h += `<div class="example-box">
+                            <b style="color:var(--rose)">【${m.name}】</b><br>${m.content}
+                            <div style="font-size:12px; color:#666; margin-top:5px; border-top:1px solid #eee; padding-top:5px;">${m.english}</div>
+                          </div>`;
+                });
+            }
+        });
+    } else if(mode === 'extra') {
+        // 渲染解决方法和连接词
+        h += q4Data.intro || "";
+        h += `<h4>常用解决方法词汇</h4><div class="vocab-grid">`;
+        q4Data.solutions.forEach(s => {
+            h += `<div class="vocab-card" onclick="toggleCard(this, '${s.word}')"><b>${s.word}</b><div class="det" style="display:none"><small>${s.en}</small><br><i>${s.usage}</i></div></div>`;
+        });
+        h += `</div><hr><h4>常用连接词</h4><div class="vocab-grid">`;
+        q4Data.connectors.forEach(c => {
+            h += `<div class="vocab-card" onclick="toggleCard(this, '${c.word}')"><b>${c.word}</b><div class="det" style="display:none"><small>${c.en}</small></div></div>`;
+        });
+        h += `</div><hr><h4>题目范例大纲</h4>`;
+        q4Data.outlines.forEach(o => {
+            h += `<div class="example-box"><b>${o.title}</b><p style="font-size:14px;">${o.content}</p></div>`;
         });
     } else {
+        // 看法、建议、利弊通用渲染
+        const d = q4Data[mode];
         h += `<h3>${d.title}</h3>`;
         if(d.examples) h += `<p style="color:#666">常见例子：${d.examples.join(' / ')}</p>`;
         h += `<table><tr><th>步骤</th><th>详情</th></tr>`;
@@ -245,8 +292,13 @@ function showQ4Sub(mode, btn) {
     sub.innerHTML = h + '</div>';
 }
 
+// Q5 渲染逻辑：修复记叙类无法读取的问题
 function renderQ5() {
-    let html = `<div class="nav-group" style="margin-top:10px;"><button class="nav-btn active" onclick="showQ5Sub('definition', this)">❓ 定义</button><button class="nav-btn" onclick="showQ5Sub('argumentative', this)">📑 议论型</button></div><div id="q5-sub-area"></div>`;
+    let html = `<div class="nav-group" style="margin-top:10px;">
+        <button class="nav-btn active" onclick="showQ5Sub('definition', this)">❓ 定义</button>
+        <button class="nav-btn" onclick="showQ5Sub('argumentative', this)">📑 议论型</button>
+        <button class="nav-btn" onclick="showQ5Sub('narrative', this)">📖 记叙型</button>
+    </div><div id="q5-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
     showQ5Sub('definition');
 }
@@ -256,11 +308,29 @@ function showQ5Sub(mode, btn) {
     const sub = document.getElementById('q5-sub-area');
     const d = q5Data[mode];
     let h = '<div class="paper-effect">';
-    if(mode === 'definition') h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
-    else h += `<h3>${d.title}</h3><div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`;
+    
+    if(mode === 'definition') {
+        h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
+    } else if(mode === 'argumentative') {
+        h += `<h3>${d.title}</h3>`;
+        d.stepByStep.forEach(s => h += `<p><b>${s.step}</b>：${s.detail}</p>`);
+        h += `<div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`;
+    } else if(mode === 'narrative') {
+        h += `<h3>${d.title}</h3>`;
+        d.types.forEach(t => {
+            h += `<div class="example-box"><h4>${t.name}</h4><ul>`;
+            t.tips.forEach(tip => h += `<li>${tip}</li>`);
+            h += `</ul><div class="vocab-grid">`;
+            t.cases.forEach(c => {
+                h += `<div class="vocab-card" style="text-align:left;"><b>${c.title}</b><br><small style="color:var(--rose)">注意：${c.notice}</small></div>`;
+            });
+            h += `</div></div>`;
+        });
+    }
     sub.innerHTML = h + '</div>';
 }
 
+// P2 渲染逻辑保持不变
 function routeP2(mode, btn) {
     const area = document.getElementById('p2-display-area');
     if (currentP2 === mode) {
@@ -310,6 +380,7 @@ function routeP2(mode, btn) {
 
 function toggleCard(el, word) {
     const d = el.querySelector('.det');
+    if(!d) return;
     const isShowing = d.style.display === 'block';
     d.style.display = isShowing ? 'none' : 'block';
     if(!isShowing) {
