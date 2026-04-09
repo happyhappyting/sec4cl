@@ -1,54 +1,59 @@
 const q2Data = {
-    title: "Q2 公务电邮 (Formal Email)",
-    // 题目例子框
-    example: `
-        <div class="example-box">
-            你看到一张海报，内容是鼓励青少年到全善课后托管中心当义工。义工的职责是为那里的小学生策划并主办课后与假期活动。你认为你学校的学生应该积极响应，在空闲的时候去那里当义工。<br><br>
-            假设你是<span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">黄海丽</span>，给负责学生理事会的<span class="hl-yellow">王</span>美云<span class="hl-green" style="color: #2e7d32; font-weight: bold;">老师</span>写一则电邮，<span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">请她协助鼓励学生到全善课后托管中心当义工</span>。<span class="bold-text">你在电邮中要说明学生可以做出的贡献，以及他们会得到的收获。</span>
+    title: "Q2 公务电邮实战拆解",
+    
+    // 基础模板说明 (根据PDF总结)
+    template_info: `
+        <div class="example-box" style="background:#f0f7ff">
+            <b style="color:var(--sea-blue)">💡 公务电邮七段式万能结构：</b><br>
+            1. <b>第一段：</b>自我介绍 + 写信目的 (Identity + Purpose)<br>
+            2. <b>第二段：</b>描述背景/现状 (Background/Context)<br>
+            3. <b>第三段：</b>分析原因/影响 (Reasons/Impact)<br>
+            4. <b>第四段：</b>过渡句 (Transition: 有鉴于此，本人有以下建议...)<br>
+            5. <b>第五段：</b>建议方案一 + 预期效果 (Suggestion 1 + Effect)<br>
+            6. <b>第六段：</b>建议方案二 + 预期效果 (Suggestion 2 + Effect)<br>
+            7. <b>第七段：</b>总结祝愿 + 署名 (Closing: 素闻您一向从善如流...)
         </div>
     `,
-    // 你的回答框
-    answer: `
-        <div class="essay-box">
-            <span class="bold-text">主题</span>：Compose your own subject based on purpose (E.G. <span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">请协助鼓励学生到全善课后托管中心当义工</span>)<br><br>
-            <span class="hl-yellow">王</span><span class="hl-green">老师</span>：<br>
-            &emsp;&emsp;<span style="color: #003366; font-weight: 800;">您好，本人是XX的顾客／XX区的居民／XX学校的学生。本人今天写电邮的目的是为了谈谈</span><span style="background-color: #f5f5dc; padding: 2px 4px; border-radius: 3px;">＿＿COPY SUBJECT＿＿</span><span style="color: #003366; font-weight: 800;">。(Memorise)</span><br><br>
-            &emsp;&emsp;Describe situation with original words, and then write&emsp;&emsp;<br><br>
-            &emsp;&emsp;PEEL X&emsp;4 (Usually one issue, two areas (such as impact and suggestions) – 1 area 2 PEELs)<br><br>
-            &emsp;&emsp;<span style="color: #003366; font-weight: 800;">素闻您一向从善如流，办事效率高。相信您一定会听取建议，做出改善。谢谢！(Memorise)</span><br><br>
-            <span style="background-color: #add8e6; padding: 2px 4px; border-radius: 3px;">黄海丽</span><span class="bold-text">&emsp;启</span>
-        </div>
 
-        <h4 style="color:var(--sea-blue); margin-top:20px;">💡 建议类常用方法（点击查看）：</h4>
-        <div class="vocab-grid">
-            <div class="vocab-card" onclick="toggleCard(this, '张贴海报')">
-                <span class="word" style="font-size:15px">张贴海报</span>
-                <div class="det" style="display:none"><i>zhāngtiē hǎibào</i><br><b>put up posters</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '让义工巡查/提醒')">
-                <span class="word" style="font-size:15px">让义工巡查/提醒</span>
-                <div class="det" style="display:none"><i>ràng yìgōng xúnchá / tíxǐng</i><br><b>let volunteers patrol / remind others</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '加重惩罚（罚款/坐牢）')">
-                <span class="word" style="font-size:15px">加重惩罚（罚款/坐牢）</span>
-                <div class="det" style="display:none"><i>jiāzhòng chéngfá (fákuǎn / zuòláo)</i><br><b>impose heavier penalties (fine/jail)</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, 'XX日（XX=活动主题，比如家庭日）')">
-                <span class="word" style="font-size:15px">XX日（XX=活动主题，比如家庭日）</span>
-                <div class="det" style="display:none"><i>XX rì (XX=huódòng zhǔtí, bǐrú jiātíng rì)</i><br><b>XX Day (e.g. Family Day)</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '举办活动/工作坊/讲座')">
-                <span class="word" style="font-size:15px">举办活动/工作坊/讲座</span>
-                <div class="det" style="display:none"><i>jǔbàn huódòng / gōngzuòfǎng / jiǎngzuò</i><br><b>organize activities / workshops / talks</b></div>
-            </div>
-            <div class="vocab-card" onclick="toggleCard(this, '选出XX大使（XX=要达成的目的，比如环保大使、亲善大使）')">
-                <span class="word" style="font-size:15px">选出XX大使（XX=要达成的目的，比如环保大使、亲善大使）</span>
-                <div class="det" style="display:none"><i>xuǎnchū XX dàshǐ (XX=yào dáchéng de mùdì, bǐrú huánbǎo dàshǐ, qīnshàn dàshǐ)</i><br><b>appoint XX Ambassador</b></div>
-            </div>
+    // 问题一：反映抽烟问题 (投诉类)
+    example: `
+        <div class="example-box">
+            <b style="color:var(--rose)">📌 问题一：反映校外吸烟 (投诉/反映类)</b><br>
+            最近，你发现附近的学校经常能看到青少年在校外吸烟，还把烟头丢进草丛。这会带来不良影响和安全隐患。假设你是<b>陈阿狗</b>，致函警察局<b>王杰森局长</b>反映问题。
+        </div>
+    `,
+    answer: `
+        <div class="essay-box" style="border-left: 5px solid var(--rose)">
+            <p><b>主题：</b>反映青少年在校外吸烟</p>
+            <p><b>王局长：</b></p>
+            <p>1. <b>【目的】</b>本人是红山区的居民。写这封电邮是想反映青少年在校外吸烟的问题。</p>
+            <p>2. <b>【现状】</b>最近，本人发现家附近的学校经常能看到青少年在校外吸烟。他们三五成群，言语粗鲁，甚至无视路人劝阻。他们还把未熄灭的烟头丢进草丛，非常危险。</p>
+            <p>3. <b>【影响】</b>这不仅严重破坏了学校的名声，让其他学生有样学样；未熄灭的烟头更可能引发火灾，威胁社区安全。</p>
+            <p>4. <b>【过渡】</b>有鉴于这些不良影响，本人有以下建议供您参考。</p>
+            <p>5. <b>【方案一】</b>建议当局派警察定期巡逻，对吸烟者给予严厉警告或罚款。这能让他们产生畏惧，从而停止违法行为。</p>
+            <p>6. <b>【方案二】</b>建议警方与学校合作举办讲座。这能提高青少年的法律意识，让他们明白吸烟的危害。</p>
+            <p>7. <b>【结尾】</b>素闻您一向从善如流，办事效率高。相信您一定会听取建议，做出改善。谢谢！<br><b>陈阿狗 启</b></p>
+        </div>
+    `,
+
+    // 问题二：鼓励当义工 (呼吁/建议类)
+    example2: `
+        <div class="example-box">
+            <b style="color:var(--sea-blue)">📌 问题二：鼓励学生当义工 (呼吁/建议类)</b><br>
+            你看到海报鼓励青少年到“全善课后托管中心”当义工。假设你是<b>黄海丽</b>，写电邮给学生理事会负责人<b>王美云老师</b>，请她协助鼓励学生积极响应。
+        </div>
+    `,
+    answer2: `
+        <div class="essay-box" style="border-left: 5px solid var(--sea-blue)">
+            <p><b>主题：</b>建议鼓励学生到全善课后托管中心当义工</p>
+            <p><b>王老师：</b></p>
+            <p>1. <b>【目的】</b>您好，本人是学生理事会的成员黄海丽。写这封电邮是希望老师能协助鼓励校内同学到全善课后托管中心担任义工。</p>
+            <p>2. <b>【背景】</b>近日我看到一张海报，该中心正招募义工策划并主办课后与假期的活动，旨在帮助那里的小学生。我认为这是一项非常有意义的活动。</p>
+            <p>3. <b>【贡献】</b>学生们可以利用空闲时间做出贡献：首先，大家可以发挥专长，为小学生策划有趣的学习活动；其次，同学们可以协助辅导功课，减轻中心职员的负担。</p>
+            <p>4. <b>【收获】</b>通过这项活动，学生们也能受益匪浅。这不仅能培养大家的爱心与责任感，还能提升组织与沟通能力，丰富课外活动经验。</p>
+            <p>5. <b>【建议一】</b>建议老师在周会上播放相关宣传短片。这能让全校学生更直观地了解义工的工作内容，激发他们的热情。</p>
+            <p>6. <b>【建议二】</b>建议在学校布告栏张贴海报，并提供报名链接。这样方便感兴趣的同学随时查看详情并报名参加。</p>
+            <p>7. <b>【结尾】</b>素闻您一向关心学生成长，办事效率高。希望老师能考虑我的建议。谢谢！<br><b>黄海丽 启</b></p>
         </div>
     `
 };
-
-function renderQ2(container) {
-    if(container) container.innerHTML = q2Data.example + q2Data.answer;
-}
