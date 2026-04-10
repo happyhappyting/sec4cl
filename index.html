@@ -233,6 +233,8 @@ function showQ3Sub(mode, btn) {
 
 // --- Q4 议论文渲染逻辑 ---
 
+// --- Q4 议论文渲染逻辑 (最新精准拆解版) ---
+
 function renderQ4() {
     let html = `<div class="nav-group" style="margin-top:10px;">
         <button class="nav-btn active" onclick="showQ4Sub('review', this)">📚 三要素</button>
@@ -254,6 +256,7 @@ function showQ4Sub(mode, btn) {
     const sub = document.getElementById('q4-sub-area');
     let h = '<div class="paper-effect">';
     
+    // 1. 三要素模块
     if(mode === 'review') {
         h += `<h3>${q4Data.review.title}</h3>`;
         q4Data.review.elements.forEach(e => {
@@ -269,11 +272,13 @@ function showQ4Sub(mode, btn) {
             h += `</div>`;
         });
     } 
+    // 2. 核心逻辑与题目拆解模块
     else if(mode === 'logic') {
         const d = q4Data.logic_section;
         h += `<h3 style="text-align:center; color:var(--sea-blue);">${d.title}</h3>`;
-        h += `<div class="example-box" style="background:#f0f7ff; text-align:center; border:2px solid var(--sea-blue);"><p style="font-size:20px; font-weight:bold;">${d.formula}</p></div>`;
+        h += `<div class="example-box" style="background:#f0f7ff; text-align:center; border:2px solid var(--sea-blue);"><p style="font-size:20px; font-weight:bold; margin:5px 0;">${d.formula}</p></div>`;
         
+        // 审题提示 (绝对句/身份要求)
         h += `<h4>📌 审题提示</h4><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">`;
         d.traps.forEach(t => {
             h += `<div class="example-box" style="background:#fffcf0; border-left:5px solid #ff9800; margin:0;">
@@ -285,29 +290,39 @@ function showQ4Sub(mode, btn) {
         });
         h += `</div>`;
 
-        h += `<h4 style="margin-top:20px;">📂 题目逻辑拆解 (点击题目展开)</h4>`;
+        // 题目列表 (点击展开逻辑)
+        h += `<h4 style="margin-top:20px;">📂 题目逻辑拆解 (点击展开分析)</h4>`;
         d.topics.forEach((item, index) => {
-            h += `<div class="example-box" style="cursor:pointer; background:white; transition: 0.3s;" onclick="const ans = this.querySelector('.ans'); ans.style.display = ans.style.display === 'none' ? 'block' : 'none'">
-                    <b>${index+1}. ${item.q}</b>
+            // 根据 Case 类型设置不同的侧边颜色
+            const sideColor = item.cat.includes('Case A') ? '#bbdefb' : '#c8e6c9';
+            h += `<div class="example-box" style="cursor:pointer; background:white; position:relative; border-left: 6px solid ${sideColor}; padding-left:15px;" onclick="const ans = this.querySelector('.ans'); ans.style.display = ans.style.display === 'none' ? 'block' : 'none'">
+                    <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px;">
+                        <span style="font-size:10px; color:#666; font-weight:bold; background:#eee; padding:2px 5px; border-radius:3px;">${item.cat}</span>
+                        ${item.i ? `<span style="padding:1px 6px; background:#e1f5fe; color:#0288d1; border-radius:4px; font-size:11px; font-weight:bold; border:1px solid #b3e5fc;">Identity: ${item.i}</span>` : ''}
+                    </div>
+                    <b style="font-size:15px; line-height:1.4;">${index+1}. ${item.q}</b>
                     <div class="ans" style="display:none; margin-top:10px; border-top:1px dashed #ccc; padding-top:10px;">
-                        <span style="color:var(--rose)">【原因/因素】：</span>${item.f}<br>
-                        <span style="color:var(--sea-blue)">【结果/影响】：</span>${item.o}
+                        <p style="margin:5px 0; font-size:14px;"><span style="color:var(--rose); font-weight:bold;">f:</span> ${item.f}</p>
+                        <p style="margin:5px 0; font-size:14px;"><span style="color:var(--sea-blue); font-weight:bold;">o:</span> ${item.o}</p>
                     </div>
                   </div>`;
         });
     }
+    // 3. 论据库模块
     else if(mode === 'bank') {
         h += `<h3>${q4Data.bank.title}</h3>`;
         q4Data.bank.modules.forEach(m => {
-            h += `<div class="example-box"><b style="color:var(--sea-blue)">${m.name}</b><p style="font-size:14px; margin:10px 0;">${m.content}</p>
-                    <div style="background:#f9f9f9; padding:8px; border-radius:5px; font-size:13px;"><b>如何论证：</b>${m.logic}</div></div>`;
+            h += `<div class="example-box"><b style="color:var(--sea-blue); font-size:16px;">${m.name}</b><p style="font-size:14px; margin:10px 0; line-height:1.5;">${m.content}</p>
+                    <div style="background:#f9f9f9; padding:10px; border-radius:5px; font-size:13px; border-left:3px solid var(--sea-blue);"><b>如何论证 (逻辑)：</b><br>${m.logic}</div></div>`;
         });
     }
+    // 4. 三大题型详情模块
     else {
         const d = q4Data[mode];
         if(d) {
-            h += `<h3>${d.title}</h3><div class="example-box"><b>论证方法：</b><br>${d.method}</div>
-                  <div class="example-box" style="background:#fffcf0"><b>实战范例：</b><br>${d.example}</div>`;
+            h += `<h3>${d.title}</h3>
+                  <div class="example-box" style="border-left:5px solid var(--sea-blue);"><b>论证引导：</b><br>${d.method}</div>
+                  <div class="example-box" style="background:#fffcf0; border-left:5px solid #ffc107;"><b>实战范例 (5W1H + Outcome)：</b><br>${d.example}</div>`;
         }
     }
     sub.innerHTML = h + '</div>';
