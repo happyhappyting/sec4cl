@@ -105,6 +105,18 @@
         </div>
     </div>
 
+<!-- 卷三 -->
+<div class="section-box">
+    <h2 onclick="toggleSection('p3-content', this)">🎤 卷三 口试与听力 <span class="toggle-icon">▼</span></h2>
+    <div id="p3-content" class="content-toggle">
+        <div class="nav-group p3-nav">
+            <button class="nav-btn" onclick="routeP3('oral', this)">🗣️ 口试练习</button>
+            <button class="nav-btn" onclick="routeP3('listening', this)">👂 听力练习</button>
+        </div>
+        <div id="p3-display-area"></div>
+    </div>
+</div>
+    
     <div class="section-box">
         <h2 onclick="toggleSection('vocab-content', this)">🏷️ 词语学习 <span class="toggle-icon">▼</span></h2>
         <div id="vocab-content" class="content-toggle">
@@ -133,6 +145,7 @@
 <script src="data_q4.js"></script>
 <script src="data_q5.js"></script>
 <script src="data_p2.js"></script>
+<script src="data_q3.js"></script>
 
 <script>
 "use strict";
@@ -484,6 +497,55 @@ window.onload = function() {
         if(el) el.innerText = diff > 0 ? diff : 0;
     }
 };
+
+let currentP3 = null;
+
+function routeP3(mode, btn) {
+    const area = document.getElementById('p3-display-area');
+    if (currentP3 === mode) {
+        area.style.display = 'none';
+        btn.classList.remove('active');
+        currentP3 = null;
+        return;
+    }
+    area.style.display = 'block';
+    document.querySelectorAll('.p3-nav .nav-btn').forEach(b => b.classList.remove('active'));
+    if(btn) btn.classList.add('active');
+    currentP3 = mode;
+
+    let h = '<div class="paper-effect">';
+    
+    if(mode === 'oral') {
+        const d = p3Data.oralPractice;
+        h += `<h3>${d.title}</h3>`;
+        h += `<div class="vocab-grid">`;
+        d.topics.forEach(topic => {
+            h += `<div class="vocab-card" style="padding:15px; text-align:center;">
+                    <h4 style="margin:0 0 10px 0; color:var(--rose);">${topic.year} ${topic.topic}</h4>
+                    <a href="${topic.url}" target="_blank" class="nav-btn" style="display:inline-block; padding:8px 16px; text-decoration:none;">
+                        🔗 前往 SLS
+                    </a>
+                  </div>`;
+        });
+        h += `</div>`;
+        
+    } else if(mode === 'listening') {
+        const d = p3Data.listeningPractice;
+        h += `<h3>${d.title}</h3>`;
+        h += `<div class="vocab-grid">`;
+        d.exercises.forEach(exercise => {
+            h += `<div class="vocab-card" style="padding:20px; text-align:center;">
+                    <h4 style="margin:0 0 15px 0; color:var(--brown);">${exercise.name}</h4>
+                    <a href="${exercise.url}" target="_blank" class="nav-btn" style="display:inline-block; padding:10px 20px; text-decoration:none;">
+                        🔗 前往 SLS
+                    </a>
+                  </div>`;
+        });
+        h += `</div>`;
+    }
+    
+    area.innerHTML = h + '</div>';
+}
 </script>
 </body>
 </html>
