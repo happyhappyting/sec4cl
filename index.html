@@ -400,6 +400,37 @@ function routeP2(mode, btn) {
         h += `<h3>${d.title}</h3><hr><h4>提问词对照表：</h4><div class="vocab-grid">`;
         d.requirementVocab.forEach(v => h += `<div class="vocab-card" style="padding:10px;"><b style="font-size:16px;">${v.cn}</b><br><small style="color:var(--brown)">${v.en}</small></div>`);
         h += `</div>`;
+    } else if(mode === 'mcq') {
+    const d = p2Data.comp1;
+    h += `<h3>${d.title}</h3>`;
+    h += `<p><b>时间建议：</b>${d.time}</p>`;
+    h += `<p><b>说明：</b>${d.desc}</p>`;
+    h += `<h4>答题技巧：</h4>`;
+    d.tips.forEach((tip, index) => h += `<p>${tip}</p>`);
+    
+} else if(mode === 'rhetoric') {
+    h += `<h3>修辞手法</h3>`;
+    p2Data.rhetoric.forEach(r => {
+        h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); d.style.display=(d.style.display==='none'?'block':'none')">
+                <span class="word">${r.name}</span>
+                <div class="det" style="display:none; border-top:1px dashed #ccc; margin-top:8px; padding-top:8px;">
+                    <p><b>说明：</b>${r.desc}</p>
+                    <p><b>例子：</b></p>`;
+        r.examples.forEach(ex => h += `<p style="margin-left:15px;"><i>${ex}</i></p>`);
+        h += `</div></div>`;
+    });
+    
+} else if(mode === 'expository') {
+    const d = p2Data.expository;
+    h += `<h3>说明文</h3>`;
+    h += `<h4>说明顺序：</h4>`;
+    d.orders.forEach(order => {
+        h += `<div class="example-box"><b>${order.type}</b><br>${order.detail}</div>`;
+    });
+    h += `<h4>说明方法：</h4>`;
+    d.methods.forEach(method => {
+        h += `<div class="example-box"><b>${method.name}</b><br>${method.detail}</div>`;
+    });
     } else if(mode === 'character') {
         h += `<h3>人物描写手法</h3>`;
         p2Data.characterPortrayal.forEach(c => {
