@@ -5,17 +5,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习</title>
     <style>
-        :root {
-            --bg-color: #f0f9f4; /* 明亮的豆沙绿 */
-            --forest-green: #1b4332; 
-            --sea-blue: #0077b6; 
-            --rose: #e91e63; 
-            --glass: rgba(255, 255, 255, 0.9);
-            --paper-bg: #fffcf2; 
-            --brown: #5d4037; 
-            --hl-yellow: #fff176;
-            --ink: #2c3e50;
-        }
+:root {
+    --bg-color: #f0f9f4;
+    --forest-green: #1b4332; 
+    --sea-blue: #0077b6; 
+    --rose: #e91e63; 
+    --glass: rgba(255, 255, 255, 0.9);
+    --paper-bg: #fffcf2; 
+    --brown: #5d4037; 
+    --hl-yellow: #fff176;
+    --ink: #2c3e50;
+}
+
+.paper-effect b {
+    background: #fff9c4;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
 
         body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
         .container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.5); }
@@ -109,10 +115,13 @@
 <div class="section-box">
     <h2 onclick="toggleSection('p3-content', this)">🎤 卷三 口试与听力 <span class="toggle-icon">▼</span></h2>
     <div id="p3-content" class="content-toggle">
-        <div class="nav-group p3-nav">
-            <button class="nav-btn" onclick="routeP3('oral', this)">🗣️ 口试练习</button>
-            <button class="nav-btn" onclick="routeP3('listening', this)">👂 听力练习</button>
-        </div>
+<div class="nav-group p3-nav">
+    <button class="nav-btn" onclick="routeP3('oral', this)">🗣️ 口试练习</button>
+    <button class="nav-btn" onclick="routeP3('care', this)">❤️ 关怀弱势群体</button>
+    <button class="nav-btn" onclick="routeP3('health', this)">🌱 健康生活与休闲</button>
+    <button class="nav-btn" onclick="routeP3('school', this)">🎓 校园生活与成长</button>
+    <button class="nav-btn" onclick="routeP3('listening', this)">👂 听力练习</button>
+</div>
         <div id="p3-display-area"></div>
     </div>
 </div>
@@ -153,6 +162,26 @@
 let currentQ = null;
 let currentP2 = null;
 
+function renderP3Topic(key) {
+    const topic = p3Data.topicNotes[key];
+    if (!topic) return "";
+
+    let h = `<h3>${topic.title}</h3>`;
+
+    topic.sections.forEach((sec, i) => {
+        h += `
+        <div class="example-box" style="cursor:pointer;"
+             onclick="const c=this.querySelector('.det'); c.style.display=c.style.display==='none'?'block':'none'">
+            <b style="color:var(--sea-blue);">${sec.title}</b>
+            <div class="det" style="display:none; margin-top:10px;">
+                ${sec.content}
+            </div>
+        </div>`;
+    });
+
+    return h;
+}
+    
 function toggleSection(id, h2Element) {
     document.getElementById(id).classList.toggle('show');
     if(h2Element) {
@@ -515,7 +544,10 @@ function routeP3(mode, btn) {
 
     let h = '<div class="paper-effect">';
     
-    if(mode === 'oral') {
+    if(p3Data.topicNotes && p3Data.topicNotes[mode]) {
+    h += renderP3Topic(mode);
+}
+else if(mode === 'oral') {
         const d = p3Data.oralPractice;
         h += `<h3>${d.title}</h3>`;
         h += `<div class="vocab-grid">`;
