@@ -39,5 +39,89 @@ const p3Data = {
             { name: "听力2", url: "https://vle.learning.moe.edu.sg/mrv/moe-library/lesson/view/edcdd7c3-06b7-4676-9ffb-e6b41eb54103/cover" },
             { name: "听力3", url: "https://vle.learning.moe.edu.sg/mrv/moe-library/lesson/view/c35170c1-b195-4aba-aeca-93e185055de3/cover" }
         ]
+    },
+
+    // ===== 新增：口试课题笔记 =====
+    topicNotes: {
+        care: {
+            title: "关怀弱势群体",
+            sections: [
+                {
+                    title: "为什么要关怀弱势群体？",
+                    content: `新加坡正面临<b>人口老化 Aging population</b>的趋势，预计到2030年，每四个人中就有一位老人。同时，社会中还有残障人士、低收入家庭和客工，他们都在为国家做出贡献。建立一个包容的社会，能增强<b>凝聚力 Cohesiveness</b>，让每个人都觉得这里是温暖的家。`
+                },
+                {
+                    title: "重点关注群体",
+                    content: `<b>乐龄人士 The Elderly：</b>随着年纪增加，老人的身体容易生病，行动不便。很多老人的子女工作忙碌，他们常感到<b>孤独 Lonely</b>，而且因为<b>不会使用新科技 Don't know how to use new technology</b>，在生活中遇到很多麻烦。<br><br>
+<b>残障人士 Persons with disabilities：</b>他们在求职时可能遇到困难，或者在公共场所走动不方便。<br><br>
+<b>客工 Migrant workers：</b>他们是为新加坡建设房屋和地铁的<b>幕后英雄 Unsung heroes</b>。他们离家很远，工作辛苦，需要我们的尊重和体谅。<br><br>
+<b>低收入群体 Low-income groups</b>与<b>社会边缘群体 Marginalized groups：</b>例如独居老人、<b>流浪者 Homeless people</b>、单亲家庭，以及<b>前罪犯 Ex-convicts</b>。`
+                },
+                {
+                    title: "SGHAS框架",
+                    content: `<b>Society（社会）：</b>提供活动和社交机会，减少孤独。<br>
+<b>Government（政府）：</b>增加<b>无障碍设施 Barrier-free facilities</b>，提供<b>津贴 Subsidy</b>。<br>
+<b>Home（家庭）：</b>陪伴长辈，避免<b>孤独</b>，帮助他们使用科技。<br>
+<b>Advertisement（宣传）：</b>提高公众意识，减少歧视。<br>
+<b>School（学校）：</b>组织义工活动，培养同理心。`
+                },
+                {
+                    title: "实战PEEL 1（关怀老人）",
+                    content: `<b>点：</b>关怀老人是每个人的<b>责无旁贷 Bounden duty</b>。<br>
+<b>解释：</b>人口老化，老人容易<b>和社会脱节</b>。<br>
+<b>例子：</b>探访老人、教他们用手机。<br>
+<b>总结：</b><b>老吾老以及人之老</b>，让老人更有<b>尊严 Dignity</b>。`
+                }
+            ]
+        },
+
+        health: {
+            title: "健康生活与休闲",
+            sections: [
+                {
+                    title: "为什么要重视健康生活？",
+                    content: `现代人常有<b>久坐不动 Sedentary lifestyle</b>的问题。健康生活能提高<b>生活品质 Quality of life</b>，增强免疫力。`
+                },
+                {
+                    title: "健康生活的重要元素",
+                    content: `<b>饮食：</b>避免<b>加工食品</b>和<b>快餐</b>，多吃蔬果。<br>
+<b>运动：</b>增强<b>心肺功能</b>，释放压力。<br>
+<b>睡眠：</b>避免<b>熬夜</b>。<br>
+<b>压力管理：</b>减少<b>焦虑</b>与<b>失眠</b>。`
+                },
+                {
+                    title: "SGHAS框架",
+                    content: `<b>社会：</b>健康活动。<br>
+<b>政府：</b>建设公园连道。<br>
+<b>家庭：</b>培养健康饮食。<br>
+<b>宣传：</b>推广健康意识。<br>
+<b>学校：</b>体育与健康教育。`
+                }
+            ]
+        },
+
+        school: {
+            title: "校园生活与成长",
+            sections: [
+                {
+                    title: "为什么校园生活重要？",
+                    content: `校园培养<b>全面发展 All-round development</b>和<b>终身学习 Lifelong learning</b>能力。`
+                },
+                {
+                    title: "校园生活的重要方面",
+                    content: `<b>自主学习：</b>避免<b>填鸭式教学</b>，使用PLD学习。<br>
+<b>潜能发展：</b>通过CCA发现<b>强项</b>。<br>
+<b>假期工作：</b>培养<b>责任感</b>。<br>
+<b>升学路径：</b>Full Subject Based Banding。`
+                },
+                {
+                    title: "SGHAS框架",
+                    content: `<b>社会：</b>培养<b>人际关系技巧</b>。<br>
+<b>政府：</b>学习型国家政策。<br>
+<b>历史：</b>转向<b>全面发展</b>。<br>
+<b>体育：</b>培养<b>体育精神</b>。`
+                }
+            ]
+        }
     }
 };
