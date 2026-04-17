@@ -62,7 +62,7 @@ const q3Data = {
         { word: "爱发脾气", pinyin: "ài fā pí qì", meaning: "short-tempered" },
         { word: "聪明", pinyin: "cōng mìng", meaning: "smart" },
         { word: "贪心", pinyin: "tān xīn", meaning: "greedy" },
-        { word: "胆小", pinyin: "dǎn xiǎo", meaning: "  { word: "有责任感", pinyin: "yǒu zé rèn gǎn", meaning: "responsible / has a sense of responsibility" },
+        { word: "胆小", pinyin: "dǎn xiǎo", meaning: "timid" },
    { word: "有责任感", pinyin: "yǒu zé rèn gǎn", meaning: "responsible / has a sense of responsibility" },
   { word: "不负责任", pinyin: "bù fù zé rèn", meaning: "irresponsible" },
   { word: "温柔", pinyin: "wēn róu", meaning: "gentle / tender" },
