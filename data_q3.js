@@ -63,6 +63,11 @@ const q3Data = {
         { word: "聪明", pinyin: "cōng mìng", meaning: "smart" },
         { word: "贪心", pinyin: "tān xīn", meaning: "greedy" },
         { word: "胆小", pinyin: "dǎn xiǎo", meaning: "timid" },
+        { word: “有责任感”, pinyin: “yǒu zé rèn gǎn”, meaning: “responsible / has a sense of responsibility” },
+{ word: “不负责任”, pinyin: “bù fù zé rèn”, meaning: “irresponsible” },
+{ word: “温柔”, pinyin: “wēn róu”, meaning: “gentle / tender” },
+{ word: “做事认真”, pinyin: “zuò shì rèn zhēn”, meaning: “serious and conscientious in doing things” },
+{ word: “有原则”, pinyin: “yǒu yuán zé”, meaning: “principled” }
         { word: "善良", pinyin: "shàn liáng", meaning: "kind" },
         { word: "自私", pinyin: "zì sī", meaning: "selfish" },
         { word: "乐于助人", pinyin: "lè yú zhù rén", meaning: "helpful" }
