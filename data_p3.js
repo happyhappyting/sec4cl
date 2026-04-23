@@ -265,5 +265,64 @@ const p3Data = {
                 }
             ]
         }
+    },
+
+,
+    // 新增：口试总架构 + 常用例子
+    oralSupport: {
+        framework: {
+            title: "口试总架构",
+            intro: {
+                text: `老师好，我是_________（华文名）。请问我可以坐下吗？`,
+                pinyin: `Lǎoshī hǎo, wǒ shì _________ (Huáwén míng). Qǐngwèn wǒ kěyǐ zuò xià ma?`
+            },
+            clarify: {
+                text: `老师，可以请您解释 (Explain) 吗？`,
+                pinyin: `Lǎoshī, kěyǐ qǐng nín jiěshì ma?`
+            }
+        },
+
+        commonNouns: {
+            title: "常用名词",
+            cards: [
+                { word: "政府", pinyin: "zhèng fǔ", meaning: "government" },
+                { word: "教育部", pinyin: "jiào yù bù", meaning: "Ministry of Education" },
+                { word: "社会", pinyin: "shè huì", meaning: "society" },
+                { word: "社区", pinyin: "shè qū", meaning: "community" },
+                { word: "民众俱乐部", pinyin: "mín zhòng jù lè bù", meaning: "Community Club" },
+                { word: "组屋", pinyin: "zǔ wū", meaning: "HDB flat" },
+                { word: "学校", pinyin: "xué xiào", meaning: "school" },
+                { word: "训导主任", pinyin: "xùn dǎo zhǔ rèn", meaning: "Discipline Master" },
+                { word: "警察", pinyin: "jǐng chá", meaning: "police officer" },
+                { word: "护士", pinyin: "hù shì", meaning: "nurse" },
+                { word: "医生", pinyin: "yī shēng", meaning: "doctor" },
+                { word: "设施", pinyin: "shè shī", meaning: "facilities" },
+                { word: "措施", pinyin: "cuò shī", meaning: "measures" },
+                { word: "政策", pinyin: "zhèng cè", meaning: "policy" },
+                { word: "法律", pinyin: "fǎ lǜ", meaning: "law" },
+                { word: "广告", pinyin: "guǎng gào", meaning: "advertisement" },
+                { word: "社交媒体", pinyin: "shè jiāo méi tǐ", meaning: "social media" }
+            ]
+        },
+
+        commonMethods: {
+            title: "常用办法",
+            cards: [
+                { word: "贴海报", pinyin: "tiē hǎi bào", meaning: "put up posters" },
+                { word: "XX大使", pinyin: "XX dà shǐ", meaning: "XX ambassador" },
+                { word: "德育课", pinyin: "dé yù kè", meaning: "character and citizenship education lesson" },
+                { word: "做义工", pinyin: "zuò yì gōng", meaning: "do volunteer work" },
+                { word: "父母做好榜样", pinyin: "fù mǔ zuò hǎo bǎng yàng", meaning: "parents set a good example" },
+                { word: "找人巡逻", pinyin: "zhǎo rén xún luó", meaning: "arrange for patrols" },
+                { word: "罚款", pinyin: "fá kuǎn", meaning: "issue fines" },
+                { word: "举办讲座", pinyin: "jǔ bàn jiǎng zuò", meaning: "organise talks" },
+                { word: "举办活动", pinyin: "jǔ bàn huó dòng", meaning: "organise activities" }
+            ]
+        },
+
+        reminder: {
+            title: "温馨提醒",
+            content: `<b>说明你的例子的时候，记得使用5W1H。</b>`
+        }
     }
 };
