@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>华文总复习</title>
-    <style>
+<style>
 :root {
     --bg-color: #f0f9f4;
     --forest-green: #1b4332; 
@@ -23,51 +23,77 @@
     border-radius: 4px;
 }
 
-        body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
-        .container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.5); }
-        
-        h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; text-shadow: 1px 1px 0 rgba(255,255,255,0.8); }
+body { font-family: "PingFang SC", "Microsoft YaHei", sans-serif; background-color: var(--bg-color); color: var(--forest-green); padding: 20px; margin: 0; line-height: 1.8; }
+.container { max-width: 1000px; margin: 0 auto; background: var(--glass); backdrop-filter: blur(15px); padding: 30px; border-radius: 30px; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1); border: 1px solid rgba(255,255,255,0.5); }
 
-        /* 倒计时 */
-        .header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
-        .cd-item { background: white; padding: 15px; border-radius: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
-        .days { font-size: 28px; font-weight: bold; color: var(--rose); }
+h1 { text-align: center; color: var(--forest-green); font-size: 2.2em; margin-bottom: 30px; text-shadow: 1px 1px 0 rgba(255,255,255,0.8); }
 
-        /* 模块样式 */
-        .section-box { margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.6); border-radius: 20px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
-        h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; user-select: none; }
-        h2:hover { color: var(--forest-green); }
-        
-        .toggle-icon { font-size: 0.8em; transition: transform 0.3s ease; transform: rotate(-90deg); opacity: 0.7; }
-        .toggle-icon.rotated { transform: rotate(0deg); opacity: 1; color: var(--forest-green); }
+/* 倒计时 */
+.header-box { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 25px; }
+.cd-item { background: white; padding: 15px; border-radius: 18px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.08); border: 1px solid #eee; }
+.days { font-size: 28px; font-weight: bold; color: var(--rose); }
 
-        /* 导航按钮 */
-        .nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
-        .nav-btn { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
-        .nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; box-shadow: 0 4px 10px rgba(27,67,50,0.3); }
+/* 模块样式 */
+.section-box { margin-bottom: 20px; padding: 20px; background: rgba(255,255,255,0.6); border-radius: 20px; border: 1px solid rgba(255,255,255,0.8); box-shadow: 0 4px 15px rgba(0,0,0,0.03); }
+h2 { color: var(--sea-blue); margin: 0; font-size: 1.4em; cursor: pointer; display: flex; justify-content: space-between; align-items: center; padding: 5px 0; user-select: none; }
+h2:hover { color: var(--forest-green); }
 
-        /* 内容折叠 */
-        .content-toggle { display: none; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; }
-        .content-toggle.show { display: block; }
+.toggle-icon { font-size: 0.8em; transition: transform 0.3s ease; transform: rotate(-90deg); opacity: 0.7; }
+.toggle-icon.rotated { transform: rotate(0deg); opacity: 1; color: var(--forest-green); }
 
-        /* 核心盒子样式 */
-        .paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); position: relative; }
-        .example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
-        
-        /* 高亮与格式 */
-        .hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; }
-        .hl-green { background: #c8e6c9; color: #1b5e20; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
-        .bold-text { font-weight: 800; color: #000; }
-        .ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #333; margin: 0 5px; vertical-align: bottom; }
+/* 导航按钮 */
+.nav-group { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; }
+.nav-btn { padding: 10px 16px; border-radius: 10px; border: 2px solid var(--forest-green); background: white; cursor: pointer; font-weight: bold; transition: 0.2s; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+.nav-btn.active, .nav-btn:hover { background: var(--forest-green); color: white; box-shadow: 0 4px 10px rgba(27,67,50,0.3); }
 
-        /* 词语卡片 */
-        .vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
-        .vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+/* 内容折叠 */
+.content-toggle { display: none; margin-top: 15px; border-top: 1px dashed #ccc; padding-top: 15px; }
+.content-toggle.show { display: block; }
 
-        table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
-        th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
-        th { background: #f8f9fa; color: var(--sea-blue); }
-    </style>
+/* 核心盒子样式 */
+.paper-effect { background: var(--paper-bg); padding: 25px; border-radius: 8px; box-shadow: 4px 4px 15px rgba(0,0,0,0.08); border-left: 8px solid var(--sea-blue); margin-top: 10px; color: var(--ink); position: relative; }
+.example-box { border: 2px dashed #d1d1d1; padding: 18px; margin-bottom: 20px; background: #fdfdfd; border-radius: 10px; position: relative; }
+
+/* 高亮与格式 */
+.hl-yellow { background: var(--hl-yellow); padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+.hl-green { background: #c8e6c9; color: #1b5e20; padding: 2px 6px; border-radius: 3px; font-weight: bold; }
+.bold-text { font-weight: 800; color: #000; }
+.ch-space { display: inline-block; min-width: 4em; border-bottom: 2px solid #333; margin: 0 5px; vertical-align: bottom; }
+
+/* 词语卡片 */
+.vocab-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 12px; margin-top: 10px; }
+.vocab-card { background: white; padding: 15px; border-radius: 12px; text-align: center; cursor: pointer; border: 1px solid #efefef; box-shadow: 0 2px 5px rgba(0,0,0,0.03); }
+
+table { width: 100%; border-collapse: collapse; margin: 15px 0; background: white; }
+th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
+th { background: #f8f9fa; color: var(--sea-blue); }
+
+/* ===== 新增：口试总架构样式 ===== */
+
+.oral-line-box {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 12px;
+    padding: 14px 16px;
+    margin-bottom: 14px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.oral-pinyin {
+    margin-top: 8px;
+    color: var(--brown);
+    font-size: 0.95em;
+    line-height: 1.6;
+}
+
+.pink-highlight {
+    background: #ffd6e7;
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 800;
+}
+
+</style>
 </head>
 <body>
 
@@ -116,6 +142,7 @@
     <h2 onclick="toggleSection('p3-content', this)">🎤 卷三 口试与听力 <span class="toggle-icon">▼</span></h2>
     <div id="p3-content" class="content-toggle">
 <div class="nav-group p3-nav">
+    <button class="nav-btn" onclick="routeP3('oral_support', this)">🧩 口试总架构</button>
     <button class="nav-btn" onclick="routeP3('oral', this)">🗣️ 口试练习</button>
     <button class="nav-btn" onclick="routeP3('care', this)">❤️ 关怀弱势群体</button>
     <button class="nav-btn" onclick="routeP3('health', this)">🌱 健康生活与休闲</button>
@@ -178,6 +205,69 @@ function renderP3Topic(key) {
             </div>
         </div>`;
     });
+
+    return h;
+}
+
+
+// ===== 新增：口试总架构显示函数 =====
+function renderP3OralSupport() {
+    const d = p3Data.oralSupport;
+    if (!d) return "";
+
+    let h = `<h3>${d.framework.title}</h3>`;
+
+    // 开场句
+    h += `
+        <div class="oral-line-box">
+            <div><b>${d.framework.intro.text}</b></div>
+            <div class="oral-pinyin">${d.framework.intro.pinyin}</div>
+        </div>
+
+        <div class="oral-line-box">
+            <div><b>${d.framework.clarify.text}</b></div>
+            <div class="oral-pinyin">${d.framework.clarify.pinyin}</div>
+        </div>
+    `;
+
+    // 常用名词
+    h += `<h4 style="margin-top:20px;">${d.commonNouns.title}</h4>`;
+    h += `<div class="vocab-grid">`;
+    d.commonNouns.cards.forEach(item => {
+        h += `
+            <div class="vocab-card" onclick="toggleCard(this, '${item.word}')">
+                <span class="word">${item.word}</span>
+                <div class="det" style="display:none">
+                    <i>${item.pinyin}</i><br>
+                    <b>${item.meaning}</b>
+                </div>
+            </div>
+        `;
+    });
+    h += `</div>`;
+
+    // 常用办法
+    h += `<h4 style="margin-top:20px;">${d.commonMethods.title}</h4>`;
+    h += `<div class="vocab-grid">`;
+    d.commonMethods.cards.forEach(item => {
+        h += `
+            <div class="vocab-card" onclick="toggleCard(this, '${item.word}')">
+                <span class="word">${item.word}</span>
+                <div class="det" style="display:none">
+                    <i>${item.pinyin}</i><br>
+                    <b>${item.meaning}</b>
+                </div>
+            </div>
+        `;
+    });
+    h += `</div>`;
+
+    // 温馨提醒
+    h += `
+        <div class="example-box" style="margin-top:20px; border-left:6px solid var(--rose); background:#fff8fb;">
+            <span class="pink-highlight">${d.reminder.content.replace(/<\/?b>/g, "")}</span>
+        </div>
+    `;
 
     return h;
 }
@@ -544,10 +634,13 @@ function routeP3(mode, btn) {
 
     let h = '<div class="paper-effect">';
     
-    if(p3Data.topicNotes && p3Data.topicNotes[mode]) {
-    h += renderP3Topic(mode);
-}
-else if(mode === 'oral') {
+    if (mode === 'oral_support') {
+        h += renderP3OralSupport();
+    }
+    else if (p3Data.topicNotes && p3Data.topicNotes[mode]) {
+        h += renderP3Topic(mode);
+    }
+    else if (mode === 'oral') {
         const d = p3Data.oralPractice;
         h += `<h3>${d.title}</h3>`;
         h += `<div class="vocab-grid">`;
@@ -561,7 +654,7 @@ else if(mode === 'oral') {
         });
         h += `</div>`;
         
-    } else if(mode === 'listening') {
+    } else if (mode === 'listening') {
         const d = p3Data.listeningPractice;
         h += `<h3>${d.title}</h3>`;
         h += `<div class="vocab-grid">`;
