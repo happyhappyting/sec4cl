@@ -69,7 +69,6 @@ th, td { border: 1px solid #ddd; padding: 12px; text-align: left; }
 th { background: #f8f9fa; color: var(--sea-blue); }
 
 /* ===== 新增：口试总架构样式 ===== */
-
 .oral-line-box {
     background: #fff;
     border: 1px solid #eee;
@@ -92,7 +91,6 @@ th { background: #f8f9fa; color: var(--sea-blue); }
     border-radius: 4px;
     font-weight: 800;
 }
-
 </style>
 </head>
 <body>
@@ -137,21 +135,21 @@ th { background: #f8f9fa; color: var(--sea-blue); }
         </div>
     </div>
 
-<!-- 卷三 -->
-<div class="section-box">
-    <h2 onclick="toggleSection('p3-content', this)">🎤 卷三 口试与听力 <span class="toggle-icon">▼</span></h2>
-    <div id="p3-content" class="content-toggle">
-<div class="nav-group p3-nav">
-    <button class="nav-btn" onclick="routeP3('oral_support', this)">🧩 口试总架构</button>
-    <button class="nav-btn" onclick="routeP3('oral', this)">🗣️ 口试练习</button>
-    <button class="nav-btn" onclick="routeP3('care', this)">❤️ 关怀弱势群体</button>
-    <button class="nav-btn" onclick="routeP3('health', this)">🌱 健康生活与休闲</button>
-    <button class="nav-btn" onclick="routeP3('school', this)">🎓 校园生活与成长</button>
-    <button class="nav-btn" onclick="routeP3('listening', this)">👂 听力练习</button>
-</div>
-        <div id="p3-display-area"></div>
+    <!-- 卷三 -->
+    <div class="section-box">
+        <h2 onclick="toggleSection('p3-content', this)">🎤 卷三 口试与听力 <span class="toggle-icon">▼</span></h2>
+        <div id="p3-content" class="content-toggle">
+            <div class="nav-group p3-nav">
+                <button class="nav-btn" onclick="routeP3('oral_support', this)">🧩 口试总架构</button>
+                <button class="nav-btn" onclick="routeP3('oral', this)">🗣️ 口试练习</button>
+                <button class="nav-btn" onclick="routeP3('care', this)">❤️ 关怀弱势群体</button>
+                <button class="nav-btn" onclick="routeP3('health', this)">🌱 健康生活与休闲</button>
+                <button class="nav-btn" onclick="routeP3('school', this)">🎓 校园生活与成长</button>
+                <button class="nav-btn" onclick="routeP3('listening', this)">👂 听力练习</button>
+            </div>
+            <div id="p3-display-area"></div>
+        </div>
     </div>
-</div>
     
     <div class="section-box">
         <h2 onclick="toggleSection('vocab-content', this)">🏷️ 词语学习 <span class="toggle-icon">▼</span></h2>
@@ -188,17 +186,35 @@ th { background: #f8f9fa; color: var(--sea-blue); }
 
 let currentQ = null;
 let currentP2 = null;
+let currentP3 = null;
+
+function toggleSection(id, h2Element) {
+    const section = document.getElementById(id);
+    if (!section) return;
+    section.classList.toggle('show');
+    if (h2Element) {
+        const icon = h2Element.querySelector('.toggle-icon');
+        if (icon) icon.classList.toggle('rotated');
+    }
+}
+
+function format(text) {
+    if (!text) return "";
+    return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
+}
 
 function renderP3Topic(key) {
-    const topic = p3Data.topicNotes[key];
-    if (!topic) return "";
+    if (typeof p3Data === 'undefined' || !p3Data.topicNotes || !p3Data.topicNotes[key]) {
+        return `<div class="example-box">⚠️ 暂无资料</div>`;
+    }
 
+    const topic = p3Data.topicNotes[key];
     let h = `<h3>${topic.title}</h3>`;
 
-    topic.sections.forEach((sec, i) => {
+    (topic.sections || []).forEach(sec => {
         h += `
         <div class="example-box" style="cursor:pointer;"
-             onclick="const c=this.querySelector('.det'); c.style.display=c.style.display==='none'?'block':'none'">
+             onclick="const c=this.querySelector('.det'); if(c){ c.style.display = c.style.display==='none' ? 'block' : 'none'; }">
             <b style="color:var(--sea-blue);">${sec.title}</b>
             <div class="det" style="display:none; margin-top:10px;">
                 ${sec.content}
@@ -209,110 +225,100 @@ function renderP3Topic(key) {
     return h;
 }
 
-
-// ===== 新增：口试总架构显示函数 =====
 function renderP3OralSupport() {
+    if (typeof p3Data === 'undefined' || !p3Data.oralSupport) {
+        return `<div class="example-box">⚠️ 暂无资料</div>`;
+    }
+
     const d = p3Data.oralSupport;
-    if (!d) return "";
+    let h = `<h3>${d.framework?.title || "口试总架构"}</h3>`;
 
-    let h = `<h3>${d.framework.title}</h3>`;
-
-    // 开场句
-    h += `
+    if (d.framework?.intro) {
+        h += `
         <div class="oral-line-box">
             <div><b>${d.framework.intro.text}</b></div>
-            <div class="oral-pinyin">${d.framework.intro.pinyin}</div>
-        </div>
+            <div class="oral-pinyin">${d.framework.intro.pinyin || ""}</div>
+        </div>`;
+    }
 
+    if (d.framework?.clarify) {
+        h += `
         <div class="oral-line-box">
             <div><b>${d.framework.clarify.text}</b></div>
-            <div class="oral-pinyin">${d.framework.clarify.pinyin}</div>
-        </div>
-    `;
+            <div class="oral-pinyin">${d.framework.clarify.pinyin || ""}</div>
+        </div>`;
+    }
 
-    // 常用名词
-    h += `<h4 style="margin-top:20px;">${d.commonNouns.title}</h4>`;
-    h += `<div class="vocab-grid">`;
-    d.commonNouns.cards.forEach(item => {
-        h += `
-            <div class="vocab-card" onclick="toggleCard(this, '${item.word}')">
+    if (d.commonNouns?.cards?.length) {
+        h += `<h4 style="margin-top:20px;">${d.commonNouns.title}</h4>`;
+        h += `<div class="vocab-grid">`;
+        d.commonNouns.cards.forEach(item => {
+            h += `
+            <div class="vocab-card" onclick="toggleCard(this, '${item.word.replace(/'/g, "\\'")}')">
                 <span class="word">${item.word}</span>
                 <div class="det" style="display:none">
-                    <i>${item.pinyin}</i><br>
-                    <b>${item.meaning}</b>
+                    <i>${item.pinyin || ""}</i><br>
+                    <b>${item.meaning || ""}</b>
                 </div>
-            </div>
-        `;
-    });
-    h += `</div>`;
+            </div>`;
+        });
+        h += `</div>`;
+    }
 
-    // 常用办法
-    h += `<h4 style="margin-top:20px;">${d.commonMethods.title}</h4>`;
-    h += `<div class="vocab-grid">`;
-    d.commonMethods.cards.forEach(item => {
-        h += `
-            <div class="vocab-card" onclick="toggleCard(this, '${item.word}')">
+    if (d.commonMethods?.cards?.length) {
+        h += `<h4 style="margin-top:20px;">${d.commonMethods.title}</h4>`;
+        h += `<div class="vocab-grid">`;
+        d.commonMethods.cards.forEach(item => {
+            h += `
+            <div class="vocab-card" onclick="toggleCard(this, '${item.word.replace(/'/g, "\\'")}')">
                 <span class="word">${item.word}</span>
                 <div class="det" style="display:none">
-                    <i>${item.pinyin}</i><br>
-                    <b>${item.meaning}</b>
+                    <i>${item.pinyin || ""}</i><br>
+                    <b>${item.meaning || ""}</b>
                 </div>
-            </div>
-        `;
-    });
-    h += `</div>`;
+            </div>`;
+        });
+        h += `</div>`;
+    }
 
-    // 温馨提醒
-    h += `
+    if (d.reminder?.content) {
+        h += `
         <div class="example-box" style="margin-top:20px; border-left:6px solid var(--rose); background:#fff8fb;">
             <span class="pink-highlight">${d.reminder.content.replace(/<\/?b>/g, "")}</span>
-        </div>
-    `;
+        </div>`;
+    }
 
     return h;
-}
-    
-function toggleSection(id, h2Element) {
-    document.getElementById(id).classList.toggle('show');
-    if(h2Element) {
-        const icon = h2Element.querySelector('.toggle-icon');
-        if(icon) icon.classList.toggle('rotated');
-    }
-}
-
-function format(text) {
-    if(!text) return "";
-    return text.replace(/＿{2,}/g, '<span class="ch-space"></span>');
 }
 
 function route(type, btn) {
     const area = document.getElementById('display-area');
     if (currentQ === type) {
         area.style.display = 'none';
-        btn.classList.remove('active');
+        if (btn) btn.classList.remove('active');
         currentQ = null;
         return;
     }
     area.style.display = 'block';
     document.querySelectorAll('.main-nav .nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     currentQ = type;
 
     if (type === 'q1') {
         area.innerHTML = `<div class="paper-effect"><h3>${q1Data.title}</h3>${format(q1Data.example)}${format(q1Data.answer)}</div>`;
     } else if (type === 'q2') {
-        if(typeof q2Data !== 'undefined') {
+        if (typeof q2Data !== 'undefined') {
             let h = `<div class="paper-effect"><h3>${q2Data.title}</h3>`;
-            if(q2Data.template_info) h += q2Data.template_info;
+            if (q2Data.template_info) h += q2Data.template_info;
             h += `<div style="margin-top:30px;"></div>` + (q2Data.example || "") + (q2Data.answer || "");
-            if(q2Data.example2) {
+            if (q2Data.example2) {
                 h += `<div style="margin-top:50px; border-top: 2px dashed var(--sea-blue); padding-top:20px;"></div>`;
                 h += q2Data.example2 + q2Data.answer2;
             }
-            if(q2Data.vocab) {
+            if (q2Data.vocab) {
                 h += `<h4>📌 核心词汇储备</h4><div class="vocab-grid">`;
                 q2Data.vocab.forEach(v => {
-                    h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><b>${v.word}</b><div class="det" style="display:none"><small>${v.en}</small><br><span style="color:var(--rose)">效果：${v.effect}</span></div></div>`;
+                    h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word.replace(/'/g, "\\'")}')"><b>${v.word}</b><div class="det" style="display:none"><small>${v.en}</small><br><span style="color:var(--rose)">效果：${v.effect}</span></div></div>`;
                 });
                 h += `</div>`;
             }
@@ -321,13 +327,11 @@ function route(type, btn) {
         } else {
             area.innerHTML = `<div class="paper-effect">⚠️ 暂无数据</div>`;
         }
-    }
-    else if (type === 'q3') renderQ3();
+    } else if (type === 'q3') renderQ3();
     else if (type === 'q4') renderQ4();
     else if (type === 'q5') renderQ5();
 }
 
-// Q3 渲染逻辑保持不变
 function renderQ3() {
     let html = `<div class="nav-group" style="margin-top:10px;">
         <button class="nav-btn active" onclick="showQ3Sub('tips', this)">💡 开头技巧</button>
@@ -341,31 +345,30 @@ function renderQ3() {
 }
 
 function showQ3Sub(mode, btn) {
-    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+    if (btn) {
+        btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+    }
     const sub = document.getElementById('q3-sub-area');
     let h = '';
-    if(mode === 'tips') {
+    if (mode === 'tips') {
         h = '<div class="paper-effect"><b>💡 考场建议：</b>' + q3Data.strategies.examTips + '<hr>';
         q3Data.strategies.openings.forEach(o => h += `<p><b style="color:var(--sea-blue)">${o.title}</b><br>${format(o.example)}</p>`);
         h += '</div>';
-    } else if(mode === 'ending') {
+    } else if (mode === 'ending') {
         h = '<div class="paper-effect">';
         q3Data.strategies.conclusions.forEach((c, idx) => h += `<p><b>${idx+1}. ${c.title}：</b><br>${c.content}</p>`);
         h += '</div>';
-    } else if(['traits', 'emotions'].includes(mode)) {
+    } else if (['traits', 'emotions'].includes(mode)) {
         const pool = mode === 'traits' ? q3Data.traits : q3Data.emotions;
         h = `<div class="vocab-grid">`;
-        pool.forEach(v => h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`);
+        pool.forEach(v => h += `<div class="vocab-card" onclick="toggleCard(this, '${v.word.replace(/'/g, "\\'")}')"><span class="word">${v.word}</span><div class="det" style="display:none"><i>${v.pinyin}</i><br><b>${v.meaning}</b></div></div>`);
         h += `</div>`;
-    } else if(mode === 'essay') {
+    } else if (mode === 'essay') {
         h = `<div class="model-essay-paper"><span class="model-essay-title">${q3Data.modelEssay.title}</span><div class="model-essay-content">${format(q3Data.modelEssay.content)}</div></div>`;
     }
     sub.innerHTML = h;
 }
-
-// --- Q4 议论文渲染逻辑 ---
-
-// --- Q4 议论文渲染逻辑 (最新精准拆解版) ---
 
 function renderQ4() {
     let html = `<div class="nav-group" style="margin-top:10px;">
@@ -377,23 +380,22 @@ function renderQ4() {
         <button class="nav-btn" onclick="showQ4Sub('proscons', this)">⚖️ 利与弊</button>
     </div><div id="q4-sub-area"></div>`;
     document.getElementById('display-area').innerHTML = html;
-    showQ4Sub('review'); // 默认显示第一项
+    showQ4Sub('review');
 }
 
 function showQ4Sub(mode, btn) {
-    if(btn) { 
+    if (btn) { 
         btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); 
         btn.classList.add('active'); 
     }
     const sub = document.getElementById('q4-sub-area');
     let h = '<div class="paper-effect">';
     
-    // 1. 三要素模块
-    if(mode === 'review') {
+    if (mode === 'review') {
         h += `<h3>${q4Data.review.title}</h3>`;
         q4Data.review.elements.forEach(e => {
             h += `<div class="example-box"><b style="color:var(--sea-blue)">${e.term}</b>：${e.detail}`;
-            if(e.methods) {
+            if (e.methods) {
                 e.methods.forEach(m => {
                     h += `<div style="margin-top:10px; padding:10px; background:#fff; border:1px solid #eee; border-radius:8px;">
                             <b style="color:var(--rose)">【${m.name}】</b><br>${m.content}
@@ -403,31 +405,24 @@ function showQ4Sub(mode, btn) {
             }
             h += `</div>`;
         });
-    } 
-    // 2. 核心逻辑与题目拆解模块
-    else if(mode === 'logic') {
+    } else if (mode === 'logic') {
         const d = q4Data.logic_section;
         h += `<h3 style="text-align:center; color:var(--sea-blue);">${d.title}</h3>`;
         h += `<div class="example-box" style="background:#f0f7ff; text-align:center; border:2px solid var(--sea-blue);"><p style="font-size:20px; font-weight:bold; margin:5px 0;">${d.formula}</p></div>`;
-        
-        // 审题提示 (绝对句/身份要求)
         h += `<h4>📌 审题提示</h4><div style="display:grid; grid-template-columns:1fr 1fr; gap:10px;">`;
         d.traps.forEach(t => {
             h += `<div class="example-box" style="background:#fffcf0; border-left:5px solid #ff9800; margin:0;">
                     <b style="color:#e65100;">${t.name}</b><br><small>关键词：${t.keywords}</small><p style="font-size:13px; margin-top:5px;">${t.strategy}</p>`;
-            if(t.cases) {
+            if (t.cases) {
                 t.cases.forEach(c => h += `<div style="font-size:11px; color:#666; background:#fff; padding:5px; margin-top:5px; border-radius:4px;">例：${c.q}➔${c.a}</div>`);
             }
             h += `</div>`;
         });
         h += `</div>`;
-
-        // 题目列表 (点击展开逻辑)
         h += `<h4 style="margin-top:20px;">📂 题目逻辑拆解 (点击展开分析)</h4>`;
         d.topics.forEach((item, index) => {
-            // 根据 Case 类型设置不同的侧边颜色
             const sideColor = item.cat.includes('Case A') ? '#bbdefb' : '#c8e6c9';
-            h += `<div class="example-box" style="cursor:pointer; background:white; position:relative; border-left: 6px solid ${sideColor}; padding-left:15px;" onclick="const ans = this.querySelector('.ans'); ans.style.display = ans.style.display === 'none' ? 'block' : 'none'">
+            h += `<div class="example-box" style="cursor:pointer; background:white; position:relative; border-left: 6px solid ${sideColor}; padding-left:15px;" onclick="const ans = this.querySelector('.ans'); if(ans){ ans.style.display = ans.style.display === 'none' ? 'block' : 'none'; }">
                     <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:5px;">
                         <span style="font-size:10px; color:#666; font-weight:bold; background:#eee; padding:2px 5px; border-radius:3px;">${item.cat}</span>
                         ${item.i ? `<span style="padding:1px 6px; background:#e1f5fe; color:#0288d1; border-radius:4px; font-size:11px; font-weight:bold; border:1px solid #b3e5fc;">Identity: ${item.i}</span>` : ''}
@@ -439,19 +434,15 @@ function showQ4Sub(mode, btn) {
                     </div>
                   </div>`;
         });
-    }
-    // 3. 论据库模块
-    else if(mode === 'bank') {
+    } else if (mode === 'bank') {
         h += `<h3>${q4Data.bank.title}</h3>`;
         q4Data.bank.modules.forEach(m => {
             h += `<div class="example-box"><b style="color:var(--sea-blue); font-size:16px;">${m.name}</b><p style="font-size:14px; margin:10px 0; line-height:1.5;">${m.content}</p>
                     <div style="background:#f9f9f9; padding:10px; border-radius:5px; font-size:13px; border-left:3px solid var(--sea-blue);"><b>如何论证 (逻辑)：</b><br>${m.logic}</div></div>`;
         });
-    }
-    // 4. 三大题型详情模块
-    else {
+    } else {
         const d = q4Data[mode];
-        if(d) {
+        if (d) {
             h += `<h3>${d.title}</h3>
                   <div class="example-box" style="border-left:5px solid var(--sea-blue);"><b>论证引导：</b><br>${d.method}</div>
                   <div class="example-box" style="background:#fffcf0; border-left:5px solid #ffc107;"><b>实战范例 (5W1H + Outcome)：</b><br>${d.example}</div>`;
@@ -459,8 +450,6 @@ function showQ4Sub(mode, btn) {
     }
     sub.innerHTML = h + '</div>';
 }
-
-// --- Q5 渲染逻辑 ---
 
 function renderQ5() {
     let html = `<div class="nav-group" style="margin-top:10px;">
@@ -473,18 +462,18 @@ function renderQ5() {
 }
 
 function showQ5Sub(mode, btn) {
-    if(btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
+    if (btn) { btn.parentElement.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }
     const sub = document.getElementById('q5-sub-area');
     const d = q5Data[mode];
     let h = '<div class="paper-effect">';
     
-    if(mode === 'definition') {
-        h += `<h3>${d.title}</h3><ul>${d.rules.map(r=>`<li>${r}</li>`).join('')}</ul>`;
-    } else if(mode === 'argumentative') {
+    if (mode === 'definition') {
+        h += `<h3>${d.title}</h3><ul>${d.rules.map(r => `<li>${r}</li>`).join('')}</ul>`;
+    } else if (mode === 'argumentative') {
         h += `<h3>${d.title}</h3>`;
         d.stepByStep.forEach(s => h += `<p><b>${s.step}</b>：${s.detail}</p>`);
         h += `<div class="example-box"><b>材料：</b><br>${format(d.example.material)}</div><p><b>用法：</b><br>${d.example.usage}</p>`;
-    } else if(mode === 'narrative') {
+    } else if (mode === 'narrative') {
         h += `<h3>${d.title}</h3>`;
         d.types.forEach(t => {
             h += `<div class="example-box"><h4>${t.name}</h4><ul>`;
@@ -499,74 +488,71 @@ function showQ5Sub(mode, btn) {
     sub.innerHTML = h + '</div>';
 }
 
-// P2 渲染逻辑保持不变
 function routeP2(mode, btn) {
     const area = document.getElementById('p2-display-area');
     if (currentP2 === mode) {
         area.style.display = 'none';
-        btn.classList.remove('active');
+        if (btn) btn.classList.remove('active');
         currentP2 = null;
         return;
     }
     area.style.display = 'block';
     document.querySelectorAll('.p2-nav .nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     currentP2 = mode;
 
     let h = '<div class="paper-effect">';
-    if(mode === 'reading_tips') {
+    if (mode === 'reading_tips') {
         const d = p2Data.readingTips;
         h += `<h3>${d.title}</h3><p style="color:var(--rose); font-weight:bold;">${d.subtitle}</p>`;
         d.steps.forEach(s => h += `<p><b>${s.step}</b>：${s.detail}</p>`);
-    } else if(mode === 'vocab_app') {
+    } else if (mode === 'vocab_app') {
         const c = p2Data.clozeAndReplacement.cloze;
         const r = p2Data.clozeAndReplacement.replacement;
         h += `<div class="example-box"><h3>${c.title}</h3><p><b>说明：</b>${c.desc}</p></div>`;
         h += `<div class="example-box"><h3>${r.title}</h3><p><b>说明：</b>${r.desc}</p></div>`;
-    } else if(mode === 'argument_analysis') {
+    } else if (mode === 'argument_analysis') {
         const d = p2Data.argumentative;
         h += `<h3>${d.analysis.title}</h3>`;
         d.analysis.table.forEach(item => h += `<div class="example-box"><b>论点：</b>${item.point}<br><b>方法：</b>${item.method}</div>`);
-    } else if(mode === 'open_ended') {
+    } else if (mode === 'open_ended') {
         const d = p2Data.comp2;
         h += `<h3>${d.title}</h3><hr><h4>提问词对照表：</h4><div class="vocab-grid">`;
         d.requirementVocab.forEach(v => h += `<div class="vocab-card" style="padding:10px;"><b style="font-size:16px;">${v.cn}</b><br><small style="color:var(--brown)">${v.en}</small></div>`);
         h += `</div>`;
-    } else if(mode === 'mcq') {
-    const d = p2Data.comp1;
-    h += `<h3>${d.title}</h3>`;
-    h += `<p><b>时间建议：</b>${d.time}</p>`;
-    h += `<p><b>说明：</b>${d.desc}</p>`;
-    h += `<h4>答题技巧：</h4>`;
-    d.tips.forEach((tip, index) => h += `<p>${tip}</p>`);
-    
-} else if(mode === 'rhetoric') {
-    h += `<h3>修辞手法</h3>`;
-    p2Data.rhetoric.forEach(r => {
-        h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); d.style.display=(d.style.display==='none'?'block':'none')">
-                <span class="word">${r.name}</span>
-                <div class="det" style="display:none; border-top:1px dashed #ccc; margin-top:8px; padding-top:8px;">
-                    <p><b>说明：</b>${r.desc}</p>
-                    <p><b>例子：</b></p>`;
-        r.examples.forEach(ex => h += `<p style="margin-left:15px;"><i>${ex}</i></p>`);
-        h += `</div></div>`;
-    });
-    
-} else if(mode === 'expository') {
-    const d = p2Data.expository;
-    h += `<h3>说明文</h3>`;
-    h += `<h4>说明顺序：</h4>`;
-    d.orders.forEach(order => {
-        h += `<div class="example-box"><b>${order.type}</b><br>${order.detail}</div>`;
-    });
-    h += `<h4>说明方法：</h4>`;
-    d.methods.forEach(method => {
-        h += `<div class="example-box"><b>${method.name}</b><br>${method.detail}</div>`;
-    });
-    } else if(mode === 'character') {
+    } else if (mode === 'mcq') {
+        const d = p2Data.comp1;
+        h += `<h3>${d.title}</h3>`;
+        h += `<p><b>时间建议：</b>${d.time}</p>`;
+        h += `<p><b>说明：</b>${d.desc}</p>`;
+        h += `<h4>答题技巧：</h4>`;
+        d.tips.forEach(tip => h += `<p>${tip}</p>`);
+    } else if (mode === 'rhetoric') {
+        h += `<h3>修辞手法</h3>`;
+        p2Data.rhetoric.forEach(r => {
+            h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); if(d){ d.style.display=(d.style.display==='none'?'block':'none'); }">
+                    <span class="word">${r.name}</span>
+                    <div class="det" style="display:none; border-top:1px dashed #ccc; margin-top:8px; padding-top:8px;">
+                        <p><b>说明：</b>${r.desc}</p>
+                        <p><b>例子：</b></p>`;
+            r.examples.forEach(ex => h += `<p style="margin-left:15px;"><i>${ex}</i></p>`);
+            h += `</div></div>`;
+        });
+    } else if (mode === 'expository') {
+        const d = p2Data.expository;
+        h += `<h3>说明文</h3>`;
+        h += `<h4>说明顺序：</h4>`;
+        d.orders.forEach(order => {
+            h += `<div class="example-box"><b>${order.type}</b><br>${order.detail}</div>`;
+        });
+        h += `<h4>说明方法：</h4>`;
+        d.methods.forEach(method => {
+            h += `<div class="example-box"><b>${method.name}</b><br>${method.detail}</div>`;
+        });
+    } else if (mode === 'character') {
         h += `<h3>人物描写手法</h3>`;
         p2Data.characterPortrayal.forEach(c => {
-            h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); d.style.display=(d.style.display==='none'?'block':'none')">
+            h += `<div class="vocab-card" style="text-align:left; margin-bottom:10px; width:auto;" onclick="const d=this.querySelector('.det'); if(d){ d.style.display=(d.style.display==='none'?'block':'none'); }">
                     <span class="word">${c.type}</span>
                     <div class="det" style="display:none; border-top:1px dashed #ccc; margin-top:8px; padding-top:8px;">
                         <p><b>作用：</b>${c.effect}</p>
@@ -580,12 +566,13 @@ function routeP2(mode, btn) {
 
 function toggleCard(el, word) {
     const d = el.querySelector('.det');
-    if(!d) return;
+    if (!d) return;
     const isShowing = d.style.display === 'block';
     d.style.display = isShowing ? 'none' : 'block';
-    if(!isShowing) {
+    if (!isShowing) {
         const msg = new SpeechSynthesisUtterance(word);
         msg.lang = "zh-CN";
+        window.speechSynthesis.cancel();
         window.speechSynthesis.speak(msg);
     }
 }
@@ -594,11 +581,11 @@ function renderVocab(mode) {
     const area = document.getElementById('vocab-display');
     const lv = document.getElementById('grade-select').value;
     area.innerHTML = "";
-    if(typeof vocabData === 'undefined') return;
+    if (typeof vocabData === 'undefined') return;
     let pool = [];
-    if(lv === 'all') Object.keys(vocabData).forEach(k => pool = pool.concat(vocabData[k]));
+    if (lv === 'all') Object.keys(vocabData).forEach(k => pool = pool.concat(vocabData[k]));
     else pool = vocabData[lv] || [];
-    let list = mode === 'random' ? [...pool].sort(()=>0.5-Math.random()).slice(0,10) : pool;
+    let list = mode === 'random' ? [...pool].sort(() => 0.5 - Math.random()).slice(0, 10) : pool;
     list.forEach(item => {
         const card = document.createElement('div');
         card.className = 'vocab-card';
@@ -608,69 +595,74 @@ function renderVocab(mode) {
     });
 }
 
-window.onload = function() {
-    const dates = { cd1: '2026-06-02', cd2: '2026-07-07', cd3: '2026-07-13' };
-    for (let id in dates) {
-        const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
-        const el = document.getElementById(id);
-        if(el) el.innerText = diff > 0 ? diff : 0;
-    }
-};
-
-let currentP3 = null;
-
 function routeP3(mode, btn) {
     const area = document.getElementById('p3-display-area');
     if (currentP3 === mode) {
         area.style.display = 'none';
-        btn.classList.remove('active');
+        if (btn) btn.classList.remove('active');
         currentP3 = null;
         return;
     }
     area.style.display = 'block';
     document.querySelectorAll('.p3-nav .nav-btn').forEach(b => b.classList.remove('active'));
-    if(btn) btn.classList.add('active');
+    if (btn) btn.classList.add('active');
     currentP3 = mode;
 
     let h = '<div class="paper-effect">';
     
-    if (mode === 'oral_support') {
-        h += renderP3OralSupport();
-    }
-    else if (p3Data.topicNotes && p3Data.topicNotes[mode]) {
-        h += renderP3Topic(mode);
-    }
-    else if (mode === 'oral') {
-        const d = p3Data.oralPractice;
-        h += `<h3>${d.title}</h3>`;
-        h += `<div class="vocab-grid">`;
-        d.topics.forEach(topic => {
-            h += `<div class="vocab-card" style="padding:15px; text-align:center;">
-                    <h4 style="margin:0 0 10px 0; color:var(--rose);">${topic.year} ${topic.topic}</h4>
-                    <a href="${topic.url}" target="_blank" class="nav-btn" style="display:inline-block; padding:8px 16px; text-decoration:none;">
-                        🔗 前往 SLS
-                    </a>
-                  </div>`;
-        });
-        h += `</div>`;
-        
-    } else if (mode === 'listening') {
-        const d = p3Data.listeningPractice;
-        h += `<h3>${d.title}</h3>`;
-        h += `<div class="vocab-grid">`;
-        d.exercises.forEach(exercise => {
-            h += `<div class="vocab-card" style="padding:20px; text-align:center;">
-                    <h4 style="margin:0 0 15px 0; color:var(--brown);">${exercise.name}</h4>
-                    <a href="${exercise.url}" target="_blank" class="nav-btn" style="display:inline-block; padding:10px 20px; text-decoration:none;">
-                        🔗 前往 SLS
-                    </a>
-                  </div>`;
-        });
-        h += `</div>`;
+    try {
+        if (mode === 'oral_support') {
+            h += renderP3OralSupport();
+        }
+        else if (typeof p3Data !== 'undefined' && p3Data.topicNotes && p3Data.topicNotes[mode]) {
+            h += renderP3Topic(mode);
+        }
+        else if (typeof p3Data !== 'undefined' && mode === 'oral' && p3Data.oralPractice) {
+            const d = p3Data.oralPractice;
+            h += `<h3>${d.title}</h3>`;
+            h += `<div class="vocab-grid">`;
+            d.topics.forEach(topic => {
+                h += `<div class="vocab-card" style="padding:15px; text-align:center;">
+                        <h4 style="margin:0 0 10px 0; color:var(--rose);">${topic.year} ${topic.topic}</h4>
+                        <a href="${topic.url}" target="_blank" class="nav-btn" style="display:inline-block; padding:8px 16px; text-decoration:none;">
+                            🔗 前往 SLS
+                        </a>
+                      </div>`;
+            });
+            h += `</div>`;
+        }
+        else if (typeof p3Data !== 'undefined' && mode === 'listening' && p3Data.listeningPractice) {
+            const d = p3Data.listeningPractice;
+            h += `<h3>${d.title}</h3>`;
+            h += `<div class="vocab-grid">`;
+            d.exercises.forEach(exercise => {
+                h += `<div class="vocab-card" style="padding:20px; text-align:center;">
+                        <h4 style="margin:0 0 15px 0; color:var(--brown);">${exercise.name}</h4>
+                        <a href="${exercise.url}" target="_blank" class="nav-btn" style="display:inline-block; padding:10px 20px; text-decoration:none;">
+                            🔗 前往 SLS
+                        </a>
+                      </div>`;
+            });
+            h += `</div>`;
+        } else {
+            h += `<div class="example-box">⚠️ 暂无资料</div>`;
+        }
+    } catch (err) {
+        h += `<div class="example-box">⚠️ 口试资料载入失败，请检查 data_p3.js 的逗号、括号和 oralSupport / topicNotes 插入位置。</div>`;
+        console.error(err);
     }
     
     area.innerHTML = h + '</div>';
 }
+
+window.onload = function() {
+    const dates = { cd1: '2026-06-02', cd2: '2026-07-07', cd3: '2026-07-13' };
+    for (let id in dates) {
+        const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
+        const el = document.getElementById(id);
+        if (el) el.innerText = diff > 0 ? diff : 0;
+    }
+};
 </script>
 </body>
 </html>
