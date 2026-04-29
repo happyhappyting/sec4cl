@@ -511,6 +511,7 @@ const vocabData = {
 { word: "凝聚力", pinyin: "níng jù lì", meaning: "cohesion" },
 { word: "辨别", pinyin: "biàn bié", meaning: "to distinguish; to differentiate" }
     ],
+    
     "Level 3": [
         { word: "良好", pinyin: "liáng hǎo", meaning: "good" },
         { word: "人际", pinyin: "rén jì", meaning: "human relationships" },
@@ -747,10 +748,44 @@ const vocabData = {
         { word: "慈祥", pinyin: "cí xiáng", meaning: "kindly" },
         { word: "潭", pinyin: "tán", meaning: "deep pool" },
         { word: "教授", pinyin: "jiào shòu", meaning: "professor" },
-        { word: "割舍", pinyin: "gē shě", meaning: "give up" }
+        { word: "割舍", pinyin: "gē shě", meaning: "give up" },
+        { word: "磋商", pinyin: "cuō shāng", meaning: "to consult; to negotiate" },
+{ word: "均衡", pinyin: "jūn héng", meaning: "balanced; equilibrium" },
+{ word: "享受", pinyin: "xiǎng shòu", meaning: "to enjoy" },
+{ word: "所谓", pinyin: "suǒ wèi", meaning: "so-called" },
+{ word: "源远流长", pinyin: "yuán yuǎn liú cháng", meaning: "to have a long history" },
+{ word: "异军突起", pinyin: "yì jūn tū qǐ", meaning: "to rise suddenly as a new force" },
+{ word: "五花八门", pinyin: "wǔ huā bā mén", meaning: "varied; all kinds of" },
+{ word: "鲜为人知", pinyin: "xiǎn wéi rén zhī", meaning: "rarely known" },
+{ word: "宵夜", pinyin: "xiāo yè", meaning: "late-night snack" },
+{ word: "艰难", pinyin: "jiān nán", meaning: "difficult; hard" },
+{ word: "营造", pinyin: "yíng zào", meaning: "to build; to create" },
+{ word: "计较", pinyin: "jì jiào", meaning: "to fuss over; to haggle over" },
+{ word: "划算", pinyin: "huá suàn", meaning: "worth it; cost-effective" },
+{ word: "久而久之", pinyin: "jiǔ ér jiǔ zhī", meaning: "as time passes" },
+{ word: "畅所欲言", pinyin: "chàng suǒ yù yán", meaning: "to speak freely" },
+{ word: "尊重", pinyin: "zūn zhòng", meaning: "to respect" },
+{ word: "广泛", pinyin: "guǎng fàn", meaning: "wide; extensive" },
+{ word: "导致", pinyin: "dǎo zhì", meaning: "to lead to; to cause" },
+{ word: "前所未有", pinyin: "qián suǒ wèi yǒu", meaning: "unprecedented" },
+{ word: "创建", pinyin: "chuàng jiàn", meaning: "to establish; to create" },
+{ word: "贯穿", pinyin: "guàn chuān", meaning: "to run through; to permeate" },
+{ word: "勇于", pinyin: "yǒng yú", meaning: "to have the courage to" },
+{ word: "九牛一毛", pinyin: "jiǔ niú yī máo", meaning: "a drop in the bucket" },
+{ word: "层出不穷", pinyin: "céng chū bù qióng", meaning: "to emerge one after another endlessly" },
+{ word: "信任", pinyin: "xìn rèn", meaning: "to trust; trust" },
+{ word: "依赖", pinyin: "yī lài", meaning: "to rely on; dependence" },
+{ word: "搬迁", pinyin: "bān qiān", meaning: "to move; to relocate" },
+{ word: "孝顺", pinyin: "xiào shùn", meaning: "filial; to be filial" },
+{ word: "探望", pinyin: "tàn wàng", meaning: "to visit" },
+{ word: "谅解", pinyin: "liàng jiě", meaning: "to understand; to forgive" },
+{ word: "折磨", pinyin: "zhé mó", meaning: "to torment; suffering" },
+{ word: "神圣", pinyin: "shén shèng", meaning: "sacred; holy" },
+{ word: "介意", pinyin: "jiè yì", meaning: "to mind; to care about" },
+{ word: "演奏", pinyin: "yǎn zòu", meaning: "to perform music" }
     ],
+    
     "Level 4": [
-    // 第一单元（关怀主题）
     { word: "责无旁贷", pinyin: "zé wú páng dài", meaning: "duty-bound; obligated" },
     { word: "分忧", pinyin: "fēn yōu", meaning: "to share worries; relieve burden" },
     { word: "残障", pinyin: "cán zhàng", meaning: "disability; handicap" },
@@ -789,8 +824,6 @@ const vocabData = {
     { word: "匆匆", pinyin: "cōng cōng", meaning: "hurriedly; hastily" },
     { word: "婴儿", pinyin: "yīng ér", meaning: "baby; infant" },
     { word: "翅膀", pinyin: "chì bǎng", meaning: "wing" },
-
-    // 第二单元（戏剧文学主题）
     { word: "呈献", pinyin: "chéng xiàn", meaning: "to present; offer" },
     { word: "扣人心弦", pinyin: "kòu rén xīn xián", meaning: "gripping; touching" },
     { word: "爱恋", pinyin: "ài liàn", meaning: "love; romantic attachment" },
@@ -828,8 +861,6 @@ const vocabData = {
     { word: "严寒", pinyin: "yán hán", meaning: "severe cold" },
     { word: "恳请", pinyin: "kěn qǐng", meaning: "to earnestly request" },
     { word: "心直口快", pinyin: "xīn zhí kǒu kuài", meaning: "frank and outspoken" },
-
-    // 第三单元（生态环境主题）
     { word: "酿", pinyin: "niàng", meaning: "to brew; cause" },
     { word: "涌", pinyin: "yǒng", meaning: "to surge; gush" },
     { word: "繁殖", pinyin: "fán zhí", meaning: "to reproduce; breed" },
