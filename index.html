@@ -91,6 +91,84 @@ th { background: #f8f9fa; color: var(--sea-blue); }
     border-radius: 4px;
     font-weight: 800;
 }
+
+/* ===== 常见错误 + 高分表达 ===== */
+
+.error-reminder {
+    background: #fff8fb;
+    border-left: 6px solid var(--rose);
+    padding: 12px 14px;
+    border-radius: 10px;
+    margin: 12px 0 18px 0;
+    color: var(--brown);
+    font-weight: bold;
+}
+
+.error-card {
+    background: #ffebee;
+    border: 2px solid #ef9a9a;
+    border-radius: 14px;
+    padding: 15px;
+    margin-bottom: 14px;
+    cursor: pointer;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+}
+
+.error-card.open {
+    background: white;
+    border: 2px dashed #d1d1d1;
+}
+
+.error-card-title {
+    color: #b71c1c;
+    font-weight: 800;
+    font-size: 1.05em;
+}
+
+.error-card.open .error-card-title {
+    color: var(--sea-blue);
+}
+
+.error-detail {
+    display: none;
+    margin-top: 12px;
+    border-top: 1px dashed #ccc;
+    padding-top: 12px;
+}
+
+.error-example {
+    background: #fdfdfd;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 8px 0;
+}
+
+.wrong {
+    background: #ffcdd2;
+    color: #b71c1c;
+    padding: 4px 6px;
+    border-radius: 5px;
+    display: block;
+    margin-bottom: 6px;
+    font-weight: bold;
+}
+
+.correct {
+    background: #e8f5e9;
+    color: #1b5e20;
+    padding: 4px 6px;
+    border-radius: 5px;
+    display: block;
+    font-weight: bold;
+}
+
+.word-mini-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 10px;
+    padding: 10px;
+    margin: 6px 0;
+}
 </style>
 </head>
 <body>
@@ -170,9 +248,20 @@ th { background: #f8f9fa; color: var(--sea-blue); }
             <div id="vocab-display" class="vocab-grid"></div>
         </div>
     </div>
+
+    <!-- 新增：常见错误 + 高分表达 -->
+    <div class="section-box">
+        <h2 onclick="toggleSection('error-content', this)">🔥 常见错误 + 高分表达 <span class="toggle-icon">▼</span></h2>
+        <div id="error-content" class="content-toggle">
+            <div class="nav-group error-nav" id="error-nav"></div>
+            <div id="error-display-area"></div>
+        </div>
+    </div>
 </div>
 
+    
 <script src="data.js"></script>
+<script src="data_error.js"></script>
 <script src="data_q1.js"></script>
 <script src="data_q2.js"></script>
 <script src="data_q3.js"></script>
@@ -655,13 +744,141 @@ function routeP3(mode, btn) {
     area.innerHTML = h + '</div>';
 }
 
+function initErrorModule() {
+    if (typeof errorData === 'undefined') return;
+
+    const nav = document.getElementById('error-nav');
+    if (!nav) return;
+
+    nav.innerHTML = "";
+
+    errorData.modules.forEach((mod, index) => {
+        const btn = document.createElement('button');
+        btn.className = 'nav-btn';
+        btn.innerHTML = `${mod.title}<br><small>${mod.titleEn}</small>`;
+        btn.onclick = () => renderErrorModule(mod.id, btn);
+        nav.appendChild(btn);
+
+        if (index === 0) {
+            setTimeout(() => renderErrorModule(mod.id, btn), 0);
+        }
+    });
+}
+
+function renderErrorModule(moduleId, btn) {
+    if (typeof errorData === 'undefined') return;
+
+    const area = document.getElementById('error-display-area');
+    const mod = errorData.modules.find(m => m.id === moduleId);
+    if (!area || !mod) return;
+
+    document.querySelectorAll('.error-nav .nav-btn').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+
+    let h = `<div class="paper-effect">`;
+    h += `<h3>${mod.title}</h3>`;
+    h += `<p style="color:var(--brown); font-weight:bold;">${mod.titleEn}</p>`;
+
+    h += `
+        <div class="error-reminder">
+            ${mod.reminderZh}<br>
+            ${mod.reminderEn}
+        </div>
+    `;
+
+    mod.items.forEach((item, idx) => {
+        h += `
+        <div class="error-card" onclick="toggleErrorCard(this)">
+            <div class="error-card-title">${idx + 1}. ${item.title}</div>
+            <small>${item.titleEn || ""}</small>
+
+            <div class="error-detail">
+                <p><b>规则：</b>${item.rule || ""}</p>
+                <p><b>English Help：</b>${item.englishHelp || ""}</p>
+        `;
+
+        if (item.wordList) {
+            h += `<div class="vocab-grid">`;
+            item.wordList.forEach(w => {
+                h += `
+                    <div class="word-mini-card">
+                        <b>${w.word}</b><br>
+                        <small>${w.meaning}</small>
+                    </div>
+                `;
+            });
+            h += `</div>`;
+        }
+
+        if (item.examples) {
+            item.examples.forEach(ex => {
+                h += `
+                    <div class="error-example">
+                        <span class="wrong">✗ ${ex.wrong}</span>
+                        <span class="correct">✓ ${ex.correct}</span>
+                    </div>
+                `;
+            });
+        }
+
+        h += `
+            </div>
+        </div>
+        `;
+    });
+
+    if (moduleId === "useful_expressions" && errorData.typoCards) {
+        h += `<h4 style="margin-top:25px;">常见错别字快卡</h4>`;
+        h += `<div class="vocab-grid">`;
+
+        errorData.typoCards.forEach(group => {
+            h += `
+            <div class="vocab-card" style="text-align:left;">
+                <b>${group.group}</b>
+                <div style="margin-top:8px;">
+            `;
+
+            group.cards.forEach(card => {
+                h += `
+                    <div style="border-top:1px dashed #ddd; padding-top:6px; margin-top:6px;">
+                        <b>${card.word}</b> <i>${card.pinyin}</i><br>
+                        <small>${card.examples}</small>
+                    </div>
+                `;
+            });
+
+            h += `
+                </div>
+            </div>
+            `;
+        });
+
+        h += `</div>`;
+    }
+
+    h += `</div>`;
+    area.innerHTML = h;
+}
+
+function toggleErrorCard(card) {
+    const detail = card.querySelector('.error-detail');
+    if (!detail) return;
+
+    const isOpen = card.classList.contains('open');
+
+    card.classList.toggle('open');
+    detail.style.display = isOpen ? 'none' : 'block';
+}
+    
 window.onload = function() {
     const dates = { cd1: '2026-06-02', cd2: '2026-07-07', cd3: '2026-07-13' };
     for (let id in dates) {
         const diff = Math.ceil((new Date(dates[id]) - new Date()) / (1000 * 60 * 60 * 24));
         const el = document.getElementById(id);
-        if (el) el.innerText = diff > 0 ? diff : 0;
+        if(el) el.innerText = diff > 0 ? diff : 0;
     }
+
+    initErrorModule();
 };
 </script>
 </body>
