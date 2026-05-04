@@ -169,6 +169,38 @@ th { background: #f8f9fa; color: var(--sea-blue); }
     padding: 10px;
     margin: 6px 0;
 }
+
+    .error-detail b {
+    background: #fff9c4;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+.error-detail u {
+    text-decoration-thickness: 2px;
+    text-underline-offset: 3px;
+}
+
+.error-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0;
+    background: white;
+    font-size: 0.95em;
+}
+
+.error-table th,
+.error-table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    vertical-align: top;
+    text-align: left;
+}
+
+.error-table th {
+    background: #f8f9fa;
+    color: var(--sea-blue);
+}
 </style>
 </head>
 <body>
@@ -793,68 +825,12 @@ function renderErrorModule(moduleId, btn) {
             <small>${item.titleEn || ""}</small>
 
             <div class="error-detail">
-                <p><b>规则：</b>${item.rule || ""}</p>
-                <p><b>English Help：</b>${item.englishHelp || ""}</p>
-        `;
-
-        if (item.wordList) {
-            h += `<div class="vocab-grid">`;
-            item.wordList.forEach(w => {
-                h += `
-                    <div class="word-mini-card">
-                        <b>${w.word}</b><br>
-                        <small>${w.meaning}</small>
-                    </div>
-                `;
-            });
-            h += `</div>`;
-        }
-
-        if (item.examples) {
-            item.examples.forEach(ex => {
-                h += `
-                    <div class="error-example">
-                        <span class="wrong">✗ ${ex.wrong}</span>
-                        <span class="correct">✓ ${ex.correct}</span>
-                    </div>
-                `;
-            });
-        }
-
-        h += `
+                ${item.explanationEn ? `<p><b>English Help:</b> ${item.explanationEn}</p>` : ""}
+                ${item.contentHtml || ""}
             </div>
         </div>
         `;
     });
-
-    if (moduleId === "useful_expressions" && errorData.typoCards) {
-        h += `<h4 style="margin-top:25px;">常见错别字快卡</h4>`;
-        h += `<div class="vocab-grid">`;
-
-        errorData.typoCards.forEach(group => {
-            h += `
-            <div class="vocab-card" style="text-align:left;">
-                <b>${group.group}</b>
-                <div style="margin-top:8px;">
-            `;
-
-            group.cards.forEach(card => {
-                h += `
-                    <div style="border-top:1px dashed #ddd; padding-top:6px; margin-top:6px;">
-                        <b>${card.word}</b> <i>${card.pinyin}</i><br>
-                        <small>${card.examples}</small>
-                    </div>
-                `;
-            });
-
-            h += `
-                </div>
-            </div>
-            `;
-        });
-
-        h += `</div>`;
-    }
 
     h += `</div>`;
     area.innerHTML = h;
